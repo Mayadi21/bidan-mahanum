@@ -5,14 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class User extends Model
+class Report extends Model
 {
     use HasFactory;
-
-    protected $guarded = ['id'];
-
-    public function posts()
-    {
-        return $this->hasMany(Post::class);
-    }
 }
