@@ -13,9 +13,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('comments')->get();
-
-        return view('posts.index', compact('posts'));
+        //
     }
 
     /**
@@ -37,10 +35,9 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        $post = Post::with('comments')->find($id);
-        return view('post', compact('post'));
+        //
     }
 
 
