@@ -18,6 +18,7 @@ return new class extends Migration
 
             $table->string('title');
             $table->string('slug');
+            $table->text('content');
             $table->text('excerpt');
             $table->text('body');
             $table->string('status');
