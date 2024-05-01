@@ -27,14 +27,13 @@
                     {{-- Loop bagian ini --}}
                     @foreach ($comments as $comment)
                     <div class="comment">
-                    <a href="/user/{{ $comment->user->username }} " class="text-decoration-none text-dark">
-                    <a href=
+                        <a href="/user/{{ $comment->user->username }} " class="text-decoration-none text-dark">
                             <strong>{{ $comment->user->username }}</strong>
                         </a>
                         -
                         <small>{{ $comment->created_at->diffForHumans() }}</small>
                         <p>
-                        {{ $comment->body }}
+                            {{ $comment->body }}
                         </p>
                     </div>
                     @endforeach
