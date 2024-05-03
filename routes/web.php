@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-// use App\Http\Controllers\PostsController;
+use App\Http\Controllers\PostsController;
+use App\Http\Controllers\CategoryController;
+
 use App\Models\User;
 use App\Models\Post;
 use App\Models\Category;
@@ -46,10 +48,18 @@ Route::get('/posts/{post:slug}', function (Post $post) {
 });
 
 
-
 /*
     Menampilkan semua jenis kategori dari database
 */
+// Route::get('/categories', function () {
+//     $categories = Category::all(); // Ambil semua kategori dari database
+//     return view('categories', [
+//         'page' => 'All Categories',
+//         'title' => 'All Categories',
+//         'categories' => $categories, // Kirim daftar kategori ke view
+//     ]);
+// });
+// Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
 Route::get('/categories', function () {
     return view('categories', [
         'page' => 'All Categories',
@@ -63,13 +73,17 @@ Route::get('/categories', function () {
     Menampilkan satu kategori serta menampilkan semua post
     dengan kategori tersebut, dan yang berstatus published
 */
-Route::get('/categories/{category:category_slug}', function (Category $category) {
+
+Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+
+
+Route::get('/categories/{slug}', function (Category $category) {
     return view('category', [
         'page' => $category->category_name,
         'title' => $category->category_name,
         // 'posts' => 
     ]);
-});
+})->name('category.show');
 
 
 /*
