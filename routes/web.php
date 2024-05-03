@@ -41,8 +41,8 @@ Route::get('/posts', function () {
 Route::get('/posts/{post:slug}', function (Post $post) {
     return view('post', [
         'page' => $post->title,
-        'post' => $post
-        // 'comments' => 
+        'post' => $post,
+        'comments' => $post->comments()->orderBy('created_at', 'desc')->get()
     ]);
 });
 
@@ -58,7 +58,7 @@ Route::get('/posts/{post:slug}', function (Post $post) {
 //         'categories' => $categories, // Kirim daftar kategori ke view
 //     ]);
 // });
-
+// Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
 Route::get('/categories', function () {
     return view('categories', [
         'page' => 'All Categories',
@@ -76,13 +76,13 @@ Route::get('/categories', function () {
 Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
 
 
-// Route::get('/categories/{slug}', function (Category $category) {
-//     return view('category', [
-//         'page' => $category->category_name,
-//         'title' => $category->category_name,
-//         // 'posts' => 
-//     ]);
-// });
+Route::get('/categories/{slug}', function (Category $category) {
+    return view('category', [
+        'page' => $category->category_name,
+        'title' => $category->category_name,
+        // 'posts' => 
+    ]);
+})->name('category.show');
 
 
 /*

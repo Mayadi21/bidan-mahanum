@@ -25,21 +25,18 @@
 
                 <div id="commentList" class="mt-3">
                     {{-- Loop bagian ini --}}
+                    @foreach ($comments as $comment)
                     <div class="comment">
-                        <a href="/user/refaelsiagian" class="text-decoration-none text-dark">
-                            <strong>@refaelsiagian</strong>
+                        <a href="/user/{{ $comment->user->username }} " class="text-decoration-none text-dark">
+                            <strong>{{ $comment->user->username }}</strong>
                         </a>
                         -
-                        <small>23 hours ago</small>
+                        <small>{{ $comment->created_at->diffForHumans() }}</small>
                         <p>
-                            This is a great article! I will definitely read it again.
-                            Because I love it. Thank you! But, I will not read it again.
-                            Because I hate it. Thank you! But, I will not read it again.
-                            Because I hate it. Thank you! But, I will not read it again.
-                            Because I hate it. Thank you! But, I will not read it again.
-                            Because I hate it. Thank you!
+                            {{ $comment->body }}
                         </p>
                     </div>
+                    @endforeach
                     {{-- Sampai sini --}}
                 </div>
             </div>
@@ -47,3 +44,4 @@
     </div>
 
 @endsection
+
