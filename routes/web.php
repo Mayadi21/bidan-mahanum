@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PostsController;
+// use App\Http\Controllers\PostsController;
 use App\Models\User;
 use App\Models\Post;
 use App\Models\Category;
