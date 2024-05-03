@@ -17,5 +17,15 @@ class CategoryController extends Controller
         ]);
     }
 
+    public function show(Category $category)
+    {
+        $posts = $category->posts()->get();
+        return view('category', [
+            'title' => $category->category_name,
+            'page' => $category->category_name,
+            'posts' => $posts
+        ]);
+    }
+
     
 }
