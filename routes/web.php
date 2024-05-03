@@ -41,8 +41,8 @@ Route::get('/posts', function () {
 Route::get('/posts/{post:slug}', function (Post $post) {
     return view('post', [
         'page' => $post->title,
-        'post' => $post
-        // 'comments' => 
+        'post' => $post,
+        'comments' => $post->comments()->orderBy('created_at', 'desc')->get()
     ]);
 });
 
