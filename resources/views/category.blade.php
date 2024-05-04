@@ -6,72 +6,29 @@
     <h2 class="text-center my-5">{{ $title }}</h2>
 
     <div class="row justify-content-center">
+        @foreach ($posts as $post)
         <div class="col-md-4 mb-3">
             <div class="card">
                 <div class="position-absolute px-3 py-2 text-white fs-8 rounded" style="background-color: rgba(0, 0, 0, 0.3)">
-                    <a href="/categories/category_slug" class="text-white text-decoration-none">Category</a>
+                    <a href="/categories/{{ $post->category->slug }}" class="text-white text-decoration-none">{{ $post->category->category_name }}</a>
                 </div>
-                <img src="https://source.unsplash.com/500x300?category_slug" class="card-img-top" alt="Category">
+                <img src="https://source.unsplash.com/500x300?{{ $post->category->category_slug }}" class="card-img-top" alt="{{ $post->category->name }}">
                 <div class="card-body">
-                    <h5 class="card-title d-flex align-items-center" style="height: 3em; overflow: hidden;">Judul post dari database</h5>
+                    <h5 class="card-title d-flex align-items-center" style="height: 3em; overflow: hidden;">{{ $post->title }}</h5>
                     <p>
                         <small>
-                            By <a href="/user/username" class="text-decoration-none">Name</a> 
-                            Rentang Waktu
+                            By <a href="/user/{{ $post->user->username }}" class="text-decoration-none">{{ $post->user->name }}</a> 
+                            {{ $post->created_at->diffForHumans() }}
                         </small>
                     </p>
                     <p class="card-text d-flex align-items-center" style="height: 8em; overflow: hidden;">
-                        Excerpt yang ada di database.
-                        Harus ditampilkan di bagian sini.
+                        {{ $post->excerpt }}
                     </p>
-                    <a href="/posts/slug" class="btn btn-primary">Read more..</a>
+                    <a href="/posts/{{ $post->slug }}" class="btn btn-primary">Read more..</a>
                 </div>
             </div>
         </div>
-        <div class="col-md-4 mb-3">
-            <div class="card">
-                <div class="position-absolute px-3 py-2 text-white fs-8 rounded" style="background-color: rgba(0, 0, 0, 0.3)">
-                    <a href="/categories/category_slug" class="text-white text-decoration-none">Category</a>
-                </div>
-                <img src="https://source.unsplash.com/500x300?category_slug" class="card-img-top" alt="Category">
-                <div class="card-body">
-                    <h5 class="card-title d-flex align-items-center" style="height: 3em; overflow: hidden;">Judul post dari database</h5>
-                    <p>
-                        <small>
-                            By <a href="/user/username" class="text-decoration-none">Name</a> 
-                            Rentang Waktu
-                        </small>
-                    </p>
-                    <p class="card-text d-flex align-items-center" style="height: 8em; overflow: hidden;">
-                        Excerpt yang ada di database.
-                        Harus ditampilkan di bagian sini.
-                    </p>
-                    <a href="/posts/slug" class="btn btn-primary">Read more..</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 mb-3">
-            <div class="card">
-                <div class="position-absolute px-3 py-2 text-white fs-8 rounded" style="background-color: rgba(0, 0, 0, 0.3)">
-                    <a href="/categories/category_slug" class="text-white text-decoration-none">Category</a>
-                </div>
-                <img src="https://source.unsplash.com/500x300?category_slug" class="card-img-top" alt="Category">
-                <div class="card-body">
-                    <h5 class="card-title d-flex align-items-center" style="height: 3em; overflow: hidden;">Judul post dari database</h5>
-                    <p>
-                        <small>
-                            By <a href="/user/username" class="text-decoration-none">Name</a> 
-                            Rentang Waktu
-                        </small>
-                    </p>
-                    <p class="card-text d-flex align-items-center" style="height: 8em; overflow: hidden;">
-                        Excerpt yang ada di database.
-                        Harus ditampilkan di bagian sini.
-                    </p>
-                    <a href="/posts/slug" class="btn btn-primary">Read more..</a>
-                </div>
-            </div>
-        </div>
+        @endforeach
     </div>
 </div>
 @endsection
