@@ -1,11 +1,12 @@
 <?php
 
+use App\Models\Post;
+use App\Models\User;
+use App\Models\Category;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\CategoryController;
-use App\Models\User;
-use App\Models\Post;
-use App\Models\Category;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,16 +61,8 @@ Route::get('/categories', [CategoryController::class, 'index'])->name('categorie
 */
 Route::get('/categories/{category:category_slug}', [CategoryController::class, 'show'])->name('category.show');
 
-
-
 /*
     Menampilkan profil user serta menampilkan semua post
     yang dibuat oleh user, dan yang berstatus published
 */
-Route::get('/user/{user:username}', function (User $user) {
-    return view('user', [
-        'page' => $user->name,
-        'title' => $user->name,
-        // 'posts' =>
-    ]);
-});
+Route::get('/user/{user:username}', [UserController::class, 'show']);
