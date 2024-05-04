@@ -61,8 +61,6 @@ Route::get('/categories', [CategoryController::class, 'index'])->name('categorie
 */
 Route::get('/categories/{category:category_slug}', [CategoryController::class, 'show'])->name('category.show');
 
-
-
 /*
     Menampilkan profil user serta menampilkan semua post
     yang dibuat oleh user, dan yang berstatus published
