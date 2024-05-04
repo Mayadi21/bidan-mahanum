@@ -35,11 +35,19 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
+
     public function show(User $user)
     {
-        //
-    }
+            return view('user', [
+                'page' => $user->name,
+                'title' => $user->name,
+                'username' => $user->username,
+                'name' => $user->name,
+                'posts' => $user->posts()->where('status', 'published')->get()
+            ]);
+        }
 
+  
     /**
      * Show the form for editing the specified resource.
      */
