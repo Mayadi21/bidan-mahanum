@@ -38,7 +38,8 @@ class CategorySeeder extends Seeder
         foreach ($categories as $category) {
             Category::create([
                 'category_name' => $category,
-                'category_slug' => $categories_slug[array_search($category, $categories)]
+                'category_slug' => $categories_slug[array_search($category, $categories)],
+                'category_description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
             ]);
         }
     }

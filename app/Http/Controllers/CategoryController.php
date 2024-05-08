@@ -10,7 +10,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::all();
-        return view('categories', [
+        return view('blog.categories', [
             'categories' => $categories,
             'title' => 'All Categories',
             'page' => 'All Categories'
@@ -20,12 +20,10 @@ class CategoryController extends Controller
     public function show(Category $category)
     {
         $posts = $category->posts()->get();
-        return view('category', [
+        return view('blog.category', [
             'title' => $category->category_name,
             'page' => $category->category_name,
             'posts' => $posts
         ]);
-    }
-
-    
+    }    
 }

@@ -1,11 +1,20 @@
-@extends('layouts.main')
+@extends('blog.layouts.main')
 
 @section('content')
-<div class="container">
 
-    <h2 class="text-center my-5">{{ $title }}</h2>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="my-3 p-3 border-bottom">
+                <h3 class="pb-0 mb-0">{{ $title }}</h3>
+                <p><a href="/user/{{ $username }}" class="text-decoration-none text-dark">{{'@'. $username }} </a></p>
+                <p>Isi Profile</p>
+            </div>
+        </div>
+    </div>
 
     <div class="row justify-content-center">
+        @csrf
         @foreach ($posts as $post)
             <div class="col-md-4 mb-3">
                 <div class="card">
