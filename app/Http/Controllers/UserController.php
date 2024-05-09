@@ -37,14 +37,14 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-            return view('user', [
-                'page' => $user->name,
-                'title' => $user->name,
-                'username' => $user->username,
-                'name' => $user->name,
-                'posts' => $user->posts()->where('status', 'published')->get()
-            ]);
-        }
+        return view('blog.user', [
+            'page' => $user->name,
+            'title' => $user->name,
+            'username' => $user->username,
+            'name' => $user->name,
+            'posts' => $user->posts()->where('status', 'published')->get()
+        ]);
+    }
 
   
     /**

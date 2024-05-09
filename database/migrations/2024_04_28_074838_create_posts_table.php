@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('slug');
             $table->text('excerpt');
             $table->text('body');
+            $table->integer('view');
+            $table->string('image')->nullable();
             $table->string('status');
             
             $table->timestamps();
