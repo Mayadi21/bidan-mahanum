@@ -6,24 +6,28 @@
             <div class="col-lg-8">
                 <h2 class="my-3 pb-3 border-bottom">Edit Profile</h2>
 
-                <form action="/dashboard/posts" method="post" enctype="multipart/form-data">
+                <form action="{{ route('profile.update') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3 mx-5">
                         <label for="formFile" class="form-label">Profile Image</label>
-                        <img class="img-preview img-fluid mb-3 col-sm-5 d-block rounded-circle" style="width: 100px; height: 100px">
+                        @if($user->image)
+                    <img src="{{ asset($user->image) }}" class="img-preview img-fluid mb-3 col-sm-5 d-block rounded-circle" style="width: 100px; height: 100px">
+                        @else
+                    <img src="{{ asset('path/to/default/image.jpg') }}" class="img-preview img-fluid mb-3 col-sm-5 d-block rounded-circle" style="width: 100px; height: 100px">
+                        @endif
                         <input class="form-control" type="file" id="image" name="image" onchange="previewImage()">
                     </div>
                     <div class="mb-3 mx-5">
                         <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="name" name="name" required autofocus value="">
+                        <input type="text" class="form-control" id="name" name="name" required autofocus value="{{ $user->name }}">
                     </div>
                     <div class="mb-3 mx-5">
                         <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="username" name="username" required autofocus value="">
+                        <input type="text" class="form-control" id="username" name="username" required autofocus value="{{ $user->username }}">
                     </div>
                     <div class="mb-3 mx-5">
                         <label for="bio" class="form-label">Bio</label>
-                        <input type="text" class="form-control" id="bio" name="bio" required autofocus value="">
+                        <input type="text" class="form-control" id="bio" name="bio" required autofocus value="{{ $user->bio }}">
                     </div>
                     <button type="submit" class="btn btn-primary mx-5">Edit</button>
                 </form>  
