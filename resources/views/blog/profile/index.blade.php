@@ -7,6 +7,7 @@
         <div class="col-md-8">
             <h2 class="my-3 pb-3 border-bottom">Profile</h2>
 
+<!-- Alert Section -->
         @if(session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
@@ -18,9 +19,15 @@
                 {{ session('info') }}
             </div>
         @endif
+<!-- Alert Section End -->
+
+            <input type="hidden" name="oldImage" value="{{ $user->image }}">
+            @if($user->image)
+                <img src="{{ asset('storage/' . $user->image) }}" class="img-preview img-fluid mb-3 col-sm-5 d-block rounded-circle" style="width: 100px; height: 100px">
+            @else
+                <img src="{{ asset('img/profile-pict.jpg')}}" class="img-preview img-fluid mb-3 col-sm-5 d-block rounded-circle" alt= "Profile Photo" style="width: 100px; height: 100px">
+            @endif
             
-            <img src="{{ asset($user->image) }}" class="rounded-circle img-fluid mb-3 d-block mx-3" alt="Profile Picture" width="100">
-           
             <div class="mx-4">
                 <h4>Name</h4>
                 <p class="text-secondary"> {{ $user->name }} </p>
