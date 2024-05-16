@@ -61,8 +61,8 @@ Route::resource('/dashboard/categories', DashboardCategoriesController::class)->
 
 
 
-Route::post('/comment', [CommentController::class, 'store'])->name('comment.store')->middleware('auth');
-Route::delete('/comment', [CommentController::class, 'destroy'])->name('comment.destroy')->middleware('auth');
+Route::post('/comments', [CommentController::class, 'store'])->name('comments.store')->middleware('auth');
+Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy')->middleware('auth');
 
 
 
