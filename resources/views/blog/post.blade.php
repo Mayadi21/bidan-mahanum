@@ -8,7 +8,11 @@
         <div class="row justify-content-center mb-5">
             <div class="col-md-8 pb-5">
                 <h2 class="my-3 pb-3 border-bottom">{{ $post->title }}</h2>
-                <img src="https://source.unsplash.com/1200x400?{{ $post->category->category_name }}" class="img-fluid" alt="{{ $post->category->name }}">
+                @if($post->image)
+                    <img src="{{ asset('storage/' . $post->image) }}" class="img-fluid" alt="">
+                @else
+                    <img src="https://source.unsplash.com/1200x400?{{ $post->category->category_name }}" class="img-fluid" alt="{{ $post->category->category_name }}">
+                @endif
                 <p class="text-secondary text-lg mt-3">
                     By <a href="/user/{{ $post->user->username }}" class="text-decoration-none">{{ $post->user->name }}</a> 
                     in <a href="/categories/{{ $post->category->category_slug }}" class="text-decoration-none">{{ $post->category->category_name }}</a>
@@ -34,23 +38,24 @@
                             <small>{{ $comment->created_at->diffForHumans() }}</small>
                             <p>{{ $comment->body }}</p>
                         </div>
-                        @endforeach
-                        {{-- Contoh untuk menghapus komen sendiri --}}
-                        <div class="comment">
-                            <a href="/user/username" class="text-decoration-none text-dark">
-                                <strong>@safnayuninda (you)</strong>
-                            </a>
-                            -
-                            <small>4 days ago</small>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                    @endforeach
+                    {{-- Contoh untuk menghapus komen sendiri --}}
+                    <div class="comment">
+                        <a href="/user/username" class="text-decoration-none text-dark">
+                            <strong>@safnayuninda (you)</strong>
+                        </a>
+                        -
+                        <small>4 days ago</small>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 
-                            <form action="{{ route('comment.destroy', $comment->id) }}" method="POST" class="delete-form">
-                                <button type="submit" class="btn">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </form>
-                        </div>
-
+                        <form action="#" method="POST" class="delete-form">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </form>
+                    </div>
                     {{-- Sampai sini --}}
                 </div>
             </div>
@@ -58,4 +63,3 @@
     </div>
 
 @endsection
-

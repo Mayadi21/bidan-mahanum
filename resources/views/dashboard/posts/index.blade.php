@@ -13,66 +13,45 @@
         <table class="table table-striped table-sm">
             <thead>
                 <tr>
-                <th scope="col">#</th>
+                <th scope="col">No</th>
                 <th scope="col">Title</th>
                 <th scope="col">Category</th>
+                <th scope="col">Status</th>
                 <th scope="col">View</th>
+                <th scope="col">Publish Date</th>
                 <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
+                @foreach ($posts as $item)
+                @if(auth()->user()->role === 'user')
+                        @if($item->user_id === auth()->id())
                 <tr>
-                    <td>1,001</td>
-                    <td>Judul dari Database</td>
-                    <td>Kategori dari Database</td>
-                    <td>Jumlah View dari Database</td>
+                    <td>{{$loop->iteration}}</td>
+                    <td>{{$item->title}}</td>
+                    <td>{{$item->Category->category_name}}</td>
+                    <td>{{$item->status}}</td>
+                    <td>{{$item->view}}</td>
+                    <td>{{$item->created_at}}</td>
                     <td>
-                        <a href="{{ route('posts.show', 'non-et-dicta-libero-expedita-dolorem-nobis') . '#main' }}" class="btn btn-sm btn-outline-primary">
+                        <a href="{{ route('posts.show', $item->slug)}}" class="btn btn-sm btn-outline-primary">
                             View
                         </a>
-                        <a href="{{ route('posts.edit', 'non-et-dicta-libero-expedita-dolorem-nobis') }}" class="btn btn-sm btn-outline-secondary">
+                        <a href="{{ route('posts.edit', $item->slug) }}" class="btn btn-sm btn-outline-secondary">
                             Edit
                         </a>
-                        <a href="#" class="btn btn-sm btn-outline-danger">
-                            Delete
-                        </a>
+                        <form action="{{ route('posts.destroy', $item->slug) }}" method="POST" class="delete-form" style="display: inline-block;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
+                        </form>
                     </td>
-                </tr>
-                <tr>
-                    <td>1,001</td>
-                    <td>Judul dari Database</td>
-                    <td>Kategori dari Database</td>
-                    <td>Jumlah View dari Database</td>
-                    <td>
-                        <a href="#" class="btn btn-sm btn-outline-primary">
-                            View
-                        </a>
-                        <a href="#" class="btn btn-sm btn-outline-secondary">
-                            Edit
-                        </a>
-                        <a href="#" class="btn btn-sm btn-outline-danger">
-                            Delete
-                        </a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>1,001</td>
-                    <td>Judul dari Database</td>
-                    <td>Kategori dari Database</td>
-                    <td>Jumlah View dari Database</td>
-                    <td>
-                        <a href="#" class="btn btn-sm btn-outline-primary">
-                            View
-                        </a>
-                        <a href="#" class="btn btn-sm btn-outline-secondary">
-                            Edit
-                        </a>
-                        <a href="#" class="btn btn-sm btn-outline-danger">
-                            Delete
-                        </a>
-                    </td>
-                </tr>
+                    </tr>
+                    @endif
+                @endif
+            @endforeach
             </tbody>
         </table>
     </div>
+    {{ $posts->links() }}
 @endsection
