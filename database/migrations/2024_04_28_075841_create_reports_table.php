@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
 
             $table->string('report_name');
-            $table->text('body');
+            $table->text('report_description');
         });
     }
 

@@ -5,9 +5,6 @@
         <h1 class="h2">Dashboard</h1>
     </div>
 
-    {{-- <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas> --}}
-
-    {{-- <h2>Section title</h2> --}}
     <a href="{{ route('posts.create') }}" class="btn btn-primary mb-3">Create New Post</a>
     <div class="table-responsive small col-lg-8">
         <table class="table table-striped table-sm">
@@ -75,4 +72,36 @@
             </tbody>
         </table>
     </div>
+
+
+
+    
+    <!-- Modal -->
+    <div class="modal fade" id="sessionMessageModal" tabindex="-1" aria-labelledby="sessionMessageModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="sessionMessageModalLabel">Message</h5>
+                </div>
+                <div class="modal-body">
+                    {{ session('success') }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            @if(session('success'))
+                $('#sessionMessageModal').modal('show');
+            @endif
+        });
+    </script>
 @endsection

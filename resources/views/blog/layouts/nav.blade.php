@@ -30,9 +30,8 @@
                                 {{ auth()->user()->name }}
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{ route('posts.index') }}">My Dashboard</a></li>
+                                <li><a class="dropdown-item" href="{{ route('dashboard') }}">My Dashboard</a></li>
                                 <li><a class="dropdown-item" href="{{ route('profile.index') }}">My Profile</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>

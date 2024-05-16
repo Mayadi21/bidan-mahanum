@@ -7,14 +7,16 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 
-class CategoriesController extends Controller
+class AdminCategoriesController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('dashboard.categories.index');
+        return view('dashboard.admin-categories.index', [
+            'page' => 'All Categories',
+        ]);
     }
 
     /**
@@ -22,7 +24,9 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        return view('dashboard.categories.create');
+        return view('dashboard.admin-categories.create', [
+            'page' => 'Create Category',
+        ]);
     }
 
     /**
@@ -46,7 +50,9 @@ class CategoriesController extends Controller
      */
     public function edit(Category $category)
     {
-        return view('dashboard.categories.edit');
+        return view('dashboard.admin-categories.edit', [
+            'page' => 'Edit Category',
+        ]);
     }
 
     /**
