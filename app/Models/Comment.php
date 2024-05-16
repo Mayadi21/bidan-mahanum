@@ -9,7 +9,7 @@ class Comment extends Model
 {
     use HasFactory;
 
-    protected $guarded = ['id'];
+    protected $fillable = ['user_id', 'post_id', 'body'];
 
     public function post()
     {
@@ -19,4 +19,9 @@ class Comment extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function comments()
+{
+    return $this->hasMany(Comment::class);
+}
+
 }
