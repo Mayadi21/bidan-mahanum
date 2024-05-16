@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Category;
+use App\Models\Comment;
+use App\Http\Requests\StorePostRequest;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
 
 class PostsController extends Controller
@@ -15,7 +19,9 @@ class PostsController extends Controller
      */
     public function index()
     {
-        return view('dashboard.posts.index');
+        return view('dashboard.posts.index',[
+            'posts' => Post::with('Category')->latest()->paginate(10)
+        ]);
     }
 
     /**
@@ -23,7 +29,9 @@ class PostsController extends Controller
      */
     public function create()
     {
-        return view('dashboard.posts.create');
+        return view('dashboard.posts.create',[
+            'categories' => Category::get()
+        ]);
     }
 
     /**
@@ -31,25 +39,51 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        $slug = SlugService::createSlug(Post::class, 'slug', $request->title);
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'body' => 'required',
+            'image' => 'nullable|image|file|max:2048',
+            'category_id' => 'required',
+            'status' => 'required'
+        ]);
+        
+        if($request->file('image')){
+            $validatedData['image'] = $request->file('image')->store('post-images');
+        }
+        
+        $validatedData['user_id'] = auth()->user()->id;
+        $validatedData['slug'] = SlugService::createSlug(Post::class, 'slug', $request->title);
+        $validatedData['excerpt'] = Str::limit(strip_tags($request->body), 200, '...');
+        $validatedData['view'] = 0;
 
-        dd($slug);
+        Post::create($validatedData);
+
+        return redirect('dashboard/posts')->with('success', 'New Post has been added!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Post $post)
+    public function show($slug)
     {
-        return view('dashboard.posts.show');
+        $post = Post::where('slug', $slug)->firstOrFail();
+
+        return view('dashboard.posts.show', [
+            'post'=> $post,
+            'comments' => $post->comments()->orderBy('created_at', 'desc')->get(),
+            'page'=> $post->title
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Post $post)
+    public function edit($slug)
     {
-        return view('dashboard.posts.edit');
+        $post = Post::where('slug', $slug)->firstOrFail(); // Mengambil data post dari database berdasarkan slug
+        $categories = Category::all(); // Mengambil semua kategori untuk dropdown
+    
+        return view('dashboard.posts.edit', compact('post', 'categories')); // Meneruskan data post dan kategori ke tampilan
     }
 
     /**
@@ -57,7 +91,37 @@ class PostsController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $rules = [
+            'title' => 'required|max:255',
+            'category_id' => 'required',
+            'image' => 'image|file|max:1024',
+            'body' => 'required',
+            'status'=> 'required'
+        ];
+        
+        
+        $validatedData = $request->validate($rules);
+        
+        if($request->file('image')) {
+            if($request->oldImage) {
+                Storage::delete($request->oldImage); // menghapus gambar lama dari folder storage
+            }
+            $validatedData['image'] = $request->file('image')->store('post-images'); // menyimpan di storage/app/public/post-images
+        }
+        
+        
+        if($request->slug != $post->slug) {
+            $validatedData['slug'] = SlugService::createSlug(Post::class, 'slug', $request->title);
+        }
+        
+        $validatedData['user_id'] = auth()->user()->id;
+        $validatedData['excerpt'] = Str::limit(strip_tags($request->body), 200, '...');
+        
+        Post::where('id', $post->id)
+            ->update($validatedData)
+        ;
+
+        return redirect('/dashboard/posts')->with('success', 'Post has been updated!');
     }
 
     /**
@@ -65,6 +129,8 @@ class PostsController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+
+        return redirect('/dashboard/posts')->with('success', 'Post deleted successfully');
     }
 }

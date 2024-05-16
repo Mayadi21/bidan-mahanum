@@ -42,7 +42,7 @@ Route::get('/user/{user:username}', [PostController::class, 'user']);
 
 
 
-Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+Route::get('/categories', [CategoryController::class, 'index'])->name('category.index');
 Route::get('/categories/{category:category_slug}', [CategoryController::class, 'show'])->name('category.show');
 
 

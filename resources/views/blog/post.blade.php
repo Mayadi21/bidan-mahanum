@@ -58,10 +58,4 @@
     </div>
 </div>
 
-<script>
-    function confirmDelete() {
-        return confirm('Apakah kamu ingin menghapus Komentar?');
-    }
-</script>
-
 @endsection
