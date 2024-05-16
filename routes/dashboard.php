@@ -26,17 +26,21 @@ Route::prefix('dashboard')->middleware(['verified'])->group(function () {
 
     Route::prefix('admin')->middleware(['admin'])->group(function () {
 
+        // Done
         Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard.admin');
     
         Route::get('/users', [AdminUsersController::class, 'index'])->name('admin.users.index');
         
         Route::get('/posts', [AdminPostsController::class, 'index'])->name('admin.posts.index');
+        Route::get('/posts/{post:slug}', [AdminPostsController::class, 'show'])->name('admin.posts.show');
     
         Route::get('/comments', [AdminCommentsController::class, 'index'])->name('admin.comments.index');
+        Route::get('/comments/{comment:id}', [AdminCommentsController::class, 'show'])->name('admin.comments.show');
     
+        // Done
         Route::resource('/categories', AdminCategoriesController::class)->except('show');
         
-        Route::get('/reports', [AdminReportsController::class, 'index'])->name('admin.reports.index');
+        Route::resource('/reports', AdminReportsController::class)->except('show');
 
         Route::get('/post-reports', [AdminReportsController::class, 'index'])->name('admin.post-reports.index');
 

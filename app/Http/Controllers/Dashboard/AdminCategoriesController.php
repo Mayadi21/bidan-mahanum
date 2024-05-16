@@ -16,6 +16,7 @@ class AdminCategoriesController extends Controller
     {
         return view('dashboard.admin-categories.index', [
             'page' => 'All Categories',
+            'active' => 'admin-categories'
         ]);
     }
 
@@ -26,6 +27,7 @@ class AdminCategoriesController extends Controller
     {
         return view('dashboard.admin-categories.create', [
             'page' => 'Create Category',
+            'active' => 'admin-categories'
         ]);
     }
 
@@ -52,6 +54,7 @@ class AdminCategoriesController extends Controller
     {
         return view('dashboard.admin-categories.edit', [
             'page' => 'Edit Category',
+            'active' => 'admin-categories',
         ]);
     }
 

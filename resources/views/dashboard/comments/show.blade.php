@@ -33,7 +33,11 @@
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Pom dolor sit amet consectetur adipisicing elit.
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Pom dolor sit amet consectetur adipisicing elit.
             </p>
-            <a href="{{ route('posts.index') }}" class="text-decoration-none">Back to My Posts</a>
+            <a href="{{ route(($active === 'admin-comments') ? 'admin.comments.index' : 'dashboard.comments.index') }}" class="text-decoration-none">
+                Back to 
+                @if($active === 'admin-comments') All Comments
+                @else My Posts' Comments @endif
+            </a>
         </div>
     </div>
 </div>

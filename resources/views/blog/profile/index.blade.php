@@ -14,8 +14,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
-            
-            <img src="{{ asset('img/profile-pict.jpg')}}" class="rounded-circle img-fluid mb-3 d-block mx-3" alt="Profile Picture" width="100">
 
             <!-- Alert Section -->
                 @if(session('success'))
@@ -33,9 +31,9 @@
 
             <input type="hidden" name="oldImage" value="{{ $user->image }}">
             @if($user->image)
-                <img src="{{ asset('storage/' . $user->image) }}" class="img-preview img-fluid mb-3 col-sm-5 d-block rounded-circle" style="width: 100px; height: 100px">
+                <img src="{{ asset('storage/' . $user->image) }}" class="img-preview img-fluid mb-3 col-sm-5 d-block rounded-circle ms-3" style="width: 100px; height: 100px">
             @else
-                <img src="{{ asset('img/profile-pict.jpg')}}" class="img-preview img-fluid mb-3 col-sm-5 d-block rounded-circle" alt= "Profile Photo" style="width: 100px; height: 100px">
+                <img src="{{ asset('img/profile-pict.jpg')}}" class="img-preview img-fluid mb-3 col-sm-5 d-block rounded-circle ms-3" alt= "Profile Photo" style="width: 100px; height: 100px">
             @endif
             
             <div class="mx-4">

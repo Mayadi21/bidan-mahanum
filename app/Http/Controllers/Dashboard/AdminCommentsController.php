@@ -9,8 +9,17 @@ class AdminCommentsController extends Controller
 {
     public function index()
     {
-        return 'admin comments index';
-        // $comments = Comment::with('post')->paginate(10);
-        // return view('admin.comments.index', compact('comments'));
+        return view('dashboard.comments.index', [
+            'page' => 'All Comments',
+            'active' => 'admin-comments',
+        ]);
+    }
+
+    public function show()
+    {
+        return view('dashboard.comments.show', [
+            'page' => 'Comment Details',
+            'active' => 'admin-comments',
+        ]);
     }
 }

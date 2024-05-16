@@ -32,6 +32,11 @@ class Post extends Model
         return $this->hasOne(Report::class);
     }
 
+    public function postReport()
+    {
+        return $this->hasMany(Report::class);
+    }
+
     public function getRouteKeyName()
     {
         return 'slug';

@@ -24,66 +24,70 @@
                 </h6>
 
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="{{ route('dashboard.admin') }}">
+                    <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-dashboard') active @endif" aria-current="page" href="{{ route('dashboard.admin') }}">
                         <i class="bi bi-display"></i>
                         Dashboard
                     </a>
                 </li>
                 
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="{{ route('admin.users.index') }}">
+                    <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-users') active @endif" aria-current="page" href="{{ route('admin.users.index') }}">
                         <i class="bi bi-person-circle"></i>
                         Users
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="{{ route('admin.posts.index') }}">
+                    <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-posts') active @endif" aria-current="page" href="{{ route('admin.posts.index') }}">
                         <i class="bi bi-file-earmark-text"></i>
                         Posts
                     </a>
                 </li>
                 
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="{{ route('admin.comments.index') }}">
+                    <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-comments') active @endif" aria-current="page" href="{{ route('admin.comments.index') }}">
                         <i class="bi bi-chat-left-text"></i>
                         Comments
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2" href="{{ route('categories.index')}}">
+                    <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-categories') active @endif" href="{{ route('categories.index')}}">
                         <i class="bi bi-tags"></i>
                         Categories
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2" href="{{ route('admin.reports.index')}}">
+                    <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-reports') active @endif" href="{{ route('reports.index')}}">
                         <i class="bi bi-flag"></i>
                         Reports
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="{{ route('admin.post-reports.index') }}">
+                    <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-post-reports') active @endif" aria-current="page" href="{{ route('admin.post-reports.index') }}">
                         <i class="bi bi-stickies"></i>
                         Post Reports
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="{{ route('admin.comment-reports.index') }}">
+                    <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-comment-reports') active @endif" aria-current="page" href="{{ route('admin.comment-reports.index') }}">
                         <i class="bi bi-chat-square"></i>
                         Comment Reports
                     </a>
                 </li>
 
-                @else
+                <hr class="my-3">
+
+                @endcan
 
                 <h6 class="sidebar-heading d-flex justify-content-start align-items-center px-3 my-3 text-body-secondary text-uppercase">
                     <i class="bi bi-person-circle"></i>
-                    <span class="ms-2 fw-bold">USER</span>
+                    <span class="ms-2 fw-bold">
+                        @can('admin') USER MODE @else USER @endcan
+                    </span>
                 </h6>
                 
                 <li class="nav-item">
@@ -106,8 +110,6 @@
                         Comments
                     </a>
                 </li>
-
-                @endcan
             </ul>
 
             <hr class="my-3">

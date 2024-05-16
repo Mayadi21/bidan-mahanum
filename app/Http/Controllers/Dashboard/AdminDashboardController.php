@@ -9,7 +9,9 @@ class AdminDashboardController extends Controller
 {
     public function index()
     {
-        return 'Admin Dashboard';
-        // return view('dashboard.admin.index');
+        return view('dashboard.admin-index', [
+            'page' => 'Admin Dashboard',
+            'active' => 'admin-dashboard'
+        ]);
     }
 }
