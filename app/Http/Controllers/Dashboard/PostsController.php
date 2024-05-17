@@ -22,7 +22,10 @@ class PostsController extends Controller
         return view('dashboard.posts.index', [
             'page' => 'All Posts',
             'active' => 'posts',
-            'posts' => Post::with('Category')->latest()->paginate(10)
+            'posts' => Post::with('category')
+                        ->where('user_id', auth()->user()->id)
+                        ->latest()
+                        ->paginate(10),
         ]);
     }
 
@@ -34,7 +37,7 @@ class PostsController extends Controller
         return view('dashboard.posts.create',[
             'page' => 'Create Post',
             'active' => 'posts',
-            'categories' => Category::get()
+            'categories' => Category::orderBy('category_name', 'asc')->get(),
         ]);
     }
 
@@ -87,8 +90,8 @@ class PostsController extends Controller
     public function edit($slug)
     {
         $post = Post::where('slug', $slug)->firstOrFail(); // Mengambil data post dari database berdasarkan slug
-        $categories = Category::all(); // Mengambil semua kategori untuk dropdown
-    
+        $categories = Category::orderBy('category_name', 'asc')->get();
+
         return view('dashboard.posts.edit', [
             'page' => 'Edit Post',
             'active' => 'posts',
@@ -105,7 +108,7 @@ class PostsController extends Controller
         $rules = [
             'title' => 'required|max:255',
             'category_id' => 'required',
-            'image' => 'image|file|max:1024',
+            'image' => 'image|file|max:2048',
             'body' => 'required',
             'status'=> 'required'
         ];

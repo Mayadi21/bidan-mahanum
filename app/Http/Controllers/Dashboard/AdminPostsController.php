@@ -12,7 +12,8 @@ class AdminPostsController extends Controller
     {
         return view('dashboard.posts.index', [
             'page' => 'All Posts',
-            'active' => 'admin-posts'
+            'active' => 'admin-posts',
+            'posts' => Post::with('category')->latest()->paginate(10)
         ]);
     }
 

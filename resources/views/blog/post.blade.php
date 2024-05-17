@@ -46,7 +46,6 @@
                             -
                             <small>{{ $comment->created_at->diffForHumans() }}</small>
                             <p>{{ $comment->body }}</p>
-<<<<<<< HEAD
 
                             <!-- Button trigger modal -->
                             <button type="button" class="btn delete-form" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $comment->id }}">

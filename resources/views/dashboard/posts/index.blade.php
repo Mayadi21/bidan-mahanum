@@ -18,8 +18,13 @@
                 <tr>
                 <th scope="col">No</th>
                 <th scope="col">Title</th>
+                @if($active === 'admin-posts') 
+                <th scope="col">User</th> 
+                @endif
                 <th scope="col">Category</th>
+                @if($active === 'admin-posts') @else
                 <th scope="col">Status</th>
+                @endif
                 <th scope="col">View</th>
                 <th scope="col">Publish Date</th>
                 <th scope="col">Action</th>
@@ -30,8 +35,13 @@
                 <tr>
                     <td>{{$loop->iteration}}</td>
                     <td>{{$item->title}}</td>
-                    <td>{{$item->Category->category_name}}</td>
+                    @if($active === 'admin-posts') 
+                    <td>{{'@'.$item->user->username}}</td> 
+                    @endif
+                    <td>{{$item->category->category_name}}</td>
+                    @if($active === 'admin-posts') @else
                     <td>{{$item->status}}</td>
+                    @endif
                     <td>{{$item->view}}</td>
                     <td>{{$item->created_at}}</td>
                     <td>
