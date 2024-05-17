@@ -2,8 +2,6 @@
 
 @section('content')
 
-{{-- KOLOM KOMENTAR DI BARIS 27 --}}
-
     <div class="container">
         <div class="row justify-content-center mb-5">
             <div class="col-md-8 pb-5">
@@ -47,122 +45,116 @@
                             <small>{{ $comment->created_at->diffForHumans() }}</small>
                             <p>{{ $comment->body }}</p>
 
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn delete-form" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $comment->id }}">
-                                <i class="bi bi-flag-fill"></i>
-                            </button>
+                            @if ($comment->user_id === auth()->id())
+                                <form action="{{ route('comments.destroy', $comment->id) }}" method="POST" class="delete-form">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn" onclick="return confirm('Apakah kamu ingin menghapus komentar ini?')">
+                                        <i class="bi bi-trash" alt="Delete Comment"></i>
+                                    </button>
+                                </form>
+                            @else
                             
-                            <!-- Modal -->
-                            <div class="modal fade" id="exampleModal{{ $comment->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Report Comment</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn delete-form" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $comment->id }}">
+                                    <i class="bi bi-flag-fill"></i>
+                                </button>
+                            
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModal{{ $comment->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Report Comment</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                
+                                                <form action="/report" method="post">
+                                                    @csrf
+                                                    <input type="hidden" name="comment_id" value="{{ $comment->id }}">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input align-self-center" type="radio" name="report_id" id="report_id1" value="1" checked>
+                                                        <label class="form-check-label" for="report_id1">
+                                                            <div>
+                                                                <h5>Judul report</h5>
+                                                                <p>Deskripsi report dari database</p>
+                                                                </div>
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input align-self-center" type="radio" name="report_id" id="report_id2" value="2">
+                                                            <label class="form-check-label" for="report_id2">
+                                                                <div>
+                                                                    <h5>Judul report</h5>
+                                                                    <p>Deskripsi report dari database</p>
+                                                                </div>
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input align-self-center" type="radio" name="report_id" id="report_id3" value="3">
+                                                            <label class="form-check-label" for="report_id3">
+                                                                <div>
+                                                                    <h5>Judul report</h5>
+                                                                    <p>Deskripsi report dari database</p>
+                                                                </div>
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input align-self-center" type="radio" name="report_id" id="report_id4" value="4">
+                                                            <label class="form-check-label" for="report_id4">
+                                                                <div>
+                                                                    <h5>Judul report</h5>
+                                                                    <p>Deskripsi report dari database</p>
+                                                                </div>
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input align-self-center" type="radio" name="report_id" id="report_id5" value="5">
+                                                            <label class="form-check-label" for="report_id5">
+                                                                <div>
+                                                                    <h5>Judul report</h5>
+                                                                    <p>Deskripsi report dari database</p>
+                                                                </div>
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input align-self-center" type="radio" name="report_id" id="report_id6" value="6">
+                                                            <label class="form-check-label" for="report_id6">
+                                                                <div>
+                                                                    <h5>Judul report</h5>
+                                                                    <p>Deskripsi report dari database</p>
+                                                                </div>
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input align-self-center" type="radio" name="report_id" id="report_id7" value="7">
+                                                            <label class="form-check-label" for="report_id7">
+                                                                <div>
+                                                                    <h5>Judul report</h5>
+                                                                    <p>Deskripsi report dari database</p>
+                                                                </div>
+                                                            </label>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                            <button type="submit" class="btn btn-primary">Report</button>
+                                                        </div>
+                                                    </form>
+                                            </div>
                                         </div>
-                                        <div class="modal-body">
-
-                                            <form action="/report" method="post">
-                                                @csrf
-                                                <input type="hidden" name="comment_id" value="{{ $comment->id }}">
-                                                <div class="form-check">
-                                                    <input class="form-check-input align-self-center" type="radio" name="report_id" id="report_id1" value="1" checked>
-                                                    <label class="form-check-label" for="report_id1">
-                                                        <div>
-                                                            <h5>Judul report</h5>
-                                                            <p>Deskripsi report dari database</p>
-                                                        </div>
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input align-self-center" type="radio" name="report_id" id="report_id2" value="2">
-                                                    <label class="form-check-label" for="report_id2">
-                                                        <div>
-                                                            <h5>Judul report</h5>
-                                                            <p>Deskripsi report dari database</p>
-                                                        </div>
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input align-self-center" type="radio" name="report_id" id="report_id3" value="3">
-                                                    <label class="form-check-label" for="report_id3">
-                                                        <div>
-                                                            <h5>Judul report</h5>
-                                                            <p>Deskripsi report dari database</p>
-                                                        </div>
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input align-self-center" type="radio" name="report_id" id="report_id4" value="4">
-                                                    <label class="form-check-label" for="report_id4">
-                                                        <div>
-                                                            <h5>Judul report</h5>
-                                                            <p>Deskripsi report dari database</p>
-                                                        </div>
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input align-self-center" type="radio" name="report_id" id="report_id5" value="5">
-                                                    <label class="form-check-label" for="report_id5">
-                                                        <div>
-                                                            <h5>Judul report</h5>
-                                                            <p>Deskripsi report dari database</p>
-                                                        </div>
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input align-self-center" type="radio" name="report_id" id="report_id6" value="6">
-                                                    <label class="form-check-label" for="report_id6">
-                                                        <div>
-                                                            <h5>Judul report</h5>
-                                                            <p>Deskripsi report dari database</p>
-                                                        </div>
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input align-self-center" type="radio" name="report_id" id="report_id7" value="7">
-                                                    <label class="form-check-label" for="report_id7">
-                                                        <div>
-                                                            <h5>Judul report</h5>
-                                                            <p>Deskripsi report dari database</p>
-                                                        </div>
-                                                    </label>
-                                                </div>
-                                                 
-                                        </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                                    <button type="submit" class="btn btn-primary">Report</button>
-                                                </div>
-                                            </form>
                                     </div>
                                 </div>
-                            </div>
-                        @endforeach
-                        {{-- Contoh untuk menghapus komen sendiri --}}
-                        <div class="comment">
-                            <a href="/user/username" class="text-decoration-none text-dark">
-                                <strong>@safnayuninda (you)</strong>
-                            </a>
-                            -
-                            <small>4 days ago</small>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-
-
-                            <form action="#" method="POST" class="delete-form">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </form>
+                            @endif
                         </div>
-                    </div>
-                    {{-- Sampai sini --}}
+                    @endforeach
                 </div>
             </div>
         </div>
     </div>
+
 
 
 
