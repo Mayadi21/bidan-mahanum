@@ -5,6 +5,12 @@
         <h1 class="h2">{{auth()->user()->role}}</h1>
     </div>
 
+    @if(session('success'))
+    <div class="alert alert-success col-lg-8">
+        {{ session('success') }}
+    </div>
+    @endif
+
     {{-- <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas> --}}
 
     {{-- <h2>Section title</h2> --}}
@@ -13,53 +19,32 @@
         <table class="table table-striped table-sm">
             <thead>
                 <tr>
-                <th scope="col">#</th>
+                <th scope="col">No</th>
                 <th scope="col">Category Name</th>
                 <th scope="col">Description</th>
                 <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
+                @foreach ($categories as $item)
                 <tr>
-                    <td>1,001</td>
-                    <td>Kategori dari Database</td>
-                    <td>Deskripsi dari Database</td>
+                    <td>{{$loop->iteration}}</td>
+                    <td>{{$item->category_name}}</td>
+                    <td>{{$item->category_description}}</td>
                     <td>
-                        <a href="{{ route('categories.edit', 'travel') }}" class="btn btn-sm btn-outline-secondary">
+                    
+                        <a href="{{ route('categories.edit', $item->category_slug) }}" class="btn btn-sm btn-outline-secondary">
                             Edit
                         </a>
-                        <a href="#" class="btn btn-sm btn-outline-danger">
-                            Delete
-                        </a>
+                        <form action="{{ route('categories.destroy', $item->category_slug) }}" method="POST" class="delete-form" style="display: inline-block;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to delete this category?')">Delete</button>
+                        </form>
                     </td>
                 </tr>
-                <tr>
-                    <td>1,001</td>
-                    <td>Kategori dari Database</td>
-                    <td>Deskripsi dari Database</td>
-                    <td>
-                        <a href="#" class="btn btn-sm btn-outline-secondary">
-                            Edit
-                        </a>
-                        <a href="#" class="btn btn-sm btn-outline-danger">
-                            Delete
-                        </a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>1,001</td>
-                    <td>Kategori dari Database</td>
-                    <td>Deskripsi dari Database</td>
-                    <td>
-                        <a href="#" class="btn btn-sm btn-outline-secondary">
-                            Edit
-                        </a>
-                        <a href="#" class="btn btn-sm btn-outline-danger">
-                            Delete
-                        </a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+        @endforeach
+        </tbody>
+    </table>
+</div>
 @endsection
