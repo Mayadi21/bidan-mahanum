@@ -5,18 +5,6 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2">Create New Post</h1>
 </div>
-
-{{-- <div class="col-lg-8">
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-</div> --}}
   
 <div class="col-lg-8">
     <form action="{{ route('posts.store') }}" method="post" enctype="multipart/form-data">
@@ -24,7 +12,7 @@
 
         <div class="mb-3">
             <label for="title" class="form-label">Title</label>
-            <input type="text" class="form-control" id="title" name="title" required autofocus value="">
+            <input type="text" class="form-control" id="title" name="title" required autofocus value="{{ old('title') }}">
         </div>
         @error('title')
             <p class="text-danger">{{ $message }}</p>
@@ -34,7 +22,11 @@
             <label for="category" class="form-label">Category</label>
             <select class="form-select" aria-label="Default select example" name="category_id" id="category">
                 @foreach ($categories as $category)
-                    <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                    @if(old('category_id') == $category->id)
+                        <option value="{{ $category->id }}" selected>{{ $category->category_name }}</option>
+                    @else
+                        <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                    @endif
                 @endforeach
             </select>        
         </div>

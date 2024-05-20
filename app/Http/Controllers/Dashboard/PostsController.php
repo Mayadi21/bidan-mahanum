@@ -19,8 +19,13 @@ class PostsController extends Controller
      */
     public function index()
     {
-        return view('dashboard.posts.index',[
-            'posts' => Post::with('Category')->latest()->paginate(10)
+        return view('dashboard.posts.index', [
+            'page' => 'All Posts',
+            'active' => 'posts',
+            'posts' => Post::with('category')
+                        ->where('user_id', auth()->user()->id)
+                        ->latest()
+                        ->paginate(10),
         ]);
     }
 
@@ -30,7 +35,9 @@ class PostsController extends Controller
     public function create()
     {
         return view('dashboard.posts.create',[
-            'categories' => Category::get()
+            'page' => 'Create Post',
+            'active' => 'posts',
+            'categories' => Category::orderBy('category_name', 'asc')->get(),
         ]);
     }
 
@@ -69,9 +76,10 @@ class PostsController extends Controller
         $post = Post::where('slug', $slug)->firstOrFail();
 
         return view('dashboard.posts.show', [
+            'page'=> $post->title,
+            'active' => 'posts',
             'post'=> $post,
             'comments' => $post->comments()->orderBy('created_at', 'desc')->get(),
-            'page'=> $post->title
         ]);
     }
 
@@ -81,9 +89,14 @@ class PostsController extends Controller
     public function edit($slug)
     {
         $post = Post::where('slug', $slug)->firstOrFail(); // Mengambil data post dari database berdasarkan slug
-        $categories = Category::all(); // Mengambil semua kategori untuk dropdown
-    
-        return view('dashboard.posts.edit', compact('post', 'categories')); // Meneruskan data post dan kategori ke tampilan
+        $categories = Category::orderBy('category_name', 'asc')->get();
+
+        return view('dashboard.posts.edit', [
+            'page' => 'Edit Post',
+            'active' => 'posts',
+            'post' => $post,
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -94,7 +107,7 @@ class PostsController extends Controller
         $rules = [
             'title' => 'required|max:255',
             'category_id' => 'required',
-            'image' => 'image|file|max:1024',
+            'image' => 'image|file|max:2048',
             'body' => 'required',
             'status'=> 'required'
         ];

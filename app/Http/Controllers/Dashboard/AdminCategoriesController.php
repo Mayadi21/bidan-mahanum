@@ -12,14 +12,16 @@ use App\Models\Comment;
 use App\Http\Requests\StoreCategoryRequest;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
 
-class CategoriesController extends Controller
+class AdminCategoriesController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('dashboard.categories.index',[
+        return view('dashboard.admin-categories.index', [
+            'page' => 'All Categories',
+            'active' => 'admin-categories',
             'categories' => Category::all()
         ]);
     }
@@ -29,7 +31,10 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        return view('dashboard.categories.create');
+        return view('dashboard.admin-categories.create', [
+            'page' => 'Create Category',
+            'active' => 'admin-categories'
+        ]);
     }
 
     /**
@@ -74,7 +79,10 @@ class CategoriesController extends Controller
     public function edit($category_slug)
     {
         $category = Category::where('category_slug', $category_slug)->firstOrFail(); // Mengambil data post dari database berdasarkan slug
-        return view('dashboard.categories.edit',[
+
+        return view('dashboard.admin-categories.edit', [
+            'page' => 'Edit Category',
+            'active' => 'admin-categories',
             'category'=>$category
         ]);
     }

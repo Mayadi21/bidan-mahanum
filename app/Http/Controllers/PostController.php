@@ -10,24 +10,46 @@ class PostController extends Controller
 {
     public function index()
     {
+        
+        $posts = Post::where('status', 'published')
+                ->whereNull('posts.report_id')
+                ->whereHas('user', function ($query) {
+                    $query->whereNull('report_id');
+                })
+                ->get()
+        ;
+
         return view('blog.posts', [
             'page' => 'All Posts',
             'title' => 'All Posts',
-            'posts' => Post::where('status', 'published')->get()
+            'posts' => $posts    
         ]);
     }
 
     public function show(Post $post)
     {
+        if($post->status !== 'published' || $post->report_id) {
+            abort(404);
+        }
+
         $view_count = $post->view + 1;
         $post->update([
             'view' => $view_count
         ]);
 
+        $comments = $post->comments()
+                ->whereNull('comments.report_id')
+                ->whereHas('user', function ($query) {
+                    $query->whereNull('report_id');
+                })
+                ->orderBy('created_at', 'desc')
+                ->get()
+        ;
+
         return view('blog.post', [
             'page' => $post->title,
             'post' => $post,
-            'comments' => $post->comments()->orderBy('created_at', 'desc')->get()
+            'comments' => $comments
         ]);
     }
 
@@ -36,9 +58,13 @@ class PostController extends Controller
         return view('blog.user', [
             'page' => $user->name,
             'title' => $user->name,
-            'username' => $user->username,
-            'name' => $user->name,
+            'user' => $user,
             'posts' => $user->posts()->where('status', 'published')->get()
         ]);
+    }
+
+    public function report(Post $post)
+    {
+        //
     }
 }

@@ -13,59 +13,114 @@
                         <span class="ms-2">Back to Blog</span>
                     </a>
                 </h6>
-
+                
                 <hr class="my-3">
                 
+                @can('admin')
+                
+                <h6 class="sidebar-heading d-flex justify-content-start align-items-center px-3 my-3 text-body-secondary text-uppercase">
+                    <i class="bi bi-person-vcard"></i>
+                    <span class="ms-2 fw-bold">ADMIN</span>
+                </h6>
+
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="{{ route('posts.index') }}">
+                    <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-dashboard') active @endif" aria-current="page" href="{{ route('dashboard.admin') }}">
+                        <i class="bi bi-display"></i>
+                        Dashboard
+                    </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-users') active @endif" aria-current="page" href="{{ route('admin.users.index') }}">
+                        <i class="bi bi-person-circle"></i>
+                        Users
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-posts') active @endif" aria-current="page" href="{{ route('admin.posts.index') }}">
                         <i class="bi bi-file-earmark-text"></i>
                         Posts
                     </a>
                 </li>
                 
-                @can('admin')
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2" href="{{ route('categories.index')}}">
-                        <i class="bi bi-tags-fill"></i>
+                    <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-comments') active @endif" aria-current="page" href="{{ route('admin.comments.index') }}">
+                        <i class="bi bi-chat-left-text"></i>
+                        Comments
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-categories') active @endif" href="{{ route('categories.index')}}">
+                        <i class="bi bi-tags"></i>
                         Categories
                     </a>
                 </li>
-                @endcan
+
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-reports') active @endif" href="{{ route('reports.index')}}">
+                        <i class="bi bi-flag"></i>
+                        Reports
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-post-reports') active @endif" aria-current="page" href="{{ route('admin.post-reports.index') }}">
+                        <i class="bi bi-stickies"></i>
+                        Post Reports
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-comment-reports') active @endif" aria-current="page" href="{{ route('admin.comment-reports.index') }}">
+                        <i class="bi bi-chat-square"></i>
+                        Comment Reports
+                    </a>
+                </li>
 
                 <hr class="my-3">
 
+                @endcan
+
+                <h6 class="sidebar-heading d-flex justify-content-start align-items-center px-3 my-3 text-body-secondary text-uppercase">
+                    <i class="bi bi-person-circle"></i>
+                    <span class="ms-2 fw-bold">
+                        @can('admin') USER MODE @else USER @endcan
+                    </span>
+                </h6>
+                
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2" href="#">
-                        <svg class="bi"><use xlink:href="#people"/></svg>
-                        Nanti
+                    <a class="nav-link d-flex align-items-center gap-2 @if($active == 'dashboard') active @endif" aria-current="page" href="{{ route('dashboard') }}">
+                        <i class="bi bi-display"></i>
+                        Dashboard
                     </a>
                 </li>
+
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2" href="#">
-                        <svg class="bi"><use xlink:href="#graph-up"/></svg>
-                        Nanti
+                    <a class="nav-link d-flex align-items-center gap-2 @if($active == 'posts') active @endif" aria-current="page" href="{{ route('posts.index') }}">
+                        <i class="bi bi-file-earmark-text"></i>
+                        Posts
                     </a>
                 </li>
+
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2" href="#">
-                        <svg class="bi"><use xlink:href="#puzzle"/></svg>
-                        Nanti
+                    <a class="nav-link d-flex align-items-center gap-2 @if($active == 'comments') active @endif" aria-current="page" href="{{ route('dashboard.comments.index') }}">
+                        <i class="bi bi-chat-left-text"></i>
+                        Comments
                     </a>
                 </li>
             </ul>
-
-            {{-- <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase">
-                <span>Log Out</span>
-            </h6> --}}
 
             <hr class="my-3">
 
             <ul class="nav flex-column mb-auto">
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2" href="{{ route('logout') }}">
-                        <svg class="bi"><use xlink:href="#door-closed"/></svg>
-                        Sign out
-                    </a>
+                    <form action="{{ route('logout') }}" method="POST" class="nav-link d-flex align-items-center gap-2">
+                        @csrf
+                        <i class="bi bi-door-open"></i>
+                        <button class="dropdown-item fw-bold" type="submit">Log Out</button>
+                    </form>
                 </li>
             </ul>
         </div>

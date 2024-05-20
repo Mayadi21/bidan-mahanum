@@ -13,6 +13,12 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
+    @if(session()->has('status'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('status') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
 
     <h1 class="fs-4 card-title fw-bold mb-4">Login</h1>
     <form method="POST" class="needs-validation" action="{{ route('authenticate') }}" novalidate="" autocomplete="off">
@@ -30,7 +36,7 @@
         <div class="mb-3">
             <div class="mb-2 w-100">
                 <label class="text-muted" for="password">Password</label>
-                <a href="forgot.html" class="float-end">
+                <a href="{{ route('password.request') }}" class="float-end">
                     Forgot Password?
                 </a>
             </div>

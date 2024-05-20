@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-lg-8">
+            <div class="col-lg-8 mb-5">
                 <h2 class="my-3 pb-3 border-bottom">Edit Profile</h2>
 
                 <form action="{{ route('profile.update') }}" method="post" enctype="multipart/form-data">
