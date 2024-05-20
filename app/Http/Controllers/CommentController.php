@@ -28,4 +28,9 @@ class CommentController extends Controller
         $comment->delete();
         return back();
     }
+
+    public function report(Comment $comment)
+    {
+        //
+    }
 }

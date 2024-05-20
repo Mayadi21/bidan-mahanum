@@ -15,6 +15,16 @@ class Report extends Model
 
     public function post()
     {
-        return $this->belongsTo(Post::class);
+        return $this->hasOne(Post::class);
+    }
+
+    public function comment()
+    {
+        return $this->hasOne(Comment::class);
+    }
+
+    public function user()
+    {
+        return $this->hasOne(User::class);
     }
 }

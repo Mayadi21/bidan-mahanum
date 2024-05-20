@@ -17,15 +17,19 @@ class PostFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => $this->faker->numberBetween(2, 10),
+            'user_id' => $this->faker->numberBetween(1, 12),
             'category_id' => $this->faker->numberBetween(1, 30),
+            'report_id' => $this->faker->randomElement(
+                [NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+                1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+            ),
 
             'title' => $this->faker->sentence(),
             'slug' => $this->faker->slug(),
             'excerpt' => $this->faker->paragraph(),
             'body' => collect($this->faker->paragraphs(mt_rand(5, 10)))->map(fn ($p) => "<p>$p</p>")->implode(''),
             'view' => $this->faker->numberBetween(0, 1000),
-            'status' => $this->faker->randomElement(['draft', 'published', 'hidden']),
+            'status' => $this->faker->randomElement(['draft', 'published']),
         ];
     }
 }

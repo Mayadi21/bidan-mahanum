@@ -80,7 +80,6 @@ class PostsController extends Controller
             'active' => 'posts',
             'post'=> $post,
             'comments' => $post->comments()->orderBy('created_at', 'desc')->get(),
-
         ]);
     }
 

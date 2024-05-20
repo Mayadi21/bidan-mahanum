@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Comment;
 
 class AdminCommentsController extends Controller
 {
@@ -12,14 +13,21 @@ class AdminCommentsController extends Controller
         return view('dashboard.comments.index', [
             'page' => 'All Comments',
             'active' => 'admin-comments',
+            'comments' => Comment::latest()->paginate(10),
         ]);
     }
 
-    public function show()
+    public function show(Comment $comment)
     {
         return view('dashboard.comments.show', [
             'page' => 'Comment Details',
             'active' => 'admin-comments',
+            'comment' => $comment,
         ]);
+    }
+
+    public function destroy(Comment $comment)
+    {
+        //
     }
 }

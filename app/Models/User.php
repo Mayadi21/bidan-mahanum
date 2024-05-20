@@ -40,14 +40,19 @@ class User extends Authenticatable implements MustVerifyEmail
         'password' => 'hashed',
     ];
 
-    public function Comment()
+    public function comments()
     {
         return $this->hasMany(Comment::class);
     }
 
-    public function comment()
+    public function posts()
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Post::class);
+    }
+
+    public function report()
+    {
+        return $this->belongsTo(Report::class);
     }
 
     public function maskedEmail()

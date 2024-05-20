@@ -9,7 +9,23 @@ class AdminCommentReportsController extends Controller
 {
     public function index()
     {
-        return 'index';
-        // return view('dashboard.admin.comment-reports.index');
+        return view('dashboard.admin-report', [
+            'page' => 'Comment Reports',
+            'active' => 'admin-comment-reports'
+        ]);
+    }
+
+    public function show()
+    {
+        // JANGAN DIGANTI VIEWNYA
+        return view('dashboard.comments.show', [
+            'page' => 'Comment Reports',
+            'active' => 'admin-comment-reports'
+        ]);
+    }
+
+    public function hide()
+    {
+        //
     }
 }

@@ -19,9 +19,18 @@ class AdminPostsController extends Controller
 
     public function show(Post $post)
     {
-        return view('dashboard.posts.index', [
-            'page' => $post->title,
-            'active' => 'admin-posts'
+        $post = Post::where('slug', $post->slug)->firstOrFail();
+
+        return view('dashboard.posts.show', [
+            'page'=> $post->title,
+            'active' => 'admin-posts',
+            'post'=> $post,
+            'comments' => $post->comments()->orderBy('created_at', 'desc')->get(),
         ]);
+    }
+
+    public function hide(Post $post)
+    {
+        //
     }
 }

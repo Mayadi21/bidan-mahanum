@@ -46,18 +46,20 @@
                     <td>{{$item->created_at}}</td>
                     <td>
                         <a href="{{ route(($active === 'admin-posts') ? 'admin.posts.show' : 'posts.show', $item->slug) }}" class="btn btn-sm btn-outline-primary">
-                            View
+                            <i class="bi bi-eye-fill"></i>
                         </a>
                         @if($active === 'posts')
                             <a href="{{ route('posts.edit', $item->slug) }}" class="btn btn-sm btn-outline-secondary">
-                                Edit
+                                <i class="bi bi-pencil-fill"></i>
                             </a>
                         @endif
                         @if($active === 'posts')
                             <form action="{{ route('posts.destroy', $item->slug) }}" method="POST" class="delete-form" style="display: inline-block;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
+                                <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to delete this post?')">
+                                    <i class="bi bi-trash-fill"></i>
+                                </button>
                             </form>
                         @else
                             <!-- Button trigger modal -->
@@ -75,9 +77,10 @@
                                         </div>
                                         <div class="modal-body">
 
-                                            <form action="#" method="post">
+                                            <form action="{{ route('admin.posts.hide', $item->slug) }}" method="post">
+                                                @method('PUT')
                                                 @csrf
-                                                <input type="hidden" name="comment_id" value="{{ 1 }}">
+                                                <input type="hidden" name="post_id" value="{{ 1 }}">
                                                 <div class="form-check">
                                                     <input class="form-check-input align-self-center" type="radio" name="report_id" id="report_id1" value="1" checked>
                                                     <label class="form-check-label" for="report_id1">
@@ -141,7 +144,7 @@
                                                         </div>
                                                     </label>
                                                 </div>
-                                                 
+                                        {{-- GAK USAH DIUBAH DIV-NYA DI SINI. FOKUS DI FORM AJA --}}
                                         </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

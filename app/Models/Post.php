@@ -29,7 +29,7 @@ class Post extends Model
 
     public function report()
     {
-        return $this->hasOne(Report::class);
+        return $this->belongsTo(Report::class);
     }
 
     public function postReport()

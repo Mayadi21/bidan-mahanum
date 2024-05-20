@@ -11,6 +11,8 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ChangePasswordController;
 
 
+Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth')->name('logout');
+
 
 Route::middleware('guest')->group(function () {
 
@@ -28,7 +30,7 @@ Route::middleware('guest')->group(function () {
 });
 
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'notBanned'])->group(function () {
 
     Route::get('/email/verify', [EmailVerifyController::class, 'notice'])->name('verification.notice');
     Route::get('/email/verify/{id}/{hash}', [EmailVerifyController::class, 'verify'])
@@ -44,7 +46,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/change-email', [ChangeEmailController::class, 'change'])->name('email.change');
     Route::post('/change-email', [ChangeEmailController::class, 'check'])->name('email.check');
     Route::post('/update-email', [ChangeEmailController::class, 'update'])->name('email.update');
-
-    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 });
 
