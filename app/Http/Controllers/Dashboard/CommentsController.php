@@ -34,7 +34,7 @@ class CommentsController extends Controller
         ]);
     }
 
-    public function destroy(Comment $comment)
+    public function hide(Comment $comment)
     {
         //
     }

@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Offcanvas navbar large">
     <div class="container-fluid">
         <img src="{{ asset('img/logo.jpeg') }}" alt="Blog" width="50">
-        <a class="navbar-brand" href="#">Tubes Blog</a>
+        <a class="navbar-brand" href="#">W-Blog</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar2" aria-controls="offcanvasNavbar2" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
