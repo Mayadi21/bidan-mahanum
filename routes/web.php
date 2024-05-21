@@ -28,7 +28,7 @@ Route::get('/banned', [HomeController::class, 'banned'])->name('banned');
 
 Route::middleware('notBanned')->group(function () {
     
-    Route::get('/', [HomeController::class, 'index'])->name('home')->middleware('notBanned');
+    Route::get('/', [HomeController::class, 'index'])->name('home');
 
     Route::get('/posts', [PostController::class, 'index'])->name('post.index');
     Route::get('/posts/{post:slug}', [PostController::class, 'show'])->name('post.show');

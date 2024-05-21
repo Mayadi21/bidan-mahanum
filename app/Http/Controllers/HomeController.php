@@ -9,10 +9,6 @@ class HomeController extends Controller
 {
     public function index()
     {
-        if($user->report_id !== null) {
-            return redirect()->route('banned');
-        }
-
         return view('blog.home', [
             'page' => 'Home',
             'title' => 'Home'
@@ -29,9 +25,7 @@ class HomeController extends Controller
 
     public function banned()
     {
-        $user = auth()->user();
-
-        if($user->report_id == null) {
+        if(auth()->check() || auth()->user()->report_id == null) {
             return redirect()->route('home');
         }
 
