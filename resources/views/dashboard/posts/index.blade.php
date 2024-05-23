@@ -43,7 +43,7 @@
                         <form action="{{ route('posts.destroy', $item->slug) }}" method="POST" class="delete-form" style="display: inline-block;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
+                            <button type="button" class="btn btn-sm btn-outline-danger" onclick="confirmDelete('{{$item->slug}}')">Delete</button>
                         </form>
                     </td>
                     </tr>
