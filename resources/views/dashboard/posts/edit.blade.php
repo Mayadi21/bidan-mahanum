@@ -35,7 +35,11 @@
             <label for="category" class="form-label">Category</label>
             <select class="form-select" aria-label="Default select example" name="category_id" id="category">
                 @foreach ($categories as $category)
-                    <option value="{{ $category->id }}" @if($category->id == $post->category_id) selected @endif>{{ $category->category_name }}</option>
+                    @if(old('category_id') == $category->id || $post->category_id == $category->id)
+                        <option value="{{ $category->id }}" selected>{{ $category->category_name }}</option>
+                    @else
+                        <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                    @endif
                 @endforeach
             </select>        
         </div>

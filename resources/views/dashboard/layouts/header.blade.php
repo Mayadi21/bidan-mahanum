@@ -1,7 +1,7 @@
 <header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="dark">
     <div class="navbar-brand">
         <img class="mx-3" src="{{ asset('img/logo.jpeg') }}" alt="Blog" width="50">
-        <a class="col-md-3 col-lg-2 me-0 fs-6 text-white text-decoration-none" href="#">Tubes Blog | Dashboard</a>
+        <a class="col-md-3 col-lg-2 me-0 fs-6 text-white text-decoration-none" href="#">W-Blog | Dashboard</a>
     </div>
 
     <ul class="navbar-nav flex-row d-md-none">

@@ -7,6 +7,7 @@
 	<meta name="description" content="This is a login page template based on Bootstrap 5">
 	<title>Tubes Blog | {{ $page }}</title>
 	<link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+	<link rel="icon" type="image/jpeg" href="{{ asset('img/logo.jpeg') }}">
 </head>
 
 <body>

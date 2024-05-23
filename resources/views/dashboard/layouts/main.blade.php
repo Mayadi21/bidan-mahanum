@@ -3,16 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Dashboard Template · Bootstrap v5.3</title>
+    <title>Dashboard | {{ $page }}</title>
 
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="{{ asset('css/bootstrap-icons.min.css') }}" rel="stylesheet">
-    <!-- Custom styles for this template -->
     <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
     <link href="{{ asset('css/trix.css') }}" rel="stylesheet">
+    <link rel="icon" type="image/jpeg" href="{{ asset('img/logo.jpeg') }}">
+
     <style>
         trix-toolbar [data-trix-button-group="file-tools"] {
             display: none; 
@@ -21,8 +20,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>    
-    
-    @include('dashboard.layouts.svg')
     
     @include('dashboard.layouts.header')
     

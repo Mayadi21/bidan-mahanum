@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Models\Report;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Category;
-use Cviebrock\EloquentSluggable\Services\SlugService;
 
-class CategoriesController extends Controller
+class AdminReportsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('dashboard.categories.index');
+        return view('dashboard.admin-reports.index',[
+            'page' => 'Reports',
+            'active' => 'admin-reports'
+        ]);
     }
 
     /**
@@ -22,7 +24,10 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        return view('dashboard.categories.create');
+        return view('dashboard.admin-reports.create',[
+            'page' => 'Create Report Category',
+            'active' => 'admin-reports'
+        ]);
     }
 
     /**
@@ -30,7 +35,7 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        // $slug = SlugService::createSlug(Category::class, 'category_slug', $request->category_name);
+        //
     }
 
     /**
@@ -44,15 +49,18 @@ class CategoriesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Category $category)
+    public function edit(Report $report)
     {
-        return view('dashboard.categories.edit');
+        return view('dashboard.admin-reports.edit',[
+            'page' => 'Edit Report Category',
+            'active' => 'admin-reports'
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, Report $report)
     {
         //
     }
@@ -60,7 +68,7 @@ class CategoriesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function destroy(Report $report)
     {
         //
     }
