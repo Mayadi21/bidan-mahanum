@@ -32,7 +32,7 @@ Route::prefix('dashboard')->middleware(['auth', 'notBanned', 'verified'])->group
 
         Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard.admin');
     
-        // Safna
+        // Yuna
         Route::get('/users', [AdminUsersController::class, 'index'])->name('admin.users.index');
         Route::put('/users/{user:username}', [AdminUsersController::class, 'role'])->name('admin.users.role');
         Route::put('/users/{user:username}/ban', [AdminUsersController::class, 'ban'])->name('admin.users.ban');
