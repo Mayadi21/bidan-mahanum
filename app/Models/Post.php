@@ -42,6 +42,12 @@ class Post extends Model
         return 'slug';
     }
 
+    public function incrementViews()
+    {
+        $this->timestamps = false; // Nonaktifkan timestamps
+        $this->increment('view'); // Perbarui views
+        $this->timestamps = true; // Aktifkan kembali timestamps
+    }
 
     public function sluggable(): array
     {

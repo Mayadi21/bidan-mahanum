@@ -9,7 +9,7 @@
             @if($post->image)
                 <img src="{{ asset('storage/' . $post->image) }}" class="img-fluid" alt="">
             @else
-                <img src="https://source.unsplash.com/1200x400?{{ $post->category->category_name }}" class="img-fluid" alt="{{ $post->category->category_name }}">
+                <img src="https://picsum.photos/seed/{{ $post->category }}/1200/400" class="img-fluid" alt="{{ $post->category->category_name }}">
             @endif
             <p class="text-secondary text-lg mt-3">
                 By <a href="/user/{{ $post->user->username }}" class="text-decoration-none">{{ $post->user->name }}</a> 
@@ -146,6 +146,7 @@
                                 -
                                 <small>{{ $comment->created_at->diffForHumans() }}</small>
                             </div>
+                            @auth
                             @if ($comment->user_id === auth()->id())
                                 <form action="{{ route('comment.destroy', $comment->id) }}" method="POST" class="delete-form">
                                     @csrf
@@ -160,6 +161,7 @@
                                     <i class="bi bi-flag-fill"></i>
                                 </button>
                             @endif
+                            @endauth
                         </div>
                         <p>{{ $comment->body }}</p>
 

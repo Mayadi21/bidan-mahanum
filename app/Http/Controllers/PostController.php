@@ -16,13 +16,15 @@ class PostController extends Controller
                 ->whereHas('user', function ($query) {
                     $query->whereNull('report_id');
                 })
+                ->orderBy('updated_at', 'desc')
                 ->get()
         ;
 
         return view('blog.posts', [
             'page' => 'All Posts',
             'title' => 'All Posts',
-            'posts' => $posts    
+            'posts' => $posts,
+            'active' => 'posts'
         ]);
     }
 
@@ -32,10 +34,7 @@ class PostController extends Controller
             abort(404);
         }
 
-        $view_count = $post->view + 1;
-        $post->update([
-            'view' => $view_count
-        ]);
+        $post->incrementViews();
 
         $comments = $post->comments()
                 ->whereNull('comments.report_id')
@@ -49,7 +48,8 @@ class PostController extends Controller
         return view('blog.post', [
             'page' => $post->title,
             'post' => $post,
-            'comments' => $comments
+            'comments' => $comments,
+            'active' => 'posts'
         ]);
     }
 
@@ -59,7 +59,8 @@ class PostController extends Controller
             'page' => $user->name,
             'title' => $user->name,
             'user' => $user,
-            'posts' => $user->posts()->where('status', 'published')->get()
+            'posts' => $user->posts()->where('status', 'published')->get(),
+            'active' => 'posts'
         ]);
     }
 

@@ -3,15 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     public function index()
     {
+        $latest = Post::where('status', 'published')
+            ->whereNull('posts.report_id')
+            ->whereHas('user', function ($query) {
+                $query->whereNull('report_id');
+            })
+            ->orderBy('updated_at', 'desc')
+            ->take(5)->get()
+        ;
+
         return view('blog.home', [
             'page' => 'Home',
-            'title' => 'Home'
+            'title' => 'Home',
+            'active' => 'home',
+            'latest' => $latest
         ]);
     }
 
