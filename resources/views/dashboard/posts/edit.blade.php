@@ -19,7 +19,7 @@
 </div> --}}
   
 <div class="col-lg-8">
-    <form action="{{ route('posts.update', $post->slug) }}" method="post" enctype="multipart/form-data">
+    <form id="editPostForm" action="{{ route('posts.update', $post->slug) }}" method="post" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -72,8 +72,8 @@
             <p class="text-danger">{{ $message }}</p>
         @enderror
 
-        <button type="submit" name="status" value="published" class="btn btn-primary">Publish</button>
-        <button type="submit" name="status" value="draft" class="btn btn-secondary">Draft</button>
+        <button type="button" class="btn btn-primary" onclick="confirmSubmit('published')">Publish</button>
+        <button type="button" class="btn btn-secondary" onclick="confirmSubmit('draft')">Draft</button>
     </form>  
 </div>
 
@@ -103,6 +103,28 @@
         oFReader.onload = function(oFREvent) {
             imgPreview.src = oFREvent.target.result;
         }
+    }
+
+    function confirmSubmit(status) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: `You are about to submit this post as ${status}.`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, submit it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const form = document.getElementById('editPostForm');
+                const statusInput = document.createElement('input');
+                statusInput.setAttribute('type', 'hidden');
+                statusInput.setAttribute('name', 'status');
+                statusInput.setAttribute('value', status);
+                form.appendChild(statusInput);
+                form.submit();
+            }
+        });
     }
 </script>
 

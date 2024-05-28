@@ -60,12 +60,16 @@ Route::prefix('dashboard')->middleware(['auth', 'notBanned', 'verified'])->group
         // Ferdyan
         Route::get('/post-reports', [AdminPostReportsController::class, 'index'])->name('admin.post-reports.index');
         Route::get('/post-reports/{post:slug}', [AdminPostReportsController::class, 'show'])->name('admin.post-reports.show');
-        Route::put('/post-reports/{post:slug}', [AdminPostReportsController::class, 'hide'])->name('admin.post-reports.hide');
+        Route::put('/post-reports/{post:slug}/hide', [AdminPostReportsController::class, 'hide'])->name('admin.post-reports.hide');
+        Route::delete('/post-reports/{post:id}', [AdminPostReportsController::class, 'deleteReports'])->name('admin.post-reports.delete');
+
 
         // Ferdyan
         Route::get('/comment-reports', [AdminCommentReportsController::class, 'index'])->name('admin.comment-reports.index');
         Route::get('/comment-reports/{comment:id}', [AdminCommentReportsController::class, 'show'])->name('admin.comment-reports.show');
         Route::put('/comment-reports/{comment:id}', [AdminCommentReportsController::class, 'hide'])->name('admin.comment-reports.hide');
+        Route::delete('/comment-reports/{comment:id}', [AdminCommentReportsController::class, 'deleteReports'])->name('admin.comment-reports.delete');
+
 
     });
 
