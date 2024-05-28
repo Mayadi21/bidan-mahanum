@@ -14,6 +14,20 @@
     <h4 class="mt-5 mb-0 pb-3">Active</h4>
 
     <div class="table-responsive small col-lg-8">
+        
+        <!-- Bagian untuk menampilkan pesan -->
+                @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+        @endif
+
+        @if(session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+
         <table class="table table-striped table-sm">
             <thead>
                 <tr>
@@ -25,104 +39,58 @@
                 </tr>
             </thead>
             <tbody>
-                <t>
-                    <td>1</td>
-                    <td>Aku Manusia</td>
+            @foreach($users as $user)
+                <tr>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $user->name }}</td>
                     <td>
-                        <a href="../../user/akumanusia" class="text-decoration-none">@akumanusia</a>
+                        <a href="../../user/{{ $user->username }}" class="text-decoration-none">{{ '@' . $user->username }}</a>
                     </td>
-                    <td>Banyak report (dijumlahkan dari report post sama comment)</td>
+                    <td>{{ $userReports[$user->id]['hiddenPostsCount'] + $userReports[$user->id]['hiddenCommentsCount'] }}</td>
                     <td>
-                        <a href="{{ route('admin.users.detail', 'akumanusia') }}" class="btn btn-sm btn-outline-primary">
+                        <a href="{{ route('admin.users.detail', $user->username) }}" class="btn btn-sm btn-outline-primary">
                             <i class="bi bi-eye-fill"></i>
                         </a>
 
-                        <a href="{{ route('admin.users.role', 'akumanusia') }}" class="btn btn-sm btn-outline-success" onclick="return confirm('Change this user into admin?')">
+                    <form action="{{ route('admin.users.role', $user->username) }}" method="post" class="d-inline">
+                        @method('PUT')
+                        @csrf
+                        <input type="hidden" name="role" value="admin">
+                        <button type="submit" class="btn btn-sm btn-outline-success" onclick="return confirm('Change this user into admin?')">
                             <i class="bi bi-person-vcard"></i>
-                        </a>
+                        </button>
+                    </form>
 
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{ 1 }}">
+                        <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#banModal{{ $user->id }}">
                             <i class="bi bi-x-octagon-fill"></i>
                         </button>
                         
                         <!-- Modal -->
-                        <div class="modal fade" id="exampleModal{{ 1 }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="banModal{{ $user->id }}" tabindex="-1" aria-labelledby="banModalLabel{{ $user->id }}" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h1 class="modal-title fs-3" id="exampleModalLabel">Ban User</h1>
+                                        <h1 class="modal-title fs-3" id="banModalLabel{{ $user->id }}">Ban User</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-
-                                        <form action="{{ route('admin.users.ban', 'akumanusia') }}" method="post">
+                                        <form action="{{ route('admin.users.ban', $user->username) }}" method="post">
                                             @method('PUT')
                                             @csrf
                                             <input type="hidden" name="post_id" value="{{ 1 }}">
+
+                                            @foreach($reports as $report)
                                             <div class="form-check">
-                                                <input class="form-check-input align-self-center" type="radio" name="report_id" id="report_id1" value="1" checked>
-                                                <label class="form-check-label" for="report_id1">
+                                                <input class="form-check-input" type="radio" name="report_id" id="report_id{{ $report->id }}" value="{{ $report->id }}" {{ $loop->first ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="report_id{{ $report->id }}">
                                                     <div>
-                                                        <h5>Judul report</h5>
-                                                        <p>Deskripsi report dari database</p>
+                                                        <h5>{{ $report->report_name }}</h5>
+                                                        <p>{{ $report->report_description }}</p>
                                                     </div>
                                                 </label>
                                             </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input align-self-center" type="radio" name="report_id" id="report_id2" value="2">
-                                                <label class="form-check-label" for="report_id2">
-                                                    <div>
-                                                        <h5>Judul report</h5>
-                                                        <p>Deskripsi report dari database</p>
-                                                    </div>
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input align-self-center" type="radio" name="report_id" id="report_id3" value="3">
-                                                <label class="form-check-label" for="report_id3">
-                                                    <div>
-                                                        <h5>Judul report</h5>
-                                                        <p>Deskripsi report dari database</p>
-                                                    </div>
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input align-self-center" type="radio" name="report_id" id="report_id4" value="4">
-                                                <label class="form-check-label" for="report_id4">
-                                                    <div>
-                                                        <h5>Judul report</h5>
-                                                        <p>Deskripsi report dari database</p>
-                                                    </div>
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input align-self-center" type="radio" name="report_id" id="report_id5" value="5">
-                                                <label class="form-check-label" for="report_id5">
-                                                    <div>
-                                                        <h5>Judul report</h5>
-                                                        <p>Deskripsi report dari database</p>
-                                                    </div>
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input align-self-center" type="radio" name="report_id" id="report_id6" value="6">
-                                                <label class="form-check-label" for="report_id6">
-                                                    <div>
-                                                        <h5>Judul report</h5>
-                                                        <p>Deskripsi report dari database</p>
-                                                    </div>
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input align-self-center" type="radio" name="report_id" id="report_id7" value="7">
-                                                <label class="form-check-label" for="report_id7">
-                                                    <div>
-                                                        <h5>Judul report</h5>
-                                                        <p>Deskripsi report dari database</p>
-                                                    </div>
-                                                </label>
-                                            </div>
+                                            @endforeach
                                     {{-- GAK USAH DIUBAH DIV-NYA DI SINI. FOKUS DI FORM AJA --}}
                                     </div>
                                             <div class="modal-footer">
@@ -135,6 +103,7 @@
                         </div>
                     </td>
                 </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
@@ -152,20 +121,29 @@
                 </tr>
             </thead>
             <tbody>
-                <t>
-                    <td>1</td>
-                    <td>Admin</td>
-                    <td>@admin</td>
+            @foreach($admins as $user)
+                <tr>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $user->name }}</td>
                     <td>
-                        <a href="{{ route('admin.users.detail', 'akumanusia') }}" class="btn btn-sm btn-outline-primary">
+                        <a href="#" class="text-decoration-none">{{ '@' . $user->username }}</a>
+                    </td>
+                    <td>
+                        <a href="{{ route('admin.users.detail', $user->username) }}" class="btn btn-sm btn-outline-primary">
                             <i class="bi bi-eye-fill"></i>
                         </a>
 
-                        <a href="{{ route('admin.users.role', 'akumanusia') }}" class="btn btn-sm btn-outline-warning" onclick="return confirm('Change this admin into user?')">
-                            <i class="bi bi-person-circle"></i>
-                        </a>
+                        <form action="{{ route('admin.users.role', $user->username) }}" method="post" class="d-inline">
+                            @method('PUT')
+                            @csrf
+                            <input type="hidden" name="role" value="user">
+                            <button type="submit" class="btn btn-sm btn-outline-warning" onclick="return confirm('Change this admin into user?')">
+                                <i class="bi bi-person-circle"></i>
+                            </button>
+                        </form>  
                     </td>
                 </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
@@ -186,23 +164,26 @@
                 </tr>
             </thead>
             <tbody>
-                <t>
-                    <td>1</td>
-                    <td>Nama akun</td>
-                    <td>@username</td>
-                    <td>Alasan diban, ngambil dari report_id</td>
+                @foreach($bannedUsers as $user)
+                <tr>
+                    <td> {{ $loop->iteration }} </td>
+                    <td> {{ $user->name }} </td>
+                    <td> {{ $user->username }} </td>
+                    <td> {{ $user->report->report_name }} </td>
                     <td>
-                        <a href="{{ route('admin.users.detail', 'akumanusia') }}" class="btn btn-sm btn-outline-primary">
+                        <a href="{{ route('admin.users.detail', $user->username) }}" class="btn btn-sm btn-outline-primary">
                             <i class="bi bi-eye-fill"></i>
                         </a>
-                        <form action="{{ route('admin.users.destroy', 'akumanusia') }}">
+                        <form action="{{ route('admin.users.destroy', $user->username) }}" method="POST">
+                            @method('DELETE')
                             @csrf
-                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                            <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure to delete this user?')">
                                 <i class="bi bi-trash-fill"></i>
                             </button>
                         </form>
                     </td>
                 </tr>
+            @endforeach
             </tbody>
         </table>
     </div>
