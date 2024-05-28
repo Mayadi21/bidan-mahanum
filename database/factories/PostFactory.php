@@ -21,7 +21,7 @@ class PostFactory extends Factory
             'category_id' => $this->faker->numberBetween(1, 30),
             'report_id' => $this->faker->randomElement(
                 [NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-                1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+                1, 3, 7, 8, 11, 12]
             ),
 
             'title' => $this->faker->sentence(),
@@ -29,7 +29,7 @@ class PostFactory extends Factory
             'excerpt' => $this->faker->paragraph(),
             'body' => collect($this->faker->paragraphs(mt_rand(5, 10)))->map(fn ($p) => "<p>$p</p>")->implode(''),
             'view' => $this->faker->numberBetween(0, 1000),
-            'status' => $this->faker->randomElement(['draft', 'published']),
+            'status' => $this->faker->randomElement(['draft', 'published', 'published', 'published', 'published', 'published']),
         ];
     }
 }

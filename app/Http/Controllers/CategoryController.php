@@ -33,6 +33,7 @@ class CategoryController extends Controller
             'title' => $category->category_name,
             'page' => $category->category_name,
             'posts' => $posts,
+            'description' => $category->category_description,
             'active' => 'categories'
         ]);
     }    

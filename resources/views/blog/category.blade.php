@@ -3,14 +3,21 @@
 @section('content')
 <div class="container">
 
-    <h2 class="text-center my-5">{{ $title }}</h2>
-
-    <div class="btn-group mb-3" role="group" aria-label="Basic outlined example">
-        <button type="button" class="btn btn-outline-secondary">Latest</button>
-        <button type="button" class="btn btn-outline-secondary">Popular</button>
+    <div class="text-center my-5">
+        <h2>{{ $title }}</h2>
+        <p>{{ $description }}</p>
     </div>
 
     <div class="row justify-content-center">
+        @if($posts->isEmpty())
+            <div class="container vertical-center">
+                <div class="row justify-content-center">
+                    <div class="col-md-6 text-center">
+                        <p class="lead">Sorry, no posts here yet</p>
+                    </div>
+                </div>
+            </div>
+        @endif
         @foreach ($posts as $post)
         <div class="col-md-4 mb-3">
             <div class="card">

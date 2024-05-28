@@ -15,6 +15,7 @@ class ProfileController extends Controller
 
         return view('blog.profile.index', [
             'page' => 'Profile',
+            'active' => null,
             'user' => $user
         ]);
     }

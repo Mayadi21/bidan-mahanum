@@ -19,7 +19,7 @@
 </div> --}}
   
 <div class="col-lg-8">
-    <form action="{{ route('posts.update', $post->slug) }}" method="post" enctype="multipart/form-data">
+    <form id="trix-form" action="{{ route('posts.update', $post->slug) }}" method="post" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -68,6 +68,7 @@
             <input id="body" type="hidden" name="body" value="{{ $post->body }}">
             <trix-editor input="body"></trix-editor>
         </div>
+        <p id="word-count-message" class="text"></p>
         @error('body')
             <p class="text-danger">{{ $message }}</p>
         @enderror
@@ -85,11 +86,11 @@
         fetch('/dashboard/posts/checkSlug?title=' + title.value)
             .then(response => response.json())
             .then(data => slug.value = data.slug)
-    })
+    });
 
     document.addEventListener('trix-file-accept', function(e) {
         e.preventDefault();
-    })
+    });
 
     function previewImage() {
         const image = document.querySelector('#image');
@@ -102,8 +103,33 @@
 
         oFReader.onload = function(oFREvent) {
             imgPreview.src = oFREvent.target.result;
-        }
+        };
     }
+
+    function countWords(str) {
+        return str.trim().split(/\s+/).filter(function(word) {
+            return word.length > 0;
+        }).length;
+    }
+
+    document.addEventListener('trix-change', function(event) {
+        const editor = event.target;
+        const wordCount = countWords(editor.editor.getDocument().toString());
+        const messageElement = document.getElementById('word-count-message');
+        
+        messageElement.textContent = `${wordCount} kata`;
+    });
+
+    document.getElementById('trix-form').addEventListener('submit', function(event) {
+        const editor = document.querySelector('trix-editor');
+        const wordCount = countWords(editor.editor.getDocument().toString());
+        const status = event.submitter.value;
+        
+        if (status === 'published' && wordCount < 500) {
+            event.preventDefault();
+            alert('Konten harus lebih dari 500 kata untuk dipublish.');
+        }
+    });
 </script>
 
 @endsection

@@ -9,7 +9,7 @@
                 @if($post->image)
                 <img src="{{ asset('storage/' . $post->image) }}" class="img-fluid" alt="{{ $post->category->name }}">
                 @else
-                <img src="https://source.unsplash.com/1200x400?{{ $post->category->category_name }}" class="img-fluid" alt="{{ $post->category->name }}">
+                <img src="https://picsum.photos/seed/{{ $post->category }}/1200/400" class="img-fluid" alt="{{ $post->category->name }}">
                 @endif
                 <hr class="my-3">
                 {!! $post->body !!}

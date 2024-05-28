@@ -12,7 +12,8 @@
                             <img src="{{ asset('img/profile-pict.jpg') }}" class="profile-pic pb-2">
                             <div class="ms-2">
                                 <h3 class="pb-0 mb-0">{{ $title }}</h3>
-                                <p><a href="/user/{{ $user->username }}" class="text-decoration-none text-dark">{{ '@' . $user->username }}</a></p>
+                                <p class="pb-0 mb-0"><a href="/user/{{ $user->username }}" class="text-decoration-none text-dark">{{ '@' . $user->username }}</a></p>
+                                @if($user->role == 'admin') <span class="badge text-bg-success">Admin</span> @endif
                             </div>
                         </div>
                         <p class="mt-3">{{ $user->bio }}</p>

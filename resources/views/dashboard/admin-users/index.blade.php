@@ -5,29 +5,23 @@
         <h1 class="h2">Users</h1>
     </div>
 
-    <div class="btn-group btn-group-sm" role="group" aria-label="Basic outlined example">
-        <button type="button" class="btn btn-outline-primary">Active</button>
-        <button type="button" class="btn btn-outline-primary">Admins</button>
-        <button type="button" class="btn btn-outline-primary">Banned</button>
+    
+    <!-- Bagian untuk menampilkan pesan -->
+    @if(session('success'))
+    <div class="alert alert-success col-lg-8">
+        {{ session('success') }}
     </div>
-
+    @endif
+    
+    @if(session('error'))
+    <div class="alert alert-danger col-lg-8">
+        {{ session('error') }}
+    </div>
+    @endif
+    
     <h4 class="mt-5 mb-0 pb-3">Active</h4>
 
     <div class="table-responsive small col-lg-8">
-        
-        <!-- Bagian untuk menampilkan pesan -->
-                @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-        @endif
-
-        @if(session('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
-            </div>
-        @endif
-
         <table class="table table-striped table-sm">
             <thead>
                 <tr>
@@ -126,13 +120,14 @@
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $user->name }}</td>
                     <td>
-                        <a href="#" class="text-decoration-none">{{ '@' . $user->username }}</a>
+                        <a href="../../user/{{ $user->username }}" class="text-decoration-none">{{ '@' . $user->username }}</a>
                     </td>
                     <td>
                         <a href="{{ route('admin.users.detail', $user->username) }}" class="btn btn-sm btn-outline-primary">
                             <i class="bi bi-eye-fill"></i>
                         </a>
 
+                        @if($user->id !== auth()->user()->id)
                         <form action="{{ route('admin.users.role', $user->username) }}" method="post" class="d-inline">
                             @method('PUT')
                             @csrf
@@ -140,7 +135,8 @@
                             <button type="submit" class="btn btn-sm btn-outline-warning" onclick="return confirm('Change this admin into user?')">
                                 <i class="bi bi-person-circle"></i>
                             </button>
-                        </form>  
+                        </form>
+                        @endif
                     </td>
                 </tr>
                 @endforeach

@@ -19,11 +19,32 @@ class HomeController extends Controller
             ->take(5)->get()
         ;
 
+        $popular = Post::where('status', 'published')
+            ->whereNull('posts.report_id')
+            ->whereHas('user', function ($query) {
+                $query->whereNull('report_id');
+            })
+            ->orderBy('view', 'desc')
+            ->take(6)->get()
+        ;
+
+        $admin = Post::where('status', 'published')
+            ->whereNull('posts.report_id')
+            ->whereHas('user', function ($query) {
+                $query->whereNull('report_id')
+                    ->where('role', 'admin');
+            })
+            ->orderBy('updated_at', 'desc')
+            ->take(6)->get()
+        ;
+
         return view('blog.home', [
             'page' => 'Home',
             'title' => 'Home',
             'active' => 'home',
-            'latest' => $latest
+            'latest' => $latest,
+            'popular' => $popular,
+            'admin' => $admin
         ]);
     }
 

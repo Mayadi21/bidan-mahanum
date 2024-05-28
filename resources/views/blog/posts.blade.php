@@ -22,9 +22,10 @@
                         <p>
                             <small>
                                 By <a href="/user/{{ $post->user->username }}" class="text-decoration-none">{{ $post->user->name }}</a> 
-                                {{ $post->created_at->diffForHumans() }} | 
+                                {{ $post->updated_at->diffForHumans() }} | 
                                 <i class="bi bi-eye"></i> {{ $post->view }}
                             </small>
+                            @if($post->user->role == 'admin') <span class="badge text-bg-success">Admin</span> @endif
                         </p>
                         <p class="card-text d-flex align-items-center" style="height: 8em; overflow: hidden;">{{ $post->excerpt }}</p>
                         <a href="/posts/{{ $post->slug }}" class="btn btn-primary">Read more..</a>

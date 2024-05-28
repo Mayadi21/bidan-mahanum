@@ -13,6 +13,7 @@
             @endif
             <p class="text-secondary text-lg mt-3">
                 By <a href="/user/{{ $post->user->username }}" class="text-decoration-none">{{ $post->user->name }}</a> 
+                @if($post->user->role == 'admin') <span class="badge text-bg-success">Admin</span> @endif
                 in <a href="/categories/{{ $post->category->category_slug }}" class="text-decoration-none">{{ $post->category->category_name }}</a>
             </p>
 
@@ -131,6 +132,15 @@
             @endauth
 
             <div id="commentList" class="mt-3">
+                @if($comments->isEmpty())
+                    <div class="container vertical-center">
+                        <div class="row justify-content-center">
+                            <div class="col-md-6 text-center">
+                                <p class="lead">No comments.</p>
+                            </div>
+                        </div>
+                    </div>
+                @endif
                 {{-- Loop bagian ini --}}
                 @foreach ($comments as $comment)
                     <div class="comment mb-3" id="{{ 'comment-'.$comment->id }}">
@@ -142,6 +152,7 @@
                                         @if ($comment->user_id === auth()->id())
                                         (you) @endif
                                     </strong>
+                                    @if($comment->user->role == 'admin') <span class="badge text-bg-success">Admin</span> @endif
                                 </a>
                                 -
                                 <small>{{ $comment->created_at->diffForHumans() }}</small>

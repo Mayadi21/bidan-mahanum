@@ -20,7 +20,7 @@
         </div>
         <div class="col-md-8 pb-5">
             <h3 class="my-3 pb-3 border-bottom">{{ $comment->post->title }}</h3>
-            <img src="https://source.unsplash.com/1200x400?category" class="img-fluid" alt="category">
+            <img src="https://picsum.photos/seed/{{ $comment->post->category }}/1200/400" class="img-fluid" alt="category">
             <p class="text-secondary text-lg mt-3">
                 By <a href="/user/{{$comment->post->user->username}}" class="text-decoration-none">{{$comment->post->user->name}}</a> 
             </p>
