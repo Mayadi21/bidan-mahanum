@@ -17,4 +17,9 @@ class PostReport extends Model
     {
         return $this->belongsTo(Post::class);
     }
+
+    public function report()
+    {
+        return $this->belongsTo(Report::class);
+    }
 }

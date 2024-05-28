@@ -42,8 +42,7 @@ class PostController extends Controller
                     $query->whereNull('report_id');
                 })
                 ->orderBy('created_at', 'desc')
-                ->get()
-        ;
+                ->get();
 
         return view('blog.post', [
             'page' => $post->title,

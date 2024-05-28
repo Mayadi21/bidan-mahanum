@@ -25,7 +25,7 @@
             font-style: italic;
         }
     </style>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>    
     
@@ -49,5 +49,53 @@
     <script src="{{ asset('js/dashboard.js') }}"></script>
     <script src="{{ asset('js/trix.umd.min.js') }}"></script>
     
+    <script>
+    function confirmDelete(slug) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Submit the form
+                var form = document.querySelector('form[action*="' + slug + '"]');
+                form.submit();
+            }
+        });
+    }
+
+    
+    const title = document.querySelector('#title');
+    const slug = document.querySelector('#slug');
+
+    title.addEventListener('change', function() {
+        fetch('/dashboard/posts/checkSlug?title=' + title.value)
+            .then(response => response.json())
+            .then(data => slug.value = data.slug)
+    })
+
+    document.addEventListener('trix-file-accept', function(e) {
+        e.preventDefault();
+    })
+
+    function previewImage() {
+        const image = document.querySelector('#image');
+        const imgPreview = document.querySelector('.img-preview');
+
+        imgPreview.style.display = 'block';
+
+        const oFReader = new FileReader();
+        oFReader.readAsDataURL(image.files[0]);
+
+        oFReader.onload = function(oFREvent) {
+            imgPreview.src = oFREvent.target.result;
+        }
+    }
+</script>
+
 </body>
 </html>

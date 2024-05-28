@@ -5,6 +5,18 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2">Create New Post</h1>
 </div>
+
+{{-- <div class="col-lg-8">
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+</div> --}}
   
 <div class="col-lg-8">
     <form id="trix-form" action="{{ route('posts.store') }}" method="post" enctype="multipart/form-data">
@@ -45,7 +57,7 @@
 
         <div class="mb-3">
             <label for="body" class="form-label">Body</label>
-            <input id="body" type="hidden" name="body" value="">
+            <input id="body" type="hidden" name="body" value="{{ old('body') }}">
             <trix-editor input="body"></trix-editor>
         </div>
         <p id="word-count-message" class="text"></p>
@@ -53,10 +65,12 @@
             <p class="text-danger">{{ $message }}</p>
         @enderror
 
-        <button type="submit" name="status" value="published" class="btn btn-primary">Publish</button>
-        <button type="submit" name="status" value="draft" class="btn btn-secondary">Draft</button>
+        <button type="button" class="btn btn-primary" onclick="confirmSubmit('published')">Publish</button>
+        <button type="button" class="btn btn-secondary" onclick="confirmSubmit('draft')">Draft</button>
     </form>  
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
     const title = document.querySelector('#title');
@@ -86,6 +100,7 @@
         }
     }
 
+
     function countWords(str) {
         return str.trim().split(/\s+/).filter(function(word) {
             return word.length > 0;
@@ -110,6 +125,28 @@
             alert('Konten harus lebih dari 500 kata untuk dipublish.');
         }
     });
+
+    function confirmSubmit(status) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: `You are about to submit this post as ${status}.`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, submit it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const form = document.getElementById('trix-form');
+                const statusInput = document.createElement('input');
+                statusInput.setAttribute('type', 'hidden');
+                statusInput.setAttribute('name', 'status');
+                statusInput.setAttribute('value', status);
+                form.appendChild(statusInput);
+                form.submit();
+            }
+        });
+    }
 </script>
 
 @endsection

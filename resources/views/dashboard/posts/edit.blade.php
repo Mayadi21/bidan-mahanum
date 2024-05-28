@@ -73,8 +73,8 @@
             <p class="text-danger">{{ $message }}</p>
         @enderror
 
-        <button type="submit" name="status" value="published" class="btn btn-primary">Publish</button>
-        <button type="submit" name="status" value="draft" class="btn btn-secondary">Draft</button>
+        <button type="button" class="btn btn-primary" onclick="confirmSubmit('published')">Publish</button>
+        <button type="button" class="btn btn-secondary" onclick="confirmSubmit('draft')">Draft</button>
     </form>  
 </div>
 
@@ -130,6 +130,28 @@
             alert('Konten harus lebih dari 500 kata untuk dipublish.');
         }
     });
+
+    function confirmSubmit(status) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: `You are about to submit this post as ${status}.`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, submit it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const form = document.getElementById('trix-form');
+                const statusInput = document.createElement('input');
+                statusInput.setAttribute('type', 'hidden');
+                statusInput.setAttribute('name', 'status');
+                statusInput.setAttribute('value', status);
+                form.appendChild(statusInput);
+                form.submit();
+            }
+        });
+    }
 </script>
 
 @endsection

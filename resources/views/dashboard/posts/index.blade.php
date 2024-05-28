@@ -66,93 +66,40 @@
                             </form>
                         @else
                             <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{ 1 }}">
+                            <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $item->id }}">
                                 <i class="bi bi-x-octagon-fill"></i>
                             </button>
                             
                             <!-- Modal -->
-                            <div class="modal fade" id="exampleModal{{ 1 }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal fade" id="exampleModal{{ $item->id }}" tabindex="-1" aria-labelledby="exampleModalLabel{{ $item->id }}" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h1 class="modal-title fs-3" id="exampleModalLabel">Hide Post</h1>
+                                            <h1 class="modal-title fs-3" id="exampleModalLabel{{ $item->id }}">Hide Post</h1>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-
                                             <form action="{{ route('admin.posts.hide', $item->slug) }}" method="post">
                                                 @method('PUT')
                                                 @csrf
-                                                <input type="hidden" name="post_id" value="{{ 1 }}">
+                                                <input type="hidden" name="post_id" value="{{ $item->id }}">
+                                                @foreach($reports as $report)
                                                 <div class="form-check">
-                                                    <input class="form-check-input align-self-center" type="radio" name="report_id" id="report_id1" value="1" checked>
-                                                    <label class="form-check-label" for="report_id1">
+                                                    <input class="form-check-input align-self-center" type="radio" name="report_id" id="report_id{{ $report->id }}" value="{{ $report->id }}" @if($loop->first) checked @endif>
+                                                    <label class="form-check-label" for="report_id{{ $report->id }}">
                                                         <div>
-                                                            <h5>Judul report</h5>
-                                                            <p>Deskripsi report dari database</p>
+                                                            
+                                                            <h5>{{ $report->report_name }}</h5>
+                                                            <p>{{ $report->report_description }}</p>
                                                         </div>
                                                     </label>
                                                 </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input align-self-center" type="radio" name="report_id" id="report_id2" value="2">
-                                                    <label class="form-check-label" for="report_id2">
-                                                        <div>
-                                                            <h5>Judul report</h5>
-                                                            <p>Deskripsi report dari database</p>
-                                                        </div>
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input align-self-center" type="radio" name="report_id" id="report_id3" value="3">
-                                                    <label class="form-check-label" for="report_id3">
-                                                        <div>
-                                                            <h5>Judul report</h5>
-                                                            <p>Deskripsi report dari database</p>
-                                                        </div>
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input align-self-center" type="radio" name="report_id" id="report_id4" value="4">
-                                                    <label class="form-check-label" for="report_id4">
-                                                        <div>
-                                                            <h5>Judul report</h5>
-                                                            <p>Deskripsi report dari database</p>
-                                                        </div>
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input align-self-center" type="radio" name="report_id" id="report_id5" value="5">
-                                                    <label class="form-check-label" for="report_id5">
-                                                        <div>
-                                                            <h5>Judul report</h5>
-                                                            <p>Deskripsi report dari database</p>
-                                                        </div>
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input align-self-center" type="radio" name="report_id" id="report_id6" value="6">
-                                                    <label class="form-check-label" for="report_id6">
-                                                        <div>
-                                                            <h5>Judul report</h5>
-                                                            <p>Deskripsi report dari database</p>
-                                                        </div>
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input align-self-center" type="radio" name="report_id" id="report_id7" value="7">
-                                                    <label class="form-check-label" for="report_id7">
-                                                        <div>
-                                                            <h5>Judul report</h5>
-                                                            <p>Deskripsi report dari database</p>
-                                                        </div>
-                                                    </label>
-                                                </div>
-                                        {{-- GAK USAH DIUBAH DIV-NYA DI SINI. FOKUS DI FORM AJA --}}
+                                                @endforeach
                                         </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                                    <button type="submit" class="btn btn-warning">Hide</button>
-                                                </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                            <button type="submit" class="btn btn-warning">Hide</button>
+                                        </div>
                                             </form>
                                     </div>
                                 </div>

@@ -17,4 +17,9 @@ class CommentReport extends Model
     {
         return $this->belongsTo(Comment::class);
     }
+
+    public function report()
+    {
+        return $this->belongsTo(Report::class);
+    }
 }
