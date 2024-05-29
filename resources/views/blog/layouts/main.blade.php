@@ -7,24 +7,7 @@
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" rel="stylesheet">
         <link rel="icon" type="image/jpeg" href="{{ asset('img/logo.jpeg') }}">
-        <style>
-            .comment {
-                position: relative;
-            }
-
-            .delete-form {
-                position: absolute;
-                top: 5px;
-                right: 10px;
-            }
-
-            .profile-pic {
-                width: 60px;
-                height: 60px;
-                border-radius: 50%;
-                object-fit: cover;
-            }
-        </style>
+        <link rel="stylesheet" href="{{ asset('css/blog.css') }}">
     </head>
     <body>
 

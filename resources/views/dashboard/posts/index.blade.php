@@ -43,7 +43,10 @@
                     <td>{{$item->status}}</td>
                     @endif
                     <td>{{$item->view}}</td>
-                    <td>{{$item->created_at}}</td>
+                    <td>
+                        @if($item->status == 'published') {{$item->updated_at}} 
+                        @else - @endif
+                    </td>
                     <td>
                         <a href="{{ route(($active === 'admin-posts') ? 'admin.posts.show' : 'posts.show', $item->slug) }}" class="btn btn-sm btn-outline-primary">
                             <i class="bi bi-eye-fill"></i>

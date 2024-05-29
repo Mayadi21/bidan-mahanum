@@ -19,7 +19,7 @@
 </div> --}}
   
 <div class="col-lg-8">
-    <form id="createPostForm" action="{{ route('posts.store') }}" method="post" enctype="multipart/form-data">
+    <form id="trix-form" action="{{ route('posts.store') }}" method="post" enctype="multipart/form-data">
         @csrf
 
         <div class="mb-3">
@@ -60,12 +60,7 @@
             <input id="body" type="hidden" name="body" value="{{ old('body') }}">
             <trix-editor input="body"></trix-editor>
         </div>
-        @error('body')
-            <p class="text-danger">{{ $message }}</p>
-        @enderror
-
-        <button type="button" class="btn btn-primary" onclick="confirmSubmit('published')">Publish</button>
-        <button type="button" class="btn btn-secondary" onclick="confirmSubmit('draft')">Draft</button>
+        <button type="submit" class="btn btn-primary">Create</button>
     </form>  
 </div>
 
@@ -99,7 +94,30 @@
         }
     }
 
+
+    function countWords(str) {
+        return str.trim().split(/\s+/).filter(function(word) {
+            return word.length > 0;
+        }).length;
+    }
+
+    document.addEventListener('trix-change', function(event) {
+        const editor = event.target;
+        const wordCount = countWords(editor.editor.getDocument().toString());
+        const messageElement = document.getElementById('word-count-message');
+        
+        messageElement.textContent = `${wordCount} kata`;
+    });
+
     function confirmSubmit(status) {
+        const editor = document.querySelector('trix-editor');
+        const wordCount = countWords(editor.editor.getDocument().toString());
+        
+        if (status === 'published' && wordCount < 500) {
+            alert('Konten harus lebih dari 500 kata untuk dipublish.');
+            return;
+        }
+
         Swal.fire({
             title: 'Are you sure?',
             text: `You are about to submit this post as ${status}.`,
@@ -110,7 +128,7 @@
             confirmButtonText: 'Yes, submit it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                const form = document.getElementById('createPostForm');
+                const form = document.getElementById('trix-form');
                 const statusInput = document.createElement('input');
                 statusInput.setAttribute('type', 'hidden');
                 statusInput.setAttribute('name', 'status');

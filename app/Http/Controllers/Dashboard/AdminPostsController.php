@@ -11,10 +11,17 @@ class AdminPostsController extends Controller
 {
     public function index()
     {
+        $posts = Post::with('category')
+            ->where('status', 'published')
+            ->whereNull('report_id')
+            ->orderBy('updated_at', 'desc')
+            ->paginate(10)
+        ;
+
         return view('dashboard.posts.index', [
             'page' => 'All Posts',
             'active' => 'admin-posts',
-            'posts' => Post::with('category')->whereNull('report_id')->latest()->paginate(10),
+            'posts' => $posts,
             'reports' => Report::all()
         ]);
     }
@@ -26,6 +33,7 @@ class AdminPostsController extends Controller
         if($post->report_id !== NULL){
             return abort(404);
         }
+
         return view('dashboard.posts.show', [
             'page'=> $post->title,
             'active' => 'admin-posts',

@@ -5,21 +5,9 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2">Edit Post</h1>
 </div>
-
-{{-- <div class="col-lg-8">
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-</div> --}}
   
 <div class="col-lg-8">
-    <form id="editPostForm" action="{{ route('posts.update', $post->slug) }}" method="post" enctype="multipart/form-data">
+    <form id="trix-form" action="{{ route('posts.update', $post->slug) }}" method="post" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -68,6 +56,7 @@
             <input id="body" type="hidden" name="body" value="{{ $post->body }}">
             <trix-editor input="body"></trix-editor>
         </div>
+        <p id="word-count-message" class="text"></p>
         @error('body')
             <p class="text-danger">{{ $message }}</p>
         @enderror
@@ -85,11 +74,11 @@
         fetch('/dashboard/posts/checkSlug?title=' + title.value)
             .then(response => response.json())
             .then(data => slug.value = data.slug)
-    })
+    });
 
     document.addEventListener('trix-file-accept', function(e) {
         e.preventDefault();
-    })
+    });
 
     function previewImage() {
         const image = document.querySelector('#image');
@@ -102,10 +91,32 @@
 
         oFReader.onload = function(oFREvent) {
             imgPreview.src = oFREvent.target.result;
-        }
+        };
     }
 
+    function countWords(str) {
+        return str.trim().split(/\s+/).filter(function(word) {
+            return word.length > 0;
+        }).length;
+    }
+
+    document.addEventListener('trix-change', function(event) {
+        const editor = event.target;
+        const wordCount = countWords(editor.editor.getDocument().toString());
+        const messageElement = document.getElementById('word-count-message');
+        
+        messageElement.textContent = `${wordCount} kata`;
+    });
+
     function confirmSubmit(status) {
+        const editor = document.querySelector('trix-editor');
+        const wordCount = countWords(editor.editor.getDocument().toString());
+        
+        if (status === 'published' && wordCount < 500) {
+            alert('Konten harus lebih dari 500 kata untuk dipublish.');
+            return;
+        }
+
         Swal.fire({
             title: 'Are you sure?',
             text: `You are about to submit this post as ${status}.`,
@@ -116,7 +127,7 @@
             confirmButtonText: 'Yes, submit it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                const form = document.getElementById('editPostForm');
+                const form = document.getElementById('trix-form');
                 const statusInput = document.createElement('input');
                 statusInput.setAttribute('type', 'hidden');
                 statusInput.setAttribute('name', 'status');
@@ -128,4 +139,5 @@
     }
 </script>
 
+    
 @endsection

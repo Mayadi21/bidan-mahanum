@@ -19,10 +19,8 @@ class AdminCommentReportsController extends Controller
         ]);
     }
 
-    public function show(Comment $comment) // Mengambil comment daripada post
-    {
-        // JANGAN DIGANTI VIEWNYA
-        return view('dashboard.comments.show', [
+    public function show(Comment $comment) {// Mengambil comment daripada post
+        return view('dashboard.admin-report', [
             'page' => 'Comment Reports',
             'active' => 'admin-comment-reports',
             'comment' => $comment,
@@ -49,3 +47,4 @@ class AdminCommentReportsController extends Controller
         return redirect()->route('admin.comment-reports.index')->with('success', 'All reports for the comment have been deleted.');
     }
 }
+

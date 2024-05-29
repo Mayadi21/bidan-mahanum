@@ -24,6 +24,7 @@ class PostsController extends Controller
             'active' => 'posts',
             'posts' => Post::with('category')
                         ->where('user_id', auth()->user()->id)
+                        ->whereNull('report_id')
                         ->latest()
                         ->paginate(10),
         ]);
@@ -74,6 +75,10 @@ class PostsController extends Controller
     public function show($slug)
     {
         $post = Post::where('slug', $slug)->firstOrFail();
+
+        if($post->report_id !== NULL){
+            return abort(404);
+        }
 
         return view('dashboard.posts.show', [
             'page'=> $post->title,

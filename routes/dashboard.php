@@ -6,7 +6,7 @@ use App\Http\Controllers\Dashboard\PostsController as DashboardPostsController;
 use App\Http\Controllers\Dashboard\CommentsController as DashboardCommentsController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\AdminUsersController;
-use App\Http\Controllers\Dashboard\AdminPostsController;
+use App\Http\Controllers\Dashboard\AdminPostsController; 
 use App\Http\Controllers\Dashboard\AdminReportsController;
 use App\Http\Controllers\Dashboard\AdminCommentsController;
 use App\Http\Controllers\Dashboard\AdminDashboardController; 

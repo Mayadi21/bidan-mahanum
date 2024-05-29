@@ -16,6 +16,14 @@
         trix-toolbar [data-trix-button-group="file-tools"] {
             display: none; 
         }
+
+        blockquote {
+            margin: 20px 40px;
+            padding: 10px 20px;
+            background-color: #f9f9f9;
+            border-left: 5px solid #ccc;
+            font-style: italic;
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
