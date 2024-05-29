@@ -26,6 +26,7 @@ class ProfileController extends Controller
 
         return view('blog.profile.edit', [
             'page' => 'Edit Profile',
+            'active' => null,
             'user' => $user
         ]);
     }

@@ -9,7 +9,11 @@
                 <div class="col-md-8 d-flex flex-column">
                     <div class="my-3 p-3 border-bottom flex-grow-1">
                         <div class="d-flex align-items-center">
-                            <img src="{{ asset('img/profile-pict.jpg') }}" class="profile-pic pb-2">
+                            @if($user->image)
+                                <img src="{{ asset('storage/' . $user->image) }}" class="profile-pic">
+                            @else
+                                <img src="{{ asset('img/profile-pict.jpg')}}" class="profile-pic">
+                            @endif                            
                             <div class="ms-2">
                                 <h3 class="pb-0 mb-0">{{ $title }}</h3>
                                 <p class="pb-0 mb-0"><a href="/user/{{ $user->username }}" class="text-decoration-none text-dark">{{ '@' . $user->username }}</a></p>
@@ -45,7 +49,11 @@
                     <div class="position-absolute px-3 py-2 text-white fs-8 rounded" style="background-color: rgba(0, 0, 0, 0.3)">
                         <a href="/categories/{{ $post->category->category_slug }}" class="text-white text-decoration-none">{{ $post->category->category_name }}</a>
                     </div>
+                    @if($post->image)
+                    <img src=" {{ asset('storage/' . $post->image) }}" style="height: 13em; overflow: hidden;" class="card-img-top" alt="{{ $post->title }}" >
+                    @else
                     <img src="https://picsum.photos/seed/{{ $post->category }}/500/300" class="card-img-top" alt="{{ $post->category->category_name }}">
+                    @endif
                     <div class="card-body">
                         <h5 class="card-title d-flex align-items-center" style="height: 3em; overflow: hidden;">{{ $post->title }}</h5>
                         <p>

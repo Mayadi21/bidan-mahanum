@@ -22,7 +22,7 @@
                         <a class="nav-link @if($active === 'categories') active @endif" href="/categories">Categories</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link @if($active === 'about') active @endif" href="#">About</a>
+                        <a class="nav-link @if($active === 'about') active @endif" href="/about">About</a>
                     </li>
                     @auth
                         <li class="nav-item dropdown">
@@ -49,7 +49,7 @@
                         </li>
                     @endauth
                 </ul>
-            <form class="d-flex mt-3 mt-lg-0" role="search">
+            <form action="{{ route('posts.index') }}" class="d-flex mt-3 mt-lg-0" role="search">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>

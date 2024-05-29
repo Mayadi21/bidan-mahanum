@@ -52,7 +52,8 @@ class HomeController extends Controller
     {
         return view('blog.about', [
             'page' => 'About',
-            'title' => 'About'
+            'title' => 'About',
+            'active' => 'about'
         ]);
     }
 

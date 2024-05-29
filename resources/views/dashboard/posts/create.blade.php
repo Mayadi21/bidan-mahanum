@@ -115,18 +115,15 @@
         messageElement.textContent = `${wordCount} kata`;
     });
 
-    document.getElementById('trix-form').addEventListener('submit', function(event) {
+    function confirmSubmit(status) {
         const editor = document.querySelector('trix-editor');
         const wordCount = countWords(editor.editor.getDocument().toString());
-        const status = event.submitter.value;
         
         if (status === 'published' && wordCount < 500) {
-            event.preventDefault();
             alert('Konten harus lebih dari 500 kata untuk dipublish.');
+            return;
         }
-    });
 
-    function confirmSubmit(status) {
         Swal.fire({
             title: 'Are you sure?',
             text: `You are about to submit this post as ${status}.`,

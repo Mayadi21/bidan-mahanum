@@ -22,7 +22,7 @@ class AdminCategoriesController extends Controller
         return view('dashboard.admin-categories.index', [
             'page' => 'All Categories',
             'active' => 'admin-categories',
-            'categories' => Category::all()
+            'categories' => Category::paginate(10)
         ]);
     }
 
@@ -56,7 +56,7 @@ class AdminCategoriesController extends Controller
 
         Category::create($validatedData);
 
-        return redirect('dashboard/categories')->with('success', 'New Category has been added!');
+        return redirect(route('categories.index'))->with('success', 'New Category has been added!');
     }
 
     /**

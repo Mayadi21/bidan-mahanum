@@ -24,8 +24,11 @@
                 <div class="position-absolute px-3 py-2 text-white fs-8 rounded" style="background-color: rgba(0, 0, 0, 0.3)">
                     <a href="/categories/{{ $post->category->slug }}" class="text-white text-decoration-none">{{ $post->category->category_name }}</a>
                 </div>
-                <img src="https://picsum.photos/seed/{{ $post->category }}/500/300" class="card-img-top" alt="{{ $post->category->name }}">
-                <div class="card-body">
+                @if($post->image)
+                <img src=" {{ asset('storage/' . $post->image) }}" style="height: 13em; overflow: hidden;" class="card-img-top" alt="{{ $post->title }}" >
+                @else
+                <img src="https://picsum.photos/seed/{{ $post->category }}/500/300" class="card-img-top" alt="{{ $post->category->category_name }}">
+                @endif                <div class="card-body">
                     <h5 class="card-title d-flex align-items-center" style="height: 3em; overflow: hidden;">{{ $post->title }}</h5>
                     <p>
                         <small>

@@ -11,9 +11,6 @@
     </div>
     @endif
 
-    {{-- <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas> --}}
-
-    {{-- <h2>Section title</h2> --}}
     <a href="{{ route('categories.create') }}" class="btn btn-primary mb-3">Create New Category</a>
     <div class="table-responsive small col-lg-8">
         <table class="table table-striped table-sm">
@@ -46,5 +43,7 @@
         @endforeach
         </tbody>
     </table>
+
+    {{ $categories->links() }}
 </div>
 @endsection

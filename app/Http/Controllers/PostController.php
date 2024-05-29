@@ -58,7 +58,7 @@ class PostController extends Controller
             'page' => $user->name,
             'title' => $user->name,
             'user' => $user,
-            'posts' => $user->posts()->where('status', 'published')->get(),
+            'posts' => $user->posts()->where('status', 'published')->whereNull('posts.report_id')->get(),
             'active' => 'posts'
         ]);
     }
