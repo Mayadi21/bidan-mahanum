@@ -7,7 +7,6 @@
         <div class="col-md-8">
             <h2 class="my-3 pb-3 border-bottom">Profile</h2>
 
-
             @if(session()->has('password-success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     {{ session('password-success') }}
@@ -64,9 +63,13 @@
             <div class="mx-4 mb-3">
                 <h4>Password</h4>
             </div>
+<<<<<<< HEAD
 
             <a href="{{ route('password.change')}}" class="btn btn-primary mx-4">Change Password</a>
 
+=======
+            <a href="#" class="btn btn-primary mx-4">Change Password</a>
+>>>>>>> main
         </div>
     </div>
 </div>
