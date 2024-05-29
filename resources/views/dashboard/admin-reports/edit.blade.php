@@ -7,15 +7,16 @@
 </div>
   
 <div class="col-lg-8">
-    <form action="{{ route('reports.update', 1) }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('reports.update',$report->id) }}" method="post" enctype="multipart/form-data">
         @csrf
+        @method('PUT')
         <div class="mb-3">
             <label for="report_name" class="form-label">Report Category</label>
-            <input type="text" class="form-control" id="report_name" name="report_name" required autofocus value="">
+            <input type="text" class="form-control" id="report_name" name="report_name" required autofocus value="{{$report->report_name}}">
         </div>
         <div class="mb-3">
             <label for="report_description" class="form-label">Description</label>
-            <input type="text" class="form-control" id="report_description" name="report_description" required autofocus value="">
+            <input type="text" class="form-control" id="report_description" name="report_description" required autofocus value="{{$report->report_description}}">
         </div>
         <button type="submit" class="btn btn-primary">Edit</button>
     </form>  
