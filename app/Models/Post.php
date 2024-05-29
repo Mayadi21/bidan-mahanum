@@ -27,6 +27,16 @@ class Post extends Model
         return $this->hasMany(Comment::class);
     }
 
+    public function report()
+    {
+        return $this->belongsTo(Report::class);
+    }
+
+    public function postReport()
+    {
+        return $this->hasMany(Report::class);
+    }
+
     public function getRouteKeyName()
     {
         return 'slug';

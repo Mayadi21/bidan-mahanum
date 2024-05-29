@@ -19,9 +19,14 @@ class Comment extends Model
     {
         return $this->belongsTo(User::class);
     }
-    public function comments()
-{
-    return $this->hasMany(Comment::class);
-}
 
+    public function report()
+    {
+        return $this->belongsTo(Report::class);
+    }
+
+    public function reports()
+    {
+        return $this->hasMany(CommentReport::class);
+    }
 }

@@ -1,19 +1,14 @@
 <?php
 
-use App\Models\Post;
-use App\Models\User;
-use App\Models\Category;
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\LogoutController;
-use App\Http\Controllers\Dashboard\PostsController as DashboardPostsController;
-use App\Http\Controllers\Dashboard\CategoriesController as DashboardCategoriesController;
+use App\Http\Controllers\CategoryController;
+
 
 
 /*
@@ -27,50 +22,42 @@ use App\Http\Controllers\Dashboard\CategoriesController as DashboardCategoriesCo
 |
 */
 
-Route::get('/', function () {
-    return view('blog.home', [
-        'page' => 'Home',
-        'title' => 'Home'
-    ]);
+Route::get('/banned', [HomeController::class, 'banned'])->name('banned');
+
+
+
+Route::middleware('notBanned')->group(function () {
+    
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+
+    Route::get('/posts', [PostController::class, 'index'])->name('post.index');
+    Route::get('/posts/{post:slug}', [PostController::class, 'show'])->name('post.show');
+    Route::get('/user/{user:username}', [PostController::class, 'user'])->name('post.user');
+    
+    Route::get('/categories', [CategoryController::class, 'index'])->name('category.index');
+    Route::get('/categories/{category:category_slug}', [CategoryController::class, 'show'])->name('category.show');
 });
 
 
 
-Route::get('/posts', [PostController::class, 'index'])->name('post.index');
-Route::get('/posts/{post:slug}', [PostController::class, 'show'])->name('post.show');
-Route::get('/user/{user:username}', [PostController::class, 'user']);
+
+Route::middleware(['auth', 'notBanned'])->group(function () {
+
+    // safna
+    Route::put('/posts/{post:slug}/report', [PostController::class, 'storeReport'])->name('post.report');
+
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/profile/', [ProfileController::class, 'update'])->name('profile.update');
+
+    Route::post('/comment', [CommentController::class, 'store'])->name('comment.store');
+    Route::delete('/comment/{comment}', [CommentController::class, 'destroy'])->name('comment.destroy');
+    // safna
+    Route::post('/comment/{comment}/report', [CommentController::class, 'report'])->name('comment.report')->middleware('auth');
+
+});
 
 
 
-Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
-Route::get('/categories/{category:category_slug}', [CategoryController::class, 'show'])->name('category.show');
-
-
-
-Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index')->middleware('auth');
-Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit')->middleware('auth');
-Route::post('/profile/', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');
-
-
-
-Route::resource('/dashboard/posts', DashboardPostsController::class)->middleware('auth');
-
-
-
-Route::resource('/dashboard/categories', DashboardCategoriesController::class)->except('show')->middleware(['auth', 'admin']);
-
-
-
-Route::post('/comments', [CommentController::class, 'store'])->name('comments.store')->middleware('auth');
-Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy')->middleware('auth');
-
-
-
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
-Route::post('/login', [LoginController::class, 'authenticate'])->name('authenticate')->middleware('guest');
-
-
-
-Route::get('/register', [RegisterController::class, 'index'])->name('register.index')->middleware('guest');
-Route::post('/register', [RegisterController::class, 'store'])->name('register.store')->middleware('guest');
+require __DIR__.'/auth.php';
+require __DIR__.'/dashboard.php';

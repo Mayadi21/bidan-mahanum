@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Offcanvas navbar large">
     <div class="container-fluid">
         <img src="{{ asset('img/logo.jpeg') }}" alt="Blog" width="50">
-        <a class="navbar-brand" href="#">Tubes Blog</a>
+        <a class="navbar-brand" href="#">W-Blog</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar2" aria-controls="offcanvasNavbar2" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -30,9 +30,8 @@
                                 {{ auth()->user()->name }}
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{ route('posts.index') }}">My Dashboard</a></li>
+                                <li><a class="dropdown-item" href="{{ auth()->user()->role == 'admin' ? route('dashboard.admin') : route('dashboard') }}">My Dashboard</a></li>
                                 <li><a class="dropdown-item" href="{{ route('profile.index') }}">My Profile</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>

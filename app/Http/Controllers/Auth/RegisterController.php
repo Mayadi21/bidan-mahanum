@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Auth\Events\Registered;
 use App\Models\User;
 
 class RegisterController extends Controller
@@ -29,8 +31,12 @@ class RegisterController extends Controller
         $validated['password'] = Hash::make($validated['password']);
         $validated['role'] = 'user';
 
-        User::create($validated);
+        $user = User::create($validated);
 
-        return redirect(route('login'))->with('success', 'Register success! Please login.');
+        event(new Registered($user));
+
+        Auth::login($user);
+
+        return redirect(route('verification.notice'));
     }
 }

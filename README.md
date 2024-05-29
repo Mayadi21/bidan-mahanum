@@ -1,3 +1,97 @@
+# W-log
+
+## Info
+
+<p>Nama aplikasi: W-log</p>
+<p></p>Tim pengembang: Kelompok 1</p>
+
+- Yuna Dhuha Sabrina - 231402007<br> Back-End    <i>(Show User, CRUD Profile, Comment Reports)</i>
+- Safna Yuninda - 231402025<br> Back-End    <i>(Show Comments, CRUD Comments, Manage User)</i>
+- Refael Juari Siagian - 231402055<br> Front-End, Back-End    <i>(Authentication, Authorization)</i>
+- Ferdyan Darwis - 231402092<br> Back-End    <i>(Show Posts, CRUD Posts, Post Reports)</i>
+- Jessica Eldamaris Maha - 231402101<br> Back-End    <i>(Show Categories, CRUD Categories, CRUD Reports)</i>
+
+## Desc
+
+<p>W-log <i>( Write-log / We-blog )</i> merupakan sebuah aplikasi web yang memberikan kebebasan bagi semua orang untuk berbagi cerita. Layaknya sebuah blog, aplikasi ini mengizinkan semua orang untuk membagikan tulisan mereka. Dengan beragam kategori tulisan, pengguna dapat mengeksplorasi tulisan mereka, dari informasi menarik, tips dan trik, bahkan berbagi pengalaman pribadi mereka. Pengguna juga dapat menanggapi tulisan dengan memberi komentar.</p>
+<p>Untuk menjaga kenyamanan dalam menggunakan aplikasi ini, pengguna juga dapat melaporkan tulisan atau komentar yang dianggap mengganggu. Dengan begitu, pengguna diharapkan mendapatkan pengalaman yang baik ketika menggunakan aplikasi ini.</p>
+
+## Features
+
+### Guest
+
+- Melihat daftar post.
+  - Semua post, berdasarkan kategori, pengguna, kata kunci search
+  - Urutkan berdasarkan terbaru, terpopuler
+- Melihat tulisan post
+- Login & register
+- Verifikasi email & lupa sandi
+
+### User
+
+#### Blog
+
+- Mengirim komentar ke postingan
+- Melaporkan postingan
+- Melaporkan komentar
+- Edit profile
+- Ganti password dan email
+- Logout
+
+#### Dashboard
+
+- Halaman dashboard
+- Daftar post.
+  - Mencari post sendir
+  - Membuat, menghapus, memperbarui post
+  - Mengubah status post (published/draft)
+- Daftar comment.
+  - Mencari komentar dari post sendiri
+  - Menghapus komentar dari post sendiri
+
+ ### Admin (Dashboard)
+
+ - Halaman dashboard
+ - Kelola user
+ - Kelola postingan
+ - Kelola komentar
+ - Kelola kategori (CRUD)
+ - Kelola jenis report (CRUD)
+ - Kelola laporan post
+ - Kelola laporan komentar
+ 
+
+<br>
+<p>Beberapa sumber daya luar yang dipakai dalam aplikasi ini:</p>
+
+- [Trix Editor](https://github.com/basecamp/trix) untuk membuat tulisan.
+- [Eloquent-Sluggable](https://github.com/cviebrock/eloquent-sluggable) untuk membuat slug.
+- [Mailtrap](https://mailtrap.io/) untuk mengirim email dalam mode pengembangan.
+
+<br>
+
+## Environment
+
+<p>Beberapa syarat environment untuk menjalankan aplikasi ini:</p>
+
+- PHP : Versi 8 (8.1.17)
+- Database : MySQL
+- Laravel : Versi 10 (10.48.9)
+- Penyimpanan : Lokal
+<p>Terminal :</p>
+
+```
+php artisan storage:link
+```
+<p>.env (Laravel 10) :</p>
+
+```
+FILESYSTEM_DISK=public
+```
+___
+
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
@@ -64,6 +158,3 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-
-
-# Tubes-Blog

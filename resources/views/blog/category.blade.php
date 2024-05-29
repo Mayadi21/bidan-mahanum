@@ -5,6 +5,11 @@
 
     <h2 class="text-center my-5">{{ $title }}</h2>
 
+    <div class="btn-group mb-3" role="group" aria-label="Basic outlined example">
+        <button type="button" class="btn btn-outline-secondary">Latest</button>
+        <button type="button" class="btn btn-outline-secondary">Popular</button>
+    </div>
+
     <div class="row justify-content-center">
         @foreach ($posts as $post)
         <div class="col-md-4 mb-3">
@@ -18,7 +23,8 @@
                     <p>
                         <small>
                             By <a href="/user/{{ $post->user->username }}" class="text-decoration-none">{{ $post->user->name }}</a> 
-                            {{ $post->created_at->diffForHumans() }}
+                            {{ $post->created_at->diffForHumans() }} | 
+                            <i class="bi bi-eye"></i> {{ $post->view }}
                         </small>
                     </p>
                     <p class="card-text d-flex align-items-center" style="height: 8em; overflow: hidden;">

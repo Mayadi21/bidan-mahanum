@@ -3,18 +3,41 @@
 @section('content')
 
 <div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="my-3 p-3 border-bottom">
-                <h3 class="pb-0 mb-0">{{ $title }}</h3>
-                <p><a href="/user/{{ $username }}" class="text-decoration-none text-dark">{{'@'. $username }} </a></p>
-                <p>Isi Profile</p>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-8 d-flex flex-column">
+                    <div class="my-3 p-3 border-bottom flex-grow-1">
+                        <div class="d-flex align-items-center">
+                            <img src="{{ asset('img/profile-pict.jpg') }}" class="profile-pic pb-2">
+                            <div class="ms-2">
+                                <h3 class="pb-0 mb-0">{{ $title }}</h3>
+                                <p><a href="/user/{{ $user->username }}" class="text-decoration-none text-dark">{{ '@' . $user->username }}</a></p>
+                            </div>
+                        </div>
+                        <p class="mt-3">{{ $user->bio }}</p>
+                    </div>
+                </div>
+                <div class="col-md-4 d-flex flex-column">
+                    <div class="my-3 p-3 border-bottom flex-grow-1">
+                        <h5>Posts</h5>
+                        <p>{{ $posts->count() }} posts</p>
+                        <h5>Views</h5>
+                        <p>{{ $posts->sum('view') }} views</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+    
+    @if($posts->count() > 9)
+        <div class="btn-group mb-3" role="group" aria-label="Basic outlined example">
+            <button type="button" class="btn btn-outline-secondary">Latest</button>
+            <button type="button" class="btn btn-outline-secondary">Popular</button>
+        </div>
+    @endif
 
-    <div class="row justify-content-center">
-        @csrf
+    <div class="row justify-content-center mt-3">
         @foreach ($posts as $post)
             <div class="col-md-4 mb-3">
                 <div class="card">
@@ -27,7 +50,8 @@
                         <p>
                             <small>
                                 By <a href="/user/{{ $post->user->username }}" class="text-decoration-none">{{ $post->user->name }}</a> 
-                                {{ $post->created_at->diffForHumans() }}
+                                {{ $post->created_at->diffForHumans() }} | 
+                                <i class="bi bi-eye"></i> {{ $post->view }}
                             </small>
                         </p>
                         <p class="card-text d-flex align-items-center" style="height: 8em; overflow: hidden;">{{ $post->excerpt }}</p>

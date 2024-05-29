@@ -9,29 +9,51 @@
 <div class="col-lg-8">
     <form action="{{ route('posts.store') }}" method="post" enctype="multipart/form-data">
         @csrf
+
         <div class="mb-3">
             <label for="title" class="form-label">Title</label>
-            <input type="text" class="form-control" id="title" name="title" required autofocus value="">
+            <input type="text" class="form-control" id="title" name="title" required autofocus value="{{ old('title') }}">
         </div>
+        @error('title')
+            <p class="text-danger">{{ $message }}</p>
+        @enderror
+
         <div class="mb-3">
             <label for="category" class="form-label">Category</label>
             <select class="form-select" aria-label="Default select example" name="category_id" id="category">
-                <option value="1">Kategori 1</option>
-                <option value="2">Kategori 2</option>
-                <option value="3">Kategori 3</option>
+                @foreach ($categories as $category)
+                    @if(old('category_id') == $category->id)
+                        <option value="{{ $category->id }}" selected>{{ $category->category_name }}</option>
+                    @else
+                        <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                    @endif
+                @endforeach
             </select>        
         </div>
+        @error('category_id')
+            <p class="text-danger">{{ $message }}</p>
+        @enderror
+
         <div class="mb-3">
             <label for="formFile" class="form-label">Image</label>
             <img class="img-preview img-fluid mb-3 col-sm-5" style="width: 100px;">
             <input class="form-control" type="file" id="image" name="image" onchange="previewImage()">
         </div>
+        @error('image')
+            <p class="text-danger">{{ $message }}</p>
+        @enderror
+
         <div class="mb-3">
             <label for="body" class="form-label">Body</label>
             <input id="body" type="hidden" name="body" value="">
             <trix-editor input="body"></trix-editor>
         </div>
-        <button type="submit" class="btn btn-primary">Create</button>
+        @error('body')
+            <p class="text-danger">{{ $message }}</p>
+        @enderror
+
+        <button type="submit" name="status" value="published" class="btn btn-primary">Publish</button>
+        <button type="submit" name="status" value="draft" class="btn btn-secondary">Draft</button>
     </form>  
 </div>
 

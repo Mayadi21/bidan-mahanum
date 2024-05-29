@@ -2,7 +2,22 @@
 
 @section('content')
     <h1 class="fs-4 card-title fw-bold mb-4">Forgot Password</h1>
-    <form method="POST" class="needs-validation" novalidate="" autocomplete="off">
+
+    @error('email')
+        <div class="alert alert-danger" role="alert">
+            {{ $message }}
+        </div>
+    @enderror
+
+    @if(session()->has('status'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('status') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    <form method="POST" action="{{ route('password.email') }}" class="needs-validation" novalidate="" autocomplete="off">
+        @csrf
         <div class="mb-3">
             <label class="mb-2 text-muted" for="email">E-Mail Address</label>
             <input id="email" type="email" class="form-control" name="email" value="" required autofocus>
