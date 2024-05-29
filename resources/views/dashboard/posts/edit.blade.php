@@ -5,18 +5,6 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2">Edit Post</h1>
 </div>
-
-{{-- <div class="col-lg-8">
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-</div> --}}
   
 <div class="col-lg-8">
     <form id="trix-form" action="{{ route('posts.update', $post->slug) }}" method="post" enctype="multipart/form-data">

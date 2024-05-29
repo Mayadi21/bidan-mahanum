@@ -26,6 +26,7 @@ class AdminCommentsController extends Controller
         if ($comment->report_id !== null) {
             return abort(404);
         }
+
         return view('dashboard.comments.show', [
             'page' => 'Comment Details',
             'active' => 'admin-comments',
@@ -41,5 +42,6 @@ class AdminCommentsController extends Controller
 
         Comment::where('id', $comment_id)->update(['report_id' => $report_id]);
         return redirect()->back()->with('success', 'Comment hidden successfully.');
+
     }
 }

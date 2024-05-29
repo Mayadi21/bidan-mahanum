@@ -33,6 +33,7 @@ class AdminPostsController extends Controller
         if($post->report_id !== NULL){
             return abort(404);
         }
+
         return view('dashboard.posts.show', [
             'page'=> $post->title,
             'active' => 'admin-posts',

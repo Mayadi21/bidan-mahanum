@@ -61,6 +61,8 @@
                                 By <a href="/user/{{ $post->user->username }}" class="text-decoration-none">{{ $post->user->name }}</a> 
                                 {{ $post->created_at->diffForHumans() }} | 
                                 <i class="bi bi-eye"></i> {{ $post->view }}
+                                {{ $post->created_at->diffForHumans() }} | 
+                                <i class="bi bi-eye"></i> {{ $post->view }}
                             </small>
                         </p>
                         <p class="card-text d-flex align-items-center" style="height: 8em; overflow: hidden;">{{ $post->excerpt }}</p>

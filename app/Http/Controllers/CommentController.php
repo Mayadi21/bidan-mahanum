@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Comment;
+use App\Models\CommentReport;
 
 class CommentController extends Controller
 {
@@ -25,12 +26,27 @@ class CommentController extends Controller
 
     public function destroy(Comment $comment)
     {
+        if ($comment->user_id !== auth()->id()) {
+            return abort(403);
+        }
+
         $comment->delete();
-        return back();
+        return redirect()->back()->with('success', 'Komentar berhasil dihapus.');
     }
 
-    public function report(Comment $comment)
+    public function report(Request $request, Comment $comment)
     {
-        //
+        $request->validate([
+            'comment_id' => 'required|exists:comments,id',
+            'report_id' => 'required|exists:reports,id'
+        ]);
+
+        $report = new CommentReport();
+        $report->comment_id = $comment->id;
+        $report->report_id = $request->report_id;
+        $report->save();
+
+        return back()->with('success', 'Post telah dilaporkan.');
     }
 }
+
