@@ -45,7 +45,7 @@ Route::middleware('notBanned')->group(function () {
 Route::middleware(['auth', 'notBanned'])->group(function () {
 
     // Yuna
-    Route::get('/posts/{post:slug}/report', [PostController::class, 'report'])->name('post.report');
+    Route::post('/posts/{post:slug}/report', [PostController::class, 'report'])->name('post.report');
 
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');

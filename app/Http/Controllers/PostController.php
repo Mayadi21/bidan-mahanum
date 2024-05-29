@@ -77,7 +77,7 @@ class PostController extends Controller
         ]);
     }
 
-    public function storeReport(Request $request, Post $post)
+    public function report(Request $request, Post $post)
     {
         $request->validate([
             'post_id' => 'required|exists:posts,id',
@@ -92,18 +92,4 @@ class PostController extends Controller
         return redirect()->route('post.show', $post->slug)->with('success', 'Post telah dilaporkan.');
     }
 
-    public function report(Request $request, Comment $comment)
-    {
-        $request->validate([
-            'comment_id' => 'required|exists:comment,id',
-            'report_id' => 'required|exists:reports,id'
-        ]);
-
-        $report = new CommentReport();
-        $report->comment_id = $comment->id;
-        $report->report_id = $request->report_id;
-        $report->save();
-
-        return redirect()->route('post.show', $post->slug)->with('success', 'Post telah dilaporkan.');
-    }
 }

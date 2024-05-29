@@ -46,7 +46,7 @@ class CommentController extends Controller
         $report->report_id = $request->report_id;
         $report->save();
 
-        return back()->with('success', 'Post telah dilaporkan.');
+        return back()->with('success', 'Comment telah dilaporkan.');
     }
 }
 
