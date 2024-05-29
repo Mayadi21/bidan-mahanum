@@ -34,7 +34,6 @@
                         </div>
                         <div class="modal-body">
                             <form action="{{ route('post.report', $post->slug) }}" method="post">
-                                @method('PUT')
                                 @csrf
                                 <input type="hidden" name="post_id" value="{{ $post->id }}">
                                 @foreach($reports as $report)
@@ -51,7 +50,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-warning">Hide</button>
+                            <button type="submit" class="btn btn-warning">Report</button>
                         </div>
                         </form>
                     </div>
