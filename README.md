@@ -21,8 +21,10 @@
 ### Guest
 
 - Melihat daftar post.
-  - Semua post, berdasarkan kategori, pengguna, kata kunci search
-  - Urutkan berdasarkan terbaru, terpopuler
+  - Daftar semua post
+  - Daftar post berdasarkan kategori
+  - Daftar post berdasarkan pengguna
+  - Daftar post berdasarkan kata kunci judul
 - Melihat tulisan post
 - Login & register
 - Verifikasi email & lupa sandi
@@ -46,8 +48,7 @@
   - Membuat, menghapus, memperbarui post
   - Mengubah status post (published/draft)
 - Daftar comment.
-  - Mencari komentar dari post sendiri
-  - Menghapus komentar dari post sendiri
+  - Melihat komentar dari post sendiri
 
  ### Admin (Dashboard)
 
