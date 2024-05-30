@@ -64,7 +64,7 @@
             </div>
             <div class="col-md-4">
                 <div class="card mb-4">
-                    <img src="{{ asset('storage/post-images/2Cd4TX0LqeKY4KOnbGMMQO743ezzTBOlIa7NQesv.png') }}" class="card-img-top" style="height: 12em; object-fit: cover" alt="Team Member 1">
+                    <img src="{{ asset('images/jessi.jpg') }}" class="card-img-top" style="height: 12em; object-fit: cover" alt="Team Member 1">
                     <div class="card-body">
                         <h5 class="card-title">Jessica Eldamaris Maha</h5>
                         <p class="card-text">231402101</p>
