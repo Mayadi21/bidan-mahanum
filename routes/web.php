@@ -44,7 +44,6 @@ Route::middleware('notBanned')->group(function () {
 
 Route::middleware(['auth', 'notBanned'])->group(function () {
 
-    // Yuna
     Route::post('/posts/{post:slug}/report', [PostController::class, 'report'])->name('post.report');
 
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
@@ -53,7 +52,7 @@ Route::middleware(['auth', 'notBanned'])->group(function () {
 
     Route::post('/comment', [CommentController::class, 'store'])->name('comment.store');
     Route::delete('/comment/{comment}', [CommentController::class, 'destroy'])->name('comment.destroy');
-    // Yuna
+
     Route::post('/comment/{comment}/report', [CommentController::class, 'report'])->name('comment.report');
 
 });

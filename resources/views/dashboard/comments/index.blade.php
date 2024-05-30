@@ -8,6 +8,12 @@
         </h1>
     </div>
 
+    @if(session('success'))
+        <div class="alert alert-success col-lg-8">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <div class="table-responsive small col-lg-8">
         <table class="table table-striped table-sm">
             <thead>
@@ -32,9 +38,9 @@
                         </a>
                         
                         <!-- Button trigger modal -->
-                        @if($active !== 'comments')
                         <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $comment->id }}">
-                            <i class="bi bi-x-octagon-fill"></i>
+                            @if($active === 'admin-comments') <i class="bi bi-x-octagon-fill"></i>
+                            @else <i class="bi bi-flag-fill"></i> @endif
                         </button>
                         
                         <!-- Modal -->
@@ -42,11 +48,14 @@
                             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h1 class="modal-title fs-3" id="exampleModalLabel{{ $comment->id }}">Hide Comment</h1>
+                                        <h1 class="modal-title fs-3" id="exampleModalLabel{{ $comment->id }}">@if($active === 'admin-comments') Hide @else Report @endif Comment</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="{{ route('admin.comments.hide', $comment->id) }}" method="post">
+                                        @php
+                                            $formRoute = $active === 'admin-comments' ? 'admin.comments.hide' : 'dashboard.comments.report';
+                                        @endphp
+                                        <form action="{{ route($formRoute, $comment->id) }}" method="post">
                                             @method('PUT')
                                             @csrf
                                             <input type="hidden" name="comment_id" value="{{ $comment->id }}">
@@ -64,13 +73,12 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                        <button type="submit" class="btn btn-warning">Hide</button>
+                                        <button type="submit" class="btn btn-warning">@if($active === 'admin-comments') Hide @else Report @endif</button>
                                     </div>
                                         </form>
                                 </div>
                             </div>
                         </div>
-                        @endif
                     </td>
                 </tr>           
                 @endforeach

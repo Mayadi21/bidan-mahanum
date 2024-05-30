@@ -13,23 +13,33 @@ use App\Models\CommentReport;
 class PostController extends Controller
 {
     public function index()
-    {        
+    {    
+        $title = 'All Posts';
         $posts = Post::where('status', 'published')
                 ->whereNull('posts.report_id')
                 ->whereHas('user', function ($query) {
                     $query->whereNull('report_id');
                 })
                 ->orderBy('updated_at', 'desc')
-                ->get()
         ;
+
+        if(request('search')) {
+            $search = request('search');
+            $posts = $posts->where(function($query) use ($search) {
+                $query->where('title', 'like', '%' . $search . '%')
+                    ->orWhere('excerpt', 'like', '%' . $search . '%');
+            });
+            $title = 'Search Result: ' . request('search');
+        }
 
         return view('blog.posts', [
             'page' => 'All Posts',
-            'title' => 'All Posts',
-            'posts' => $posts,
+            'title' => $title,
+            'posts' => $posts->get(),
             'active' => 'posts'
         ]);
     }
+
 
     public function show(Post $post)
     {
@@ -89,7 +99,7 @@ class PostController extends Controller
         $report->report_id = $request->report_id;
         $report->save();
 
-        return redirect()->route('post.show', $post->slug)->with('success', 'Post telah dilaporkan.');
+        return redirect()->route('post.show', $post->slug)->with('report', 'Post has been reported.');
     }
 
 }

@@ -12,7 +12,7 @@
     <a href="{{ route('posts.create') }}" class="btn btn-primary mb-3">Create New Post</a>
     @endif
 
-    <div class="table-responsive small col-lg-8">
+    <div class="table-responsive small col-lg-12">
         <table class="table table-striped table-sm">
             <thead>
                 <tr>
@@ -34,17 +34,23 @@
             @foreach ($posts as $item)
                 <tr>
                     <td>{{$loop->iteration}}</td>
-                    <td>{{$item->title}}</td>
+                    <td @if($item->report_id) class="text-danger fw-bold" @endif>{{$item->title}}</td>
+
                     @if($active === 'admin-posts') 
                     <td>{{'@'.$item->user->username}}</td> 
                     @endif
-                    <td>{{$item->category->category_name}}</td>
+
+                    <td @if($item->report_id) class="text-danger fw-bold" @endif>{{$item->category->category_name}}</td>
+
                     @if($active === 'admin-posts') @else
-                    <td>{{$item->status}}</td>
+                    <td @if($item->report_id) class="text-danger fw-bold" @endif>
+                        {{$item->report_id == null ? $item->status : 'Hidden by Admin'}}
+                    </td>
                     @endif
-                    <td>{{$item->view}}</td>
-                    <td>
-                        @if($item->status == 'published') {{$item->updated_at}} 
+
+                    <td @if($item->report_id) class="text-danger fw-bold" @endif>{{$item->view}}</td>
+                    <td @if($item->report_id) class="text-danger fw-bold" @endif>
+                        @if($item->status !== 'draft') {{$item->updated_at}} 
                         @else - @endif
                     </td>
                     <td>
@@ -52,11 +58,14 @@
                             <i class="bi bi-eye-fill"></i>
                         </a>
                         @if($active === 'posts')
+                            @if($item->report_id == null)
                             <a href="{{ route('posts.edit', $item->slug) }}" class="btn btn-sm btn-outline-secondary">
                                 <i class="bi bi-pencil-fill"></i>
                             </a>
+                            @endif
                         @endif
                         @if($active === 'posts')
+                            @if($item->report_id == null)
                             <form action="{{ route('posts.destroy', $item->slug) }}" method="POST" class="delete-form" style="display: inline-block;">
                                 @csrf
                                 @method('DELETE')
@@ -64,6 +73,7 @@
                                     <i class="bi bi-trash-fill"></i>
                                 </button>
                             </form>
+                            @endif
                         @else
                             <!-- Button trigger modal -->
                             <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $item->id }}">

@@ -42,16 +42,15 @@ class AdminPostReportsController extends Controller
         Post::where('id', $post_id)->update(['report_id' => $report_id]);
         PostReport::where('post_id', $post_id)->delete();
         return redirect()->back()->with('success', 'Post hidden successfully.');
-
-
     }
 
-    public function deleteReports($postId)
+    public function deleteReports(Request $request)
     {
-        $post = Post::findOrFail($postId);
+        $post = Post::findOrFail($request->input('post_id'));
+        $reportId = $request->input('report_id');
         
-        PostReport::where('post_id', $post->id)->delete();
+        PostReport::where('post_id', $post->id)->where('report_id', $reportId)->delete();
         
-        return redirect()->route('admin.post-reports.index')->with('success', 'All reports for the post have been deleted.');
+        return back()->with('success', 'Post report has been deleted.');
     }
 }

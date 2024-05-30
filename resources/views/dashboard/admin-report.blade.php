@@ -8,6 +8,12 @@
         </h1>
     </div>
 
+    @if(session('success'))
+    <div class="alert alert-success col-lg-8">
+        {{ session('success') }}
+    </div>
+    @endif
+
     <div class="table-responsive small col-lg-8">
         <table class="table table-striped table-sm">
             <thead>
@@ -57,7 +63,7 @@
                                 <input type="hidden" name="comment_id" value="{{ $report->comment->id }}">
                             @endif
                             <input type="hidden" name="report_id" value="{{ $report->report->id }}">
-                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                            <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to approve this report?')">
                                 <i class="bi bi-x-octagon-fill"></i>
                             </button>
                         </form>
@@ -79,8 +85,9 @@
                                         <form action="{{ $active === 'admin-post-reports' ? route('admin.post-reports.delete', $report->post->id) : route('admin.comment-reports.delete', $report->comment->id) }}" method="post">
                                             @csrf
                                             @method('DELETE')
-                                            <p>Are you sure you want to delete all reports for this {{ $active === 'admin-post-reports' ? 'post' : 'comment' }}?</p>
+                                            <p>Are you sure you want to delete this report for this {{ $active === 'admin-post-reports' ? 'post' : 'comment' }}?</p>
                                             <input type="hidden" name="{{ $active === 'admin-post-reports' ? 'post_id' : 'comment_id' }}" value="{{ $active === 'admin-post-reports' ? $report->post->id : $report->comment->id }}">
+                                            <input type="hidden" name="report_id" value="{{ $report->report->id }}">
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

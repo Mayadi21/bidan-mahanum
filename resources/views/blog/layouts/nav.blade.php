@@ -49,8 +49,8 @@
                         </li>
                     @endauth
                 </ul>
-            <form action="{{ route('posts.index') }}" class="d-flex mt-3 mt-lg-0" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <form action="{{ route('post.index') }}" class="d-flex mt-3 mt-lg-0" role="search">
+                <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
             </div>
