@@ -170,7 +170,7 @@
                 <h5 class="modal-title" id="sessionMessageModalLabel">Message</h5>
             </div>
             <div class="modal-body">
-                {{ session('error') }}
+                {{ session('report') }}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -185,7 +185,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
     $(document).ready(function(){
-        @if(session('error'))
+        @if(session('report'))
             $('#sessionMessageModal').modal('show');
         @endif
     });

@@ -24,7 +24,6 @@ class PostsController extends Controller
             'active' => 'posts',
             'posts' => Post::with('category')
                         ->where('user_id', auth()->user()->id)
-                        ->whereNull('report_id')
                         ->latest()
                         ->paginate(10),
         ]);

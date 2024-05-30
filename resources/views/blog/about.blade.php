@@ -24,7 +24,7 @@
             </div>
             <div class="col-md-4">
                 <div class="card mb-4">
-                    <img src="{{ asset('storage/post-images/2Cd4TX0LqeKY4KOnbGMMQO743ezzTBOlIa7NQesv.png') }}" class="card-img-top" alt="Team Member 1">
+                    <img src="{{ asset('images/yuna.jpg') }}" class="card-img-top" style="height: 12em; object-fit: cover" alt="Team Member 1">
                     <div class="card-body">
                         <h5 class="card-title">Yuna Dhuha</h5>
                         <p class="card-text">231402007</p>
@@ -34,7 +34,7 @@
             </div>
             <div class="col-md-4">
                 <div class="card mb-4">
-                    <img src="{{ asset('storage/post-images/2Cd4TX0LqeKY4KOnbGMMQO743ezzTBOlIa7NQesv.png') }}" class="card-img-top" alt="Team Member 1">
+                    <img src="{{ asset('images/safna.jpg') }}" class="card-img-top" style="height: 12em; object-fit: cover" alt="Team Member 1">
                     <div class="card-body">
                         <h5 class="card-title">Safna Yuninda</h5>
                         <p class="card-text">231402025</p>
@@ -44,7 +44,7 @@
             </div>
             <div class="col-md-4">
                 <div class="card mb-4">
-                    <img src="{{ asset('storage/post-images/2Cd4TX0LqeKY4KOnbGMMQO743ezzTBOlIa7NQesv.png') }}" class="card-img-top" alt="Team Member 1">
+                    <img src="{{ asset('images/refael.jpg') }}" class="card-img-top" style="height: 12em; object-fit: cover" alt="Team Member 1">
                     <div class="card-body">
                         <h5 class="card-title">Refael Juari Siagian</h5>
                         <p class="card-text">231402055</p>
@@ -54,7 +54,7 @@
             </div>
             <div class="col-md-4">
                 <div class="card mb-4">
-                    <img src="{{ asset('storage/post-images/2Cd4TX0LqeKY4KOnbGMMQO743ezzTBOlIa7NQesv.png') }}" class="card-img-top" alt="Team Member 1">
+                    <img src="{{ asset('images/ferdy.jpg') }}" class="card-img-top" style="height: 12em; object-fit: cover" alt="Team Member 1">
                     <div class="card-body">
                         <h5 class="card-title">Ferdyan Darwis</h5>
                         <p class="card-text">231402092</p>
@@ -64,7 +64,7 @@
             </div>
             <div class="col-md-4">
                 <div class="card mb-4">
-                    <img src="{{ asset('storage/post-images/2Cd4TX0LqeKY4KOnbGMMQO743ezzTBOlIa7NQesv.png') }}" class="card-img-top" alt="Team Member 1">
+                    <img src="{{ asset('storage/post-images/2Cd4TX0LqeKY4KOnbGMMQO743ezzTBOlIa7NQesv.png') }}" class="card-img-top" style="height: 12em; object-fit: cover" alt="Team Member 1">
                     <div class="card-body">
                         <h5 class="card-title">Jessica Eldamaris Maha</h5>
                         <p class="card-text">231402101</p>
@@ -74,5 +74,4 @@
             </div>
         </div>
     </div>
-
 @endSection

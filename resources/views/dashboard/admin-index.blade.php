@@ -9,7 +9,7 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4"> 
                 <div class="card text-white bg-primary mb-3">
                     <div class="card-header">Posts</div>
                     <div class="card-body">
@@ -19,17 +19,17 @@
             </div>
             <div class="col-md-4">
                 <div class="card text-white bg-success mb-3">
-                    <div class="card-header">Views Total</div>
+                    <div class="card-header">Categories</div>
                     <div class="card-body">
-                        <h5 class="card-title" id="totalViews">{{ $posts->sum('view') }}</h5>
+                        <h5 class="card-title" id="totalViews">{{ $categories->count() }}</h5>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="card text-white bg-warning mb-3">
-                    <div class="card-header">Banned Posts</div>
+                    <div class="card-header">Active User</div>
                     <div class="card-body">
-                        <h5 class="card-title" id="totalViews">100</h5>
+                        <h5 class="card-title" id="totalViews">{{ $users->count() }}</h5>
                     </div>
                 </div>
             </div>

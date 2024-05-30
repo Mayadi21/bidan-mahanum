@@ -42,6 +42,5 @@ class AdminCommentsController extends Controller
 
         Comment::where('id', $comment_id)->update(['report_id' => $report_id]);
         return redirect()->back()->with('success', 'Comment hidden successfully.');
-
     }
 }

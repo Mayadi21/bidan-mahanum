@@ -20,7 +20,7 @@ class AdminCommentReportsController extends Controller
     }
 
     public function show(Comment $comment) {// Mengambil comment daripada post
-        return view('dashboard.admin-report', [
+        return view('dashboard.comments.show', [
             'page' => 'Comment Reports',
             'active' => 'admin-comment-reports',
             'comment' => $comment,
@@ -37,14 +37,14 @@ class AdminCommentReportsController extends Controller
         return redirect()->back()->with('success', 'Comment hidden successfully.'); 
     }
 
-    public function deleteReports($commentId)
+    public function deleteReports(Request $request)
     {
-        $comment = Comment::findOrFail($commentId);
+        $comment = Comment::findOrFail($request->input('comment_id'));
+        $reportId = $request->input('report_id');
         
+        CommentReport::where('comment_id', $comment->id)->where('report_id', $reportId)->delete();
         
-        CommentReport::where('comment_id', $comment->id)->delete();
-        
-        return redirect()->route('admin.comment-reports.index')->with('success', 'All reports for the comment have been deleted.');
+        return back()->with('success', 'Comment report has been deleted.');
     }
 }
 
