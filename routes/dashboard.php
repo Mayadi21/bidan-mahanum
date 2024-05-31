@@ -63,7 +63,6 @@ Route::prefix('dashboard')->middleware(['auth', 'notBanned', 'verified'])->group
         Route::put('/comment-reports/{comment:id}', [AdminCommentReportsController::class, 'hide'])->name('admin.comment-reports.hide');
         Route::delete('/comment-reports/{comment:id}', [AdminCommentReportsController::class, 'deleteReports'])->name('admin.comment-reports.delete');
 
-
     });
 
 });

@@ -66,6 +66,8 @@
     </form>  
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
     const title = document.querySelector('#title');
     const slug = document.querySelector('#slug');

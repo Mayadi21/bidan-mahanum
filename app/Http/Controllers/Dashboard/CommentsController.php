@@ -17,7 +17,8 @@ class CommentsController extends Controller
         // Mendapatkan ID pengguna yang sedang login
         $userId = Auth::id();
 
-        // Mengambil komentar yang berasal dari post yang dimiliki oleh pengguna yang sedang login
+        // Mengambil komentar yang berasal dari post yang
+        // dimiliki oleh pengguna yang sedang login    
         $comments = Comment::whereHas('post', function ($query) use ($userId) {
             $query->where('user_id', $userId);
         })

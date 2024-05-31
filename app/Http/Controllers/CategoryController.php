@@ -10,6 +10,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::orderBy('category_name')->get();
+
         return view('blog.categories', [
             'categories' => $categories,
             'title' => 'All Categories',
