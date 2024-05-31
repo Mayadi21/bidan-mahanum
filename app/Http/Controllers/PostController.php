@@ -56,7 +56,7 @@ class PostController extends Controller
                 })
                 ->orderBy('created_at', 'desc')
                 ->get();
-
+        
         $comments = $post->comments()
             ->whereNull('report_id')
             ->whereHas('user', function ($query) {
@@ -78,6 +78,10 @@ class PostController extends Controller
 
     public function user(User $user)
     {
+        if($user->report_id) {
+            abort(404);
+        }
+
         return view('blog.user', [
             'page' => $user->name,
             'title' => $user->name,
