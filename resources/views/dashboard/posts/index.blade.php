@@ -6,10 +6,29 @@
             @if($active === 'admin-posts') All @else My @endif
             Posts
         </h1>
+        @if($active === 'posts')
+        <div class="btn-group btn-group-sm me-2" role="group" aria-label="Basic outlined example">
+            <form action="{{ route('posts.index') }}" method="get">
+                <button type="submit" name="status" value="published" class="btn btn-outline-primary">Published</button>
+                <button type="submit" name="status" value="draft" class="btn btn-outline-secondary">Draft</button>
+                <button type="submit" name="status" value="hidden" class="btn btn-outline-danger">Hidden</button>
+            </form>
+        </div>
+        @endif
+        <form action="{{ route(($active === 'admin-posts') ? 'admin.posts.index' : 'posts.index') }}" class="d-flex mt-3 mt-lg-0" role="search">
+            <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search" value="{{ request('search') }}">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
     </div>
 
     @if($active === 'posts')
-    <a href="{{ route('posts.create') }}" class="btn btn-primary mb-3">Create New Post</a>
+        <a href="{{ route('posts.create') }}" class="btn btn-primary mb-3">Create New Post</a>
+    @endif
+
+    @if(session('success'))
+        <div class="alert alert-success col-lg-8">
+            {{ session('success') }}
+        </div>
     @endif
 
     <div class="table-responsive small col-lg-12">
@@ -34,6 +53,7 @@
             @foreach ($posts as $item)
                 <tr>
                     <td>{{$loop->iteration}}</td>
+
                     <td @if($item->report_id) class="text-danger fw-bold" @endif>{{$item->title}}</td>
 
                     @if($active === 'admin-posts') 
@@ -49,10 +69,12 @@
                     @endif
 
                     <td @if($item->report_id) class="text-danger fw-bold" @endif>{{$item->view}}</td>
+
                     <td @if($item->report_id) class="text-danger fw-bold" @endif>
                         @if($item->status !== 'draft') {{$item->updated_at}} 
                         @else - @endif
                     </td>
+
                     <td>
                         <a href="{{ route(($active === 'admin-posts') ? 'admin.posts.show' : 'posts.show', $item->slug) }}" class="btn btn-sm btn-outline-primary">
                             <i class="bi bi-eye-fill"></i>
@@ -121,5 +143,5 @@
             </tbody>
         </table>
     </div>
-    {{ $posts->links() }}
+    {{ $posts->appends(request()->all())->links() }}
 @endsection

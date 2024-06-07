@@ -34,7 +34,7 @@ class Comment extends Model
     {
         return $query->whereNotNull('report_id');
     }
-
+  
     public function scopeNotHidden($query)
     {
         return $query->whereNull('report_id');

@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Models\Post;
+use App\Models\Comment;
+use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Post;
 use Illuminate\Support\Facades\Storage;
-use App\Models\Category;
-use App\Models\Comment;
-use App\Http\Requests\StorePostRequest;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
 
 class PostsController extends Controller
@@ -19,13 +18,35 @@ class PostsController extends Controller
      */
     public function index()
     {
+        $post = Post::with('category')->user(auth()->user()->id);
+
+        if(request('status')){
+
+            $status = request('status');
+
+            switch($status){
+                case 'published':
+                    $post->notHidden()->status('published');
+                    break;
+                case 'draft':
+                    $post->notHidden()->status('draft');
+                    break;
+                case 'hidden':
+                    $post->hidden();
+                    break;
+            }
+
+        } else if (request('search')) {
+            $search = request('search');
+            $post->search($search);
+        } else {
+            $post->notHidden()->status('published');
+        }
+
         return view('dashboard.posts.index', [
             'page' => 'All Posts',
             'active' => 'posts',
-            'posts' => Post::with('category')
-                        ->where('user_id', auth()->user()->id)
-                        ->latest()
-                        ->paginate(10),
+            'posts' => $post->latest()->paginate(10),
         ]);
     }
 
@@ -71,14 +92,8 @@ class PostsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($slug)
+    public function show(Post $post)
     {
-        $post = Post::where('slug', $slug)->firstOrFail();
-
-        if($post->report_id !== NULL){
-            return abort(404);
-        }
-
         return view('dashboard.posts.show', [
             'page'=> $post->title,
             'active' => 'posts',
@@ -90,16 +105,13 @@ class PostsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($slug)
+    public function edit(Post $post)
     {
-        $post = Post::where('slug', $slug)->firstOrFail(); // Mengambil data post dari database berdasarkan slug
-        $categories = Category::orderBy('category_name', 'asc')->get();
-
         return view('dashboard.posts.edit', [
             'page' => 'Edit Post',
             'active' => 'posts',
             'post' => $post,
-            'categories' => $categories
+            'categories' => Category::orderBy('category_name', 'asc')->get()
         ]);
     }
 
@@ -116,14 +128,13 @@ class PostsController extends Controller
             'status'=> 'required'
         ];
         
-        
         $validatedData = $request->validate($rules);
         
         if($request->file('image')) {
             if($request->oldImage) {
-                Storage::delete($request->oldImage); // menghapus gambar lama dari folder storage
+                Storage::delete($request->oldImage);
             }
-            $validatedData['image'] = $request->file('image')->store('post-images'); // menyimpan di storage/app/public/post-images
+            $validatedData['image'] = $request->file('image')->store('post-images');
         }
         
         

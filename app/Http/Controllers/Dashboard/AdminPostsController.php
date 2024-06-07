@@ -12,24 +12,24 @@ class AdminPostsController extends Controller
     public function index()
     {
         $posts = Post::with('category')
-            ->where('status', 'published')
-            ->whereNull('report_id')
-            ->orderBy('updated_at', 'desc')
-            ->paginate(10)
+            ->status('published')
+            ->notHidden()
         ;
+
+        if(request('search')){
+            $posts->filteredSearch(request('search'));
+        }
 
         return view('dashboard.posts.index', [
             'page' => 'All Posts',
             'active' => 'admin-posts',
-            'posts' => $posts,
+            'posts' => $posts->orderBy('updated_at', 'desc')->paginate(10),
             'reports' => Report::all()
         ]);
     }
 
     public function show(Post $post)
-    {
-        $post = Post::where('slug', $post->slug)->firstOrFail();
-        
+    {        
         if($post->report_id !== NULL){
             return abort(404);
         }
@@ -45,12 +45,11 @@ class AdminPostsController extends Controller
 
     public function hide(Request $request)
     {
-        
         $post_id = $request->input('post_id');
         $report_id = $request->input('report_id');
         
-        Post::where('id', $post_id)->update(['report_id' => $report_id]);
+        Post::where('id', $post_id)
+            ->update(['report_id' => $report_id]);
         return redirect()->back()->with('success', 'Post hidden successfully.');
-        
     }
 }

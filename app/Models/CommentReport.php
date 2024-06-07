@@ -22,4 +22,26 @@ class CommentReport extends Model
     {
         return $this->belongsTo(Report::class);
     }
+
+    public function scopeHasNotHiddenPost($query)
+    {
+        return $query->whereHas('comment.post', function ($query) {
+            $query->whereNull('report_id');
+        });
+    }
+
+    public function scopeSearch($query, $search)
+    {
+        return $query->where(function($query) use ($search) {
+            $query->whereHas('comment', function($query) use ($search) {
+                    $query->where('body', 'like', '%' . $search . '%');
+                })
+                ->orWhereHas('report', function($query) use ($search) {
+                    $query->where('report_name', 'like', '%' . $search . '%');
+                })
+                ->orWhereHas('comment.post', function($query) use ($search) {
+                    $query->where('title', 'like', '%' . $search . '%');
+                });
+        });
+    }
 }

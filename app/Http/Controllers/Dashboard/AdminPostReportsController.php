@@ -13,12 +13,16 @@ class AdminPostReportsController extends Controller
 {
     public function index()
     {
-        $reports = PostReport::with('post')->paginate(10);
+        $reports = PostReport::with('post')->hasNotHiddenPost();
+
+        if(request('search')){
+            $reports->search(request('search'));
+        }
 
         return view('dashboard.admin-report', [
             'page' => 'Post Reports',
             'active' => 'admin-post-reports',
-            'reports' => $reports,
+            'reports' => $reports->paginate(10),
         ]);
     }
 
