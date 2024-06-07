@@ -6,6 +6,10 @@
             @if($active === 'admin-comments') All @else My @endif
             Comments
         </h1>
+        <form action="{{ route(($active === 'admin-comments') ? 'admin.comments.index' : 'dashboard.comments.index') }}" class="d-flex mt-3 mt-lg-0" role="search">
+            <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search" value="{{ request('search') }}">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
     </div>
 
     @if(session('success'))
@@ -14,7 +18,7 @@
         </div>
     @endif
 
-    <div class="table-responsive small col-lg-8">
+    <div class="table-responsive small col-lg-12">
         <table class="table table-striped table-sm">
             <thead>
                 <tr>
@@ -85,5 +89,5 @@
             </tbody>
         </table>
     </div>
-    {{ $comments->links() }}
+    {{ $comments->appends(request()->all())->links() }}
 @endsection

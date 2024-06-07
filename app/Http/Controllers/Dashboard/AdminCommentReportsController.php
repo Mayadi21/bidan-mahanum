@@ -11,11 +11,16 @@ class AdminCommentReportsController extends Controller
 {
     public function index()
     {
-        $reports = CommentReport::with('comment')->paginate(10); // Ubah relasi 'post' menjadi 'comment'
+        $reports = CommentReport::with('comment')->hasNotHiddenPost();
+
+        if (request('search')) {
+            $reports->search(request('search'));
+        }
+
         return view('dashboard.admin-report', [
             'page' => 'Comment Reports',
             'active' => 'admin-comment-reports',
-            'reports' => $reports,
+            'reports' => $reports->paginate(10),
         ]);
     }
 
