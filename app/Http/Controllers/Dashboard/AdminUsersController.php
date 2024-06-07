@@ -13,26 +13,34 @@ class AdminUsersController extends Controller
 {
     public function index()
     {
-        // Mengambil data user yang active
-        $users = User::where('role', 'user')->whereNull('report_id')->get();
-    
-        // Mengambil data jumlah laporan postingan dan komentar untuk setiap pengguna
-        $userReports = $this->getUserReports($users);
+        if(request('status')) {
+            switch(request('status')) {
+                case 'banned':
+                    $users = User::banned();
+                    break;
+                case 'active':
+                    $users = User::active()->role('user');
+                    break;
+                case 'admin':
+                    $users = User::active()->role('admin');
+                    break;
+            }
+        } else {
+            $users = User::active()->role('user');
+        }
 
-        // Mengambil data admin
-        $admins = User::where('role', 'admin')->get();
+        if(request('search')) {
+            $users = $users->search(request('search'));
+        }
 
-        // Mengambil data user yang sudah di-ban
-        $bannedUsers = User::whereNotNull('report_id')->get();
+        $userReports = $this->getUserReports($users->get());
 
         $reports = Report::all();
     
         return view('dashboard.admin-users.index', [
             'page' => 'Admin Users',
             'active' => 'admin-users',
-            'users' => $users,
-            'admins' => $admins,
-            'bannedUsers' => $bannedUsers,
+            'users' => $users->get(),
             'userReports' => $userReports,
             'reports' => $reports,
         ]);
@@ -40,12 +48,32 @@ class AdminUsersController extends Controller
 
     public function show(User $user)
     {
+        if(request('hidden')){
+            switch(request('hidden')) {
+                case 'posts':
+                    $hidden = $user->posts();
+                    $title = 'Hidden Posts';
+                    break;
+                case 'comments':
+                    $hidden = $user->comments();
+                    $title = 'Hidden Comments';
+                    break;
+            }
+        } else {
+            $hidden = $user->posts();
+            $title = 'Hidden Posts';
+        }
+
+        if(request('search')) {
+            $hidden->search(request('search'));
+        }
+
         return view('dashboard.admin-users.detail', [
             'page' => 'Admin Users',
             'active' => 'admin-users',
             'user' => $user,
-            'hiddenPosts' => $user->posts()->whereNotNull('report_id')->get(),
-            'hiddenComments' => $user->comments()->whereNotNull('report_id')->get(),
+            'hidden' => $hidden->hidden()->paginate(10),
+            'title' => $title
         ]);
     }
 
@@ -110,9 +138,6 @@ class AdminUsersController extends Controller
         return redirect()->back()->with('success', 'User has been deleted successfully.');
     }
     
-
-
-// Fungsi baru untuk menghitung jumlah report postingan dan komentar pengguna
     private function getUserReports($users)
     {
         $userReports = [];

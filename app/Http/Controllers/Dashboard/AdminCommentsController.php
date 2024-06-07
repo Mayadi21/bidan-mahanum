@@ -11,18 +11,25 @@ class AdminCommentsController extends Controller
 {
     public function index()
     {
+        $comment = Comment::with('post')
+                    ->notHidden()
+                    ->hasNotBannedUser()
+                    ->hasNotHiddenPost();
+
+        if (request('search')) {
+            $comment->filteredSearch(request('search'));
+        }
+
         return view('dashboard.comments.index', [
             'page' => 'All Comments',
             'active' => 'admin-comments',
-            'comments' => Comment::with('post')->whereNull('report_id')->latest()->paginate(10),
+            'comments' => $comment->latest()->paginate(10),
             'reports' => Report::all()
         ]);
     }
 
     public function show(Comment $comment)
     {
-        $comment = Comment::where('id', $comment->id)->firstOrFail();
-
         if ($comment->report_id !== null) {
             return abort(404);
         }
