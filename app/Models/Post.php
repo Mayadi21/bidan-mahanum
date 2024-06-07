@@ -37,6 +37,55 @@ class Post extends Model
         return $this->hasMany(Report::class);
     }
 
+    public function scopeStatus($query, $status)
+    {
+        return $query->where('status', $status);
+    }
+
+    public function scopeUser($query, $user)
+    {
+        return $query->where('user_id', $user);
+    }
+
+    public function scopeHidden($query)
+    {
+        return $query->whereNotNull('report_id');
+    }
+
+    public function scopeNotHidden($query)
+    {
+        return $query->whereNull('report_id');
+    }
+
+    public function scopeSearch($query, $search)
+    {
+        return $query->where(function($query) use ($search) {
+            $query->where('title', 'like', '%' . $search . '%')
+                ->orWhereHas('category', function($query) use ($search) {
+                    $query->where('category_name', 'like', '%' . $search . '%');
+                });
+        });
+    }
+
+    public function scopeFilteredSearch($query, $search)
+    {
+        return $query->where(function($query) use ($search) {
+            $query->where('title', 'like', '%' . $search . '%')
+                ->orWhereHas('category', function($query) use ($search) {
+                    $query->where('category_name', 'like', '%' . $search . '%');
+                })
+                ->orWhereHas('user', function($query) use ($search) {
+                    $query->where('username', 'like', '%' . $search . '%')
+                            ->orWhere('name', 'like', '%' . $search . '%');
+                });
+        })
+        ->whereNull('report_id')
+        ->whereHas('user', function($query) {
+            $query->whereNull('report_id');
+        });
+    }
+
+
     public function getRouteKeyName()
     {
         return 'slug';
@@ -44,9 +93,9 @@ class Post extends Model
 
     public function incrementViews()
     {
-        $this->timestamps = false; // Nonaktifkan timestamps
-        $this->increment('view'); // Perbarui views
-        $this->timestamps = true; // Aktifkan kembali timestamps
+        $this->timestamps = false;
+        $this->increment('view');
+        $this->timestamps = true;
     }
 
     public function sluggable(): array

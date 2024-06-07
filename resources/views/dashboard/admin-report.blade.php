@@ -6,6 +6,13 @@
             @if($active === 'admin-post-reports') Post @else Comment @endif
             Reports
         </h1>
+        @php
+            $searchRouteName = $active === 'admin-post-reports' ? 'admin.post-reports.index' : 'admin.comment-reports.index';
+        @endphp
+        <form action="{{ route($searchRouteName) }}" class="d-flex mt-3 mt-lg-0" role="search">
+            <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search" value="{{ request('search') }}">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
     </div>
 
     @if(session('success'))
@@ -14,7 +21,7 @@
     </div>
     @endif
 
-    <div class="table-responsive small col-lg-8">
+    <div class="table-responsive small col-lg-12">
         <table class="table table-striped table-sm">
             <thead>
                 <tr>
@@ -103,5 +110,5 @@
             </tbody>
         </table>
     </div>
-    {{ $reports->links() }}
+    {{ $reports->appends(request()->all())->links() }}
 @endsection
