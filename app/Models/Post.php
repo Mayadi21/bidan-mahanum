@@ -63,6 +63,9 @@ class Post extends Model
             $query->where('title', 'like', '%' . $search . '%')
                 ->orWhereHas('category', function($query) use ($search) {
                     $query->where('category_name', 'like', '%' . $search . '%');
+                })
+                ->orWhereHas('report', function($query) use ($search) {
+                    $query->where('report_name', 'like', '%' . $search . '%');
                 });
         });
     }

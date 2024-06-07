@@ -16,6 +16,9 @@
                         <img src="{{ asset('img/profile-pict.jpg')}}" class="img-preview img-fluid mb-3 col-sm-5 d-block rounded-circle" alt= "Profile Photo" style="width: 100px; height: 100px">
                         @endif
                         <input class="form-control" type="file" id="image" name="image" onchange="previewImage()">
+                        @error('image')
+                            <p class="text-danger">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="mb-3 mx-5">
                         <label for="name" class="form-label">Name</label>
@@ -24,6 +27,9 @@
                     <div class="mb-3 mx-5">
                         <label for="username" class="form-label">Username</label>
                         <input type="text" class="form-control" id="username" name="username" required autofocus value="{{ $user->username }}">
+                        @error('username')
+                            <p class="text-danger">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="mb-3 mx-5">
                         <label for="bio" class="form-label">Bio</label>

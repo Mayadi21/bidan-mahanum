@@ -30,6 +30,11 @@ class Comment extends Model
         return $this->hasMany(CommentReport::class);
     }
 
+    public function scopeHidden($query)
+    {
+        return $query->whereNotNull('report_id');
+    }
+  
     public function scopeNotHidden($query)
     {
         return $query->whereNull('report_id');
@@ -57,6 +62,19 @@ class Comment extends Model
     }
 
     public function scopeSearch($query, $search)
+    {
+        return $query->where(function($query) use ($search) {
+            $query->where('body', 'like', '%' . $search . '%')
+                ->orWhereHas('post', function($query) use ($search) {
+                    $query->where('title', 'like', '%' . $search . '%');
+                })
+                ->orWhereHas('report', function($query) use ($search) {
+                    $query->where('report_name', 'like', '%' . $search . '%');
+                });
+        });
+    }
+
+    public function scopeFilteredSearch($query, $search)
     {
         return $query->where(function($query) use ($search) {
             $query->where('body', 'like', '%' . $search . '%')

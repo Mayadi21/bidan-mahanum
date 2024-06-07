@@ -55,6 +55,32 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsTo(Report::class);
     }
 
+    public function scopeRole($query, $role)
+    {
+        return $query->where('role', $role);
+    }
+
+    public function scopeBanned($query)
+    {
+        return $query->whereNotNull('report_id');
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->whereNull('report_id');
+    }
+
+    public function scopeSearch($query, $search)
+    {
+        return $query->where(function($query) use ($search) {
+            $query->where('name', 'like', '%' . $search . '%')
+                ->orWhere('username', 'like', '%' . $search . '%')
+                ->orWhereHas('report', function($query) use ($search) {
+                    $query->where('report_name', 'like', '%' . $search . '%');
+                });
+        });
+    }
+
     public function maskedEmail()
     {
         $email = $this->email;

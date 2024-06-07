@@ -17,7 +17,7 @@ class AdminCommentsController extends Controller
                     ->hasNotHiddenPost();
 
         if (request('search')) {
-            $comment->search(request('search'));
+            $comment->filteredSearch(request('search'));
         }
 
         return view('dashboard.comments.index', [

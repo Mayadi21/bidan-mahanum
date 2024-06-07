@@ -20,7 +20,7 @@ class CommentsController extends Controller
                     ->hasNotHiddenPost();
 
         if(request('search')) {
-            $comments->search(request('search'));
+            $comments->filteredSearch(request('search'));
         }
     
         return view('dashboard.comments.index', [
