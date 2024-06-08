@@ -13,10 +13,17 @@ class PostReportSeeder extends Seeder
      */
     public function run(): void
     {
-        for($i = 0; $i < 10; $i++) {
+        $reportIds = [2, 7, 8];
+        $postIds = [];
+
+        for($i = 1; $i < 200; $i+=5) {
+            $postIds[] = $i;
+        }
+
+        for($i = 0; $i < 20; $i++) {
             PostReport::create([
-                'post_id' => rand(1, 100),
-                'report_id' => rand(1, 14),
+                'post_id' => $postIds[array_rand($postIds)],
+                'report_id' => $reportIds[array_rand($reportIds)],
             ]);
         }
     }

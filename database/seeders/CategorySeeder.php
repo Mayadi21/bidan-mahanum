@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
 use App\Models\Category;
 
@@ -21,7 +22,7 @@ class CategorySeeder extends Seeder
             'Career Development', 'Finance & Investment', 'Real Estate',
             'Education & Learning', 'Art & Design', 'Fitness & Exercise',
             'Science & Innovation', 'Music', 'Literature & Writing', 'Motorsports',
-            'Spirituality & Mindfulness', 'History'
+            'Spirituality & Mindfulness', 'History', 'Others'
         ];
 
         $categories_slug = [
@@ -32,7 +33,7 @@ class CategorySeeder extends Seeder
             'career-development', 'finance-and-investment', 'real-estate',
             'education-and-learning', 'art-and-design', 'fitness-and-exercise',
             'science-and-innovation', 'music', 'literature-and-writing', 'motorsports',
-            'spirituality-and-mindfulness', 'history'
+            'spirituality-and-mindfulness', 'history', 'others'
         ];
 
         foreach ($categories as $category) {

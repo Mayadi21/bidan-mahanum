@@ -9,7 +9,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::orderBy('category_name')->get();
+        $categories = Category::orderByRaw("category_name = 'Others' ASC")->orderBy('category_name')->get();
 
         return view('blog.categories', [
             'categories' => $categories,
@@ -22,11 +22,9 @@ class CategoryController extends Controller
     public function show(Category $category)
     {
         $posts = $category->posts()
-            ->where('status', 'published')
-            ->whereNull('report_id')
-            ->whereHas('user', function ($query) {
-                $query->whereNull('report_id');
-            })
+            ->status('published')
+            ->notHidden()
+            ->hasNotBannedUser()
             ->get()
         ;
 

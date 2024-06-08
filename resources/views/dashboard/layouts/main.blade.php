@@ -17,6 +17,11 @@
             display: none; 
         }
 
+        input[readonly] {
+            background-color: #e9ecef; /* Warna latar belakang yang sama dengan disabled */
+            cursor: not-allowed; /* Ganti kursor untuk menunjukkan tidak dapat diedit */
+        }
+
         blockquote {
             margin: 20px 40px;
             padding: 10px 20px;

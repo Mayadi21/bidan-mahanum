@@ -15,20 +15,15 @@ class PostController extends Controller
     public function index()
     {    
         $title = 'All Posts';
-        $posts = Post::where('status', 'published')
-                ->whereNull('posts.report_id')
-                ->whereHas('user', function ($query) {
-                    $query->whereNull('report_id');
-                })
+        $posts = Post::status('published')
+                ->notHidden()
+                ->hasNotBannedUser()
                 ->orderBy('updated_at', 'desc')
         ;
 
         if(request('search')) {
             $search = request('search');
-            $posts = $posts->where(function($query) use ($search) {
-                $query->where('title', 'like', '%' . $search . '%')
-                    ->orWhere('excerpt', 'like', '%' . $search . '%');
-            });
+            $posts = $posts->filteredSearch($search);
             $title = 'Search Result: ' . request('search');
         }
 

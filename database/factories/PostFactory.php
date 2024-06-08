@@ -20,8 +20,7 @@ class PostFactory extends Factory
             'user_id' => $this->faker->numberBetween(1, 12),
             'category_id' => $this->faker->numberBetween(1, 30),
             'report_id' => $this->faker->randomElement(
-                [NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-                1, 3, 7, 8, 11, 12]
+                [NULL, NULL, NULL, NULL, NULL, NULL, 8, 11, 12]
             ),
 
             'title' => $this->faker->sentence(),

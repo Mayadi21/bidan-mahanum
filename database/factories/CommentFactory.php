@@ -18,10 +18,9 @@ class CommentFactory extends Factory
     {
         return [
             'user_id' => $this->faker->numberBetween(1, 12),
-            'post_id' => $this->faker->numberBetween(1, 100),
+            'post_id' => $this->faker->numberBetween(1, 200),
             'report_id' => $this->faker->randomElement(
-                [NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-                1, 5, 10, 11]
+                [NULL, NULL, NULL, NULL, NULL, NULL, 10, 11]
             ),
 
             'body' => $this->faker->sentence(),

@@ -13,7 +13,7 @@
 
         <div class="mb-3">
             <label for="category_name" class="form-label">Category Name</label>
-            <input type="text" class="form-control" id="category_name" name="category_name" value="{{$category->category_name}}" required autofocus>
+            <input type="text" id="disabledTextInput" class="form-control" id="category_name" name="category_name" value="{{$category->category_name}}" required @if($category->id == '31') readonly @else autofocus @endif>
         </div>
         @error('title')
             <p class="text-danger">{{ $message }}</p>
