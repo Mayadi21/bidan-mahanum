@@ -14,7 +14,8 @@ class AdminCommentsController extends Controller
         $comment = Comment::with('post')
                     ->notHidden()
                     ->hasNotBannedUser()
-                    ->hasNotHiddenPost();
+                    ->hasNotHiddenPost()
+                    ->hasPublishedPost();
 
         if (request('search')) {
             $comment->filteredSearch(request('search'));

@@ -113,7 +113,7 @@ class PostsController extends Controller
             'page' => 'Edit Post',
             'active' => 'posts',
             'post' => $post,
-            'categories' => Category::orderBy('category_name', 'asc')->get()
+            'categories' => Category::orderByRaw("category_name = 'Others' ASC")->orderBy('category_name', 'asc')->get()
         ]);
     }
 

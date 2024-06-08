@@ -60,6 +60,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $query->where('role', $role);
     }
 
+    public function scopeNotBanned($query)
+    {
+        return $query->whereNull('report_id');
+    }
+
     public function scopeBanned($query)
     {
         return $query->whereNotNull('report_id');

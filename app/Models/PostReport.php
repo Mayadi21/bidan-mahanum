@@ -30,6 +30,13 @@ class PostReport extends Model
         });
     }
 
+    public function scopePublishedPost($query)
+    {
+        return $query->whereHas('post', function ($query) {
+            $query->where('status', 'published');
+        });
+    }
+
     public function scopeSearch($query, $search)
     {
         return $query->where(function($query) use ($search) {

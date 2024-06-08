@@ -11,7 +11,10 @@ class AdminCommentReportsController extends Controller
 {
     public function index()
     {
-        $reports = CommentReport::with('comment')->hasNotHiddenPost();
+        $reports = CommentReport::with('comment')
+                ->hasNotBannedUser()
+                ->hasNotHiddenPost()
+                ->hasPublishedPost();
 
         if (request('search')) {
             $reports->search(request('search'));

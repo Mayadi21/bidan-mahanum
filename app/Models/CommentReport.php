@@ -30,6 +30,20 @@ class CommentReport extends Model
         });
     }
 
+    public function scopeHasPublishedPost($query)
+    {
+        return $query->whereHas('comment.post', function ($query) {
+            $query->where('status', 'published');
+        });
+    }
+
+    public function scopeHasNotBannedUser($query)
+    {
+        return $query->whereHas('comment.user', function ($query) {
+            $query->whereNull('report_id');
+        });
+    }
+
     public function scopeSearch($query, $search)
     {
         return $query->where(function($query) use ($search) {

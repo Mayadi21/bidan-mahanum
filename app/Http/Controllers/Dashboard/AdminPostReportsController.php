@@ -13,7 +13,9 @@ class AdminPostReportsController extends Controller
 {
     public function index()
     {
-        $reports = PostReport::with('post')->hasNotHiddenPost();
+        $reports = PostReport::with('post')
+                ->hasNotHiddenPost()
+                ->publishedPost();
 
         if(request('search')){
             $reports->search(request('search'));

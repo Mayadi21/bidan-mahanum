@@ -15,7 +15,7 @@
                     @if($post->image)
                     <img src=" {{ asset('storage/' . $post->image) }}" style="height: 13em; overflow: hidden;" class="card-img-top" alt="{{ $post->title }}" >
                     @else
-                    <img src="https://picsum.photos/seed/{{ $post->category }}/500/300" class="card-img-top" alt="{{ $post->category->category_name }}">
+                    <img src="https://picsum.photos/seed/{{ $post->category->category_name }}/500/300" class="card-img-top" alt="{{ $post->category->category_name }}">
                     @endif
                     <div class="card-body">
                         <h5 class="card-title d-flex align-items-center" style="height: 3em; overflow: hidden;">{{ $post->title }}</h5>
