@@ -57,6 +57,13 @@ class Post extends Model
         return $query->whereNull('report_id');
     }
 
+    public function scopeHasNotBannedUser($query)
+    {
+        return $query->whereHas('user', function ($query) {
+            $query->whereNull('report_id');
+        });
+    }
+
     public function scopeSearch($query, $search)
     {
         return $query->where(function($query) use ($search) {

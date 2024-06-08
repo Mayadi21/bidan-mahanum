@@ -18,11 +18,13 @@ class AdminCategoriesController extends Controller
      */
     public function index()
     {
+        $categories = Category::orderByRaw("category_name = 'Others' ASC");
+
         if(request('search')) {
             $search = request('search');
-            $categories = Category::search($search)->paginate(10);
+            $categories = $categories->search($search)->paginate(10);
         } else {
-            $categories = Category::paginate(10);
+            $categories = $categories->paginate(10);
         }
 
         return view('dashboard.admin-categories.index', [

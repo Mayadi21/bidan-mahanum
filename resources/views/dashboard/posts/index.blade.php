@@ -16,6 +16,9 @@
         </div>
         @endif
         <form action="{{ route(($active === 'admin-posts') ? 'admin.posts.index' : 'posts.index') }}" class="d-flex mt-3 mt-lg-0" role="search">
+            @if($active !== 'admin-posts' && request('status'))
+            <input type="hidden" name="status" value="{{ request('status') }}">
+            @endif
             <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search" value="{{ request('search') }}">
             <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
@@ -42,7 +45,9 @@
                 @endif
                 <th scope="col">Category</th>
                 @if($active === 'admin-posts') @else
-                <th scope="col">Status</th>
+                <th scope="col">
+                    @if(request('status' !== 'banned')) Status @else Report @endif
+                </th>
                 @endif
                 <th scope="col">View</th>
                 <th scope="col">Publish Date</th>
@@ -64,7 +69,7 @@
 
                     @if($active === 'admin-posts') @else
                     <td @if($item->report_id) class="text-danger fw-bold" @endif>
-                        {{$item->report_id == null ? $item->status : 'Hidden by Admin'}}
+                        {{$item->report_id == null ? $item->status : $item->report->report_name}}
                     </td>
                     @endif
 

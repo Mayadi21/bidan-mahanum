@@ -39,6 +39,7 @@
                             <i class="bi bi-pencil-square"></i>
                         </a>
 
+                        @if($item->id !== 31)
                         <form action="{{ route('categories.destroy', $item->category_slug) }}" method="POST" class="delete-form" style="display: inline-block;">
                             @csrf
                             @method('DELETE')
@@ -46,6 +47,7 @@
                                 <i class="bi bi-trash-fill"></i>
                             </button>
                         </form>
+                        @endif
                     </td>
                 </tr>
         @endforeach

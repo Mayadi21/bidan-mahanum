@@ -13,10 +13,17 @@ class CommentReportSeeder extends Seeder
      */
     public function run(): void
     {
-        for($i = 0; $i < 10; $i++) {
+        $reportIds = [5, 9, 13];
+        $commentIds = [];
+
+        for($i = 1; $i < 500; $i+=5) {
+            $commentIds[] = $i;
+        }
+
+        for($i = 0; $i < 20; $i++) {
             CommentReport::create([
-                'comment_id' => rand(1, 100),
-                'report_id' => rand(1, 14),
+                'comment_id' => $commentIds[array_rand($commentIds)],
+                'report_id' => $reportIds[array_rand($reportIds)],
             ]);
         }
     }

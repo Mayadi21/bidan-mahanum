@@ -36,11 +36,13 @@ class PostsController extends Controller
                     break;
             }
 
-        } else if (request('search')) {
-            $search = request('search');
-            $post->search($search);
         } else {
             $post->notHidden()->status('published');
+        }
+
+        if (request('search')) {
+            $search = request('search');
+            $post->search($search);
         }
 
         return view('dashboard.posts.index', [
@@ -58,7 +60,7 @@ class PostsController extends Controller
         return view('dashboard.posts.create',[
             'page' => 'Create Post',
             'active' => 'posts',
-            'categories' => Category::orderBy('category_name', 'asc')->get(),
+            'categories' => Category::orderByRaw("category_name = 'Others' ASC")->orderBy('category_name', 'asc')->get(),
         ]);
     }
 
