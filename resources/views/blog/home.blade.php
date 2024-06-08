@@ -17,7 +17,7 @@
                 @if($post->image)
                     <img src="{{ asset('storage/'. $post->image)}}" class="d-block w-100 img-fluid" style="height: 13em; width: 30em; overflow: hidden;" alt="...">
                 @else
-                    <img src="https://picsum.photos/seed/{{ $post->category }}/800/200" class="d-block w-100 img-fluid" style="height: 13em; width: 30em; overflow: hidden;" alt="...">
+                    <img src="https://picsum.photos/seed/{{ $post->category->category_name }}/800/200" class="d-block w-100 img-fluid" style="height: 13em; width: 30em; overflow: hidden;" alt="...">
                 @endif
                 <div class="position-absolute px-3 py-2 text-white fs-8 rounded" style="background-color: rgba(0, 0, 0, 0.3); top: 0; left: 0;">
                     <a href="/categories/{{ $post->category->category_slug }}" class="text-white text-decoration-none">{{ $post->category->category_name }}</a>
@@ -52,7 +52,7 @@
                     @if($post->image)
                     <img src=" {{ asset('storage/' . $post->image) }}" style="height: 13em; overflow: hidden;" class="card-img-top" alt="{{ $post->title }}" >
                     @else
-                    <img src="https://picsum.photos/seed/{{ $post->category }}/500/300" class="card-img-top" alt="{{ $post->category->category_name }}">
+                    <img src="https://picsum.photos/seed/{{ $post->category->category_name }}/500/300" class="card-img-top" alt="{{ $post->category->category_name }}">
                     @endif
                     <div class="card-body">
                         <h5 class="card-title d-flex align-items-center" style="height: 3em; overflow: hidden;">{{ $post->title }}</h5>
@@ -84,7 +84,7 @@
                     @if($post->image)
                     <img src=" {{ asset('storage/' . $post->image) }}" style="height: 13em; overflow: hidden;" class="card-img-top" alt="{{ $post->title }}" >
                     @else
-                    <img src="https://picsum.photos/seed/{{ $post->category }}/500/300" class="card-img-top" alt="{{ $post->category->category_name }}">
+                    <img src="https://picsum.photos/seed/{{ $post->category->category_name }}/500/300" class="card-img-top" alt="{{ $post->category->category_name }}">
                     @endif
                     <div class="card-body">
                         <h5 class="card-title d-flex align-items-center" style="height: 3em; overflow: hidden;">{{ $post->title }}</h5>

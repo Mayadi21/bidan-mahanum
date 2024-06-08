@@ -16,7 +16,7 @@ class PostReportSeeder extends Seeder
         $reportIds = [2, 7, 8];
         $postIds = [];
 
-        for($i = 1; $i < 200; $i+=5) {
+        for($i = 1; $i < 200; $i+=20) {
             $postIds[] = $i;
         }
 

@@ -16,7 +16,7 @@ class CommentReportSeeder extends Seeder
         $reportIds = [5, 9, 13];
         $commentIds = [];
 
-        for($i = 1; $i < 500; $i+=5) {
+        for($i = 1; $i < 500; $i+=50) {
             $commentIds[] = $i;
         }
 

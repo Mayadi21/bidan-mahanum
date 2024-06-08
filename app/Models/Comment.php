@@ -61,6 +61,13 @@ class Comment extends Model
         });
     }
 
+    public function scopeHasPublishedPost($query)
+    {
+        return $query->whereHas('post', function ($query) {
+            $query->where('status', 'published');
+        });
+    }
+
     public function scopeSearch($query, $search)
     {
         return $query->where(function($query) use ($search) {

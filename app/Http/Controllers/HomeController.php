@@ -10,29 +10,25 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $latest = Post::where('status', 'published')
-            ->whereNull('posts.report_id')
-            ->whereHas('user', function ($query) {
-                $query->whereNull('report_id');
-            })
+        $latest = Post::status('published')
+            ->notHidden()
+            ->hasNotBannedUser()
             ->orderBy('updated_at', 'desc')
             ->take(5)->get()
         ;
 
-        $popular = Post::where('status', 'published')
-            ->whereNull('posts.report_id')
-            ->whereHas('user', function ($query) {
-                $query->whereNull('report_id');
-            })
+        $popular = Post::status('published')
+            ->notHidden()
+            ->hasNotBannedUser()
             ->orderBy('view', 'desc')
             ->take(6)->get()
         ;
 
-        $admin = Post::where('status', 'published')
-            ->whereNull('posts.report_id')
+        $admin = Post::status('published')
+            ->notHidden()
             ->whereHas('user', function ($query) {
-                $query->whereNull('report_id')
-                    ->where('role', 'admin');
+                $query->notBanned()
+                    ->role('admin');
             })
             ->orderBy('updated_at', 'desc')
             ->take(6)->get()
