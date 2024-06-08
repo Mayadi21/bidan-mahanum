@@ -5,10 +5,10 @@
 <p>Nama aplikasi: W-log</p>
 <p></p>Tim pengembang: Kelompok 1</p>
 
-- Yuna Dhuha Sabrina - 231402007<br> Back-End    <i>(Show User, CRUD Profile, Comment Reports)</i>
-- Safna Yuninda - 231402025<br> Back-End    <i>(Show Comments, CRUD Comments, Manage User)</i>
+- Yuna Dhuha Sabrina - 231402007<br> Back-End    <i>(Show User, CRUD Profile, Manage User)</i>
+- Safna Yuninda - 231402025<br> Back-End    <i>(Show Comments, CRUD Comments, Report Posts/Comments)</i>
 - Refael Juari Siagian - 231402055<br> Front-End, Back-End    <i>(Authentication, Authorization)</i>
-- Ferdyan Darwis - 231402092<br> Back-End    <i>(Show Posts, CRUD Posts, Post Reports)</i>
+- Ferdyan Darwis - 231402092<br> Back-End    <i>(Show Posts, CRUD Posts, Post/Comment Reports)</i>
 - Jessica Eldamaris Maha - 231402101<br> Back-End    <i>(Show Categories, CRUD Categories, CRUD Reports)</i>
 
 ## Desc
@@ -44,11 +44,12 @@
 
 - Halaman dashboard
 - Daftar post.
-  - Mencari post sendir
+  - Mencari post sendiri
   - Membuat, menghapus, memperbarui post
   - Mengubah status post (published/draft)
 - Daftar comment.
   - Melihat komentar dari post sendiri
+- Fitur search di halaman posts & comments
 
  ### Admin (Dashboard)
 
@@ -60,6 +61,7 @@
  - Kelola jenis report (CRUD)
  - Kelola laporan post
  - Kelola laporan komentar
+ - Fitur di masing-masing pengelolaan
  
 
 <br>
@@ -68,6 +70,7 @@
 - [Trix Editor](https://github.com/basecamp/trix) untuk membuat tulisan.
 - [Eloquent-Sluggable](https://github.com/cviebrock/eloquent-sluggable) untuk membuat slug.
 - [Mailtrap](https://mailtrap.io/) untuk mengirim email dalam mode pengembangan.
+- [Sweetalert](https://sweetalert2.github.io/) untuk memberi notifikasi di bagian create dan edit post.
 
 <br>
 
