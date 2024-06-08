@@ -13,10 +13,15 @@ class AdminReportsController extends Controller
      */
     public function index()
     {
+        if(request('search')){
+            $reports = Report::search(request('search'))->paginate(10);
+        } else {
+            $reports = Report::paginate(10);
+        }
         return view('dashboard.admin-reports.index',[
             'page' => 'Reports',
             'active' => 'admin-reports',
-            'categories' => Report::all()
+            'reports' => $reports,
         ]);
     }
 

@@ -112,7 +112,7 @@
         const wordCount = countWords(editor.editor.getDocument().toString());
         const messageElement = document.getElementById('word-count-message');
         
-        messageElement.textContent = `${wordCount} kata`;
+        messageElement.textContent = ${wordCount} kata;
     });
 
     function confirmSubmit(status) {
@@ -126,7 +126,7 @@
 
         Swal.fire({
             title: 'Are you sure?',
-            text: `You are about to submit this post as ${status}.`,
+            text: You are about to submit this post as ${status}.,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
