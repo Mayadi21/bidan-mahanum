@@ -60,7 +60,13 @@
             <input id="body" type="hidden" name="body" value="{{ old('body') }}">
             <trix-editor input="body"></trix-editor>
         </div>
-        <button type="submit" class="btn btn-primary">Create</button>
+        <p id="word-count-message" class="text"></p>
+        @error('body')
+            <p class="text-danger">{{ $message }}</p>
+        @enderror
+
+        <button type="button" class="btn btn-primary" onclick="confirmSubmit('published')">Publish</button>
+        <button type="button" class="btn btn-secondary" onclick="confirmSubmit('draft')">Draft</button>
     </form>  
 </div>
 
@@ -106,7 +112,7 @@
         const wordCount = countWords(editor.editor.getDocument().toString());
         const messageElement = document.getElementById('word-count-message');
         
-        messageElement.textContent = `${wordCount} kata`;
+        messageElement.textContent = ${wordCount} kata;
     });
 
     function confirmSubmit(status) {
@@ -120,7 +126,7 @@
 
         Swal.fire({
             title: 'Are you sure?',
-            text: `You are about to submit this post as ${status}.`,
+            text: You are about to submit this post as ${status}.,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',

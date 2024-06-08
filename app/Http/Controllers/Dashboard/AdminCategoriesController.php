@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Models\Post;
+use App\Models\Comment;
+use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Post;
 use Illuminate\Support\Facades\Storage;
-use App\Models\Category;
-use App\Models\Comment;
-use App\Http\Requests\StoreCategoryRequest;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
 
 class AdminCategoriesController extends Controller
@@ -19,10 +18,17 @@ class AdminCategoriesController extends Controller
      */
     public function index()
     {
+        if(request('search')) {
+            $search = request('search');
+            $categories = Category::search($search)->paginate(10);
+        } else {
+            $categories = Category::paginate(10);
+        }
+
         return view('dashboard.admin-categories.index', [
             'page' => 'All Categories',
             'active' => 'admin-categories',
-            'categories' => Category::paginate(10)
+            'categories' => $categories
         ]);
     }
 
@@ -98,7 +104,6 @@ class AdminCategoriesController extends Controller
             'category_description' => 'required'
         ];
         
-        
         $validatedData = $request->validate($rules);
         
         if($request->file('image')) {
@@ -108,7 +113,6 @@ class AdminCategoriesController extends Controller
             $validatedData['image'] = $request->file('image')->store('category-images'); // menyimpan di storage/app/public/post-images
         }
         
-        
         if($request->category_slug != $category->category_slug) {
             $validatedData['category_slug'] = SlugService::createSlug(Category::class, 'category_slug', $request->category_name);
         }
@@ -117,7 +121,7 @@ class AdminCategoriesController extends Controller
             ->update($validatedData)
         ;
 
-        return redirect('/dashboard/categories')->with('success', 'Category has been updated!');
+        return redirect(route('categories.index'))->with('success', 'Category has been updated!');
     }
 
     /**
@@ -125,9 +129,11 @@ class AdminCategoriesController extends Controller
      */
     public function destroy(Category $category)
     {
-        Storage::delete($category->image);
+        if($category->image) {
+            Storage::delete($category->image);
+        }
         $category->delete();
         
-        return redirect('/dashboard/categories')->with('success', 'Category deleted successfully');
+        return redirect(route('categories.index'))->with('success', 'Category deleted successfully');
     }
 }

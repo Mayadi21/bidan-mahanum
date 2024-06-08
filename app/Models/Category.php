@@ -22,6 +22,12 @@ class Category extends Model
         return 'category_slug';
     }
 
+    public function scopeSearch()
+    {
+        return $this->where('category_name', 'like', '%' . request('search') . '%')
+            ->orWhere('category_description', 'like', '%' . request('search') . '%');
+    }
+
     public function sluggable(): array
     {
         return [

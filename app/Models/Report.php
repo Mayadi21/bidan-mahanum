@@ -27,4 +27,10 @@ class Report extends Model
     {
         return $this->hasOne(User::class);
     }
+
+    public function scopeSearch($query, $search)
+    {
+        return $query->where('report_name', 'like', '%' . $search . '%')
+            ->orWhere('report_description', 'like', '%' . $search . '%');
+    }
 }
