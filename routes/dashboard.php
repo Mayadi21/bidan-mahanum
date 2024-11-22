@@ -17,7 +17,7 @@ use App\Http\Controllers\Dashboard\AdminCommentReportsController;
 
 
 
-Route::prefix('dashboard')->middleware(['auth', 'notBanned', 'verified'])->group(function () {
+Route::prefix('dashboard')->middleware(['auth', 'notBanned'])->group(function () {
 
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 

@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
-use App\Http\Controllers\Auth\EmailVerifyController;
+// use App\Http\Controllers\Auth\EmailVerifyController;
 use App\Http\Controllers\Auth\ChangeEmailController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ChangePasswordController;
@@ -31,15 +31,6 @@ Route::middleware('guest')->group(function () {
 
 
 Route::middleware(['auth', 'notBanned'])->group(function () {
-
-    Route::get('/email/verify', [EmailVerifyController::class, 'notice'])->name('verification.notice');
-    Route::get('/email/verify/{id}/{hash}', [EmailVerifyController::class, 'verify'])
-            ->middleware('signed')
-            ->name('verification.verify');
-    Route::post('/email/verification-notification', [EmailVerifyController::class, 'send'])
-            ->middleware('throttle:6,1')
-            ->name('verification.send');
-    
     Route::get('/change-password', [ChangePasswordController::class, 'index'])->name('password.change');
     Route::post('/change-password', [ChangePasswordController::class, 'update'])->name('password.modify');
     
