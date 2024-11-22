@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
             'username' => 'admin',
             'bio' => 'Admin',
             'email' => 'admin@gmail.com',
-            'email_verified_at' => now(),
+            // 'email_verified_at' => now(),
             'password' => bcrypt('admin'),
             'role' => 'admin',
         ]);
@@ -27,7 +27,7 @@ class UserSeeder extends Seeder
             'username' => 'akumanusia',
             'bio' => 'Aku Manusia',
             'email' => 'akumanusia@gmail.com',
-            'email_verified_at' => now(),
+            // 'email_verified_at' => now(),
             'password' => bcrypt('akumanusia'),
             'role' => 'user',
         ]);
