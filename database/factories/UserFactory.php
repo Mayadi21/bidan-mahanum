@@ -21,31 +21,18 @@ class UserFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition(): array
+    public function definition()
     {
         return [
-            'report_id' => $this->faker->randomElement(
-                [NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-                4, 10, 13]
-            ),
-
-            'name' => fake()->name(),
-            'username' => fake()->userName(),
-            'bio' => fake()->sentence(),
-            'email' => fake()->unique()->safeEmail(),
-            // 'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
-            'role' => 'user',
+            'nama' => $this->faker->name(),
+            'email' => $this->faker->unique()->safeEmail(),
+            'alamat' => $this->faker->address(),
+            'pekerjaan' => $this->faker->jobTitle(),
+            'no_hp' => $this->faker->numerify('08##########'), // Minimal 12 digit
+            'tanggal_lahir' => $this->faker->date('Y-m-d', '2005-12-31'), // Tanggal sebelum 2005
+            'status' => 'aktif', // Semua status aktif
+            'role' => 'user', // Semua role adalah user
+            'password' => Hash::make('password'), // Default password
         ];
-    }
-
-    /**
-     * Indicate that the model's email address should be unverified.
-     */
-    public function unverified(): static
-    {
-        return $this->state(fn (array $attributes) => [
-            'email_verified_at' => null,
-        ]);
     }
 }
