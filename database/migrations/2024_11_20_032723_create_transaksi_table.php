@@ -17,11 +17,18 @@ return new class extends Migration
                   ->constrained('users') // Referensi ke tabel users
                   ->onUpdate('cascade'); // Update cascade
 
+            $table->foreignId('janji_id') // Foreign key ke tabel users (id_pasien)
+            ->constrained('janji_temu') // Referensi ke tabel users
+            ->onUpdate('cascade')->nullable(); // Update cascade
+
             $table->foreignId('bidan') // Foreign key ke tabel users (bidan)
                   ->constrained('users') // Referensi ke tabel users
                   ->onUpdate('cascade'); // Update cascade
 
-            $table->date('tanggal'); // Kolom tanggal transaksi
+            $table->string('keterangan')->nullable(); // Kolom untuk teks ulasan
+
+
+            $table->timestamp('tanggal')->useCurrent(); // Kolom tanggal transaksi
         });
     }
 

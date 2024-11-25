@@ -14,7 +14,7 @@ class Rujukan extends Model
     public $timestamps = false;
     
     protected $fillable = [
-        'id_pasien', 'tanggal_rujukan', 'tujuan_rujukan',
+        'id_pasien', 'tanggal_rujukan', 'tujuan_rujukan', 'keterangan'
     ];
 
     /**

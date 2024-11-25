@@ -19,6 +19,8 @@ return new class extends Migration
                   ->onDelete('cascade');
             $table->date('tanggal_rujukan');
             $table->string('tujuan_rujukan');
+            $table->string('keterangan')->nullable();
+
 
 
         });

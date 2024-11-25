@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Ulasan extends Model
 {
     use HasFactory;
+    protected $table = 'ulasan'; // Nama tabel
+    public $timestamps = false;
 
     // Menentukan kolom-kolom yang bisa diisi mass-assignment
     protected $fillable = [
@@ -15,6 +17,7 @@ class Ulasan extends Model
         'layanan_id',
         'ulasan',
         'tanggal_ulasan',
+        'status'
     ];
 
     // Relasi dengan model User (id_pengguna)

@@ -16,10 +16,10 @@ class JanjiTemu extends Model
     // Tentukan kolom yang dapat diisi
     protected $fillable = [
         'id_pasien',
-        'layanan_id',
         'keluhan',
         'waktu_janji',
-        'status'
+        'status',
+        'keterangan'
     ];
 
     // Relasi dengan model User
@@ -28,9 +28,36 @@ class JanjiTemu extends Model
         return $this->belongsTo(User::class, 'id_pasien'); // Ganti user_id menjadi id_pasien
     }
 
-    // Relasi dengan model Layanan
-    public function layanan()
+    public function transaksi()
     {
-        return $this->belongsTo(Layanan::class, 'layanan_id');
+        return $this->hasMany(Transaksi::class, 'janji_id');
+    }
+
+    public function scopeDisetujui($query)
+    {
+        return $query->where('status', 'disetujui'); 
+    }    
+
+    public function scopeMenungguKonfirmasi($query)
+    {
+        return $query->where('status', 'menunggu konfirmasi'); 
+    }    
+
+    public function scopeSelesai($query)
+    {
+        return $query->where('status', 'selesai'); 
+    }    
+
+    public function scopeDitolak($query)
+    {
+        return $query->where('status', 'ditolak'); 
+    }    
+
+    public function scopeSearch($query, $search)
+    {
+        return $query->where(function($query) use ($search) {
+            $query->where('keluhan', 'like', '%' . $search . '%')
+                ->orWhere('keterangan', 'like', '%' . $search . '%');
+        });
     }
 }

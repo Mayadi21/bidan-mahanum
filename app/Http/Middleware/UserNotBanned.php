@@ -15,7 +15,7 @@ class UserNotBanned
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->check() && auth()->user()->report_id !== null) {
+        if (auth()->check() && auth()->user()->status !== 'aktif') {
             if ($request->route()->getName() !== 'banned') {
                 return redirect()->route('banned');
             }

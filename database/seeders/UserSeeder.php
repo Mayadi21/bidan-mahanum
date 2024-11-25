@@ -33,7 +33,8 @@ class UserSeeder extends Seeder
                 'tanggal_lahir' => '1961/08/15',
                 'status' => 'aktif',
                 'role' => 'admin',
-                'password' => Hash::make('password')
+                'password' => bcrypt('password'),
+
             ],
             [
                 'nama' => 'Ade',
@@ -44,7 +45,18 @@ class UserSeeder extends Seeder
                 'tanggal_lahir' => '1995/05/11',
                 'status' => 'aktif',
                 'role' => 'pegawai',
-                'password' => Hash::make('password')
+                'password' => bcrypt('password'),
+
+            ],            [
+                'nama' => 'Fatimah',
+                'email' => 'bidan2@example.com',
+                'alamat' => 'Jalan SetiaBudi No. 232',
+                'pekerjaan' => 'bidan',
+                'no_hp' => '081264346226',
+                'tanggal_lahir' => '1997/2/16',
+                'status' => 'aktif',
+                'role' => 'pegawai',
+                'password' => bcrypt('password'),
             ],
             [
                 'nama' => 'Mayadi',
@@ -54,7 +66,8 @@ class UserSeeder extends Seeder
                 'no_hp' => '081262225236',
                 'tanggal_lahir' => '2005/08/21',
                 'status' => 'aktif',
-                'password' => Hash::make('password')
+                'password' => bcrypt('password'),
+
             ],
 
         ];

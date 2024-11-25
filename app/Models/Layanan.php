@@ -12,19 +12,26 @@ class Layanan extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'nama',
+        'jenis_layanan',
         'deskripsi',
         'harga',
+        'gambar',
         'besar_bonus',
+        'status'
     ];
-
+    
+    // Scope untuk status aktif
+    public function scopeAktif($query)
+    {
+        return $query->where('status', 'aktif'); // Mengambil layanan dengan status 'aktif'
+    }
     // Relasi dengan model JanjiTemu
-    public function janjiTemus()
+    public function janjiTemu()
     {
         return $this->hasMany(JanjiTemu::class, 'layanan_id');
     }
 
-    public function ulasans()
+    public function ulasan()
     {
         return $this->hasMany(Ulasan::class, 'layanan_id');
     }

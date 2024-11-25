@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('log_transaksi', function (Blueprint $table) {
             $table->id(); // Primary key
             $table->integer('id_pasien'); 
+            $table->integer('transaksi_id'); 
             $table->string('pasien'); // Nama pasien
             $table->string('bidan'); // Nama bidan
             $table->string('layanan'); // Nama layanan

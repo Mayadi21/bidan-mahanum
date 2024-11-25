@@ -13,10 +13,11 @@ return new class extends Migration
     {
             Schema::create('layanan', function (Blueprint $table) {
                 $table->id();
-                $table->string('nama_layanan');
+                $table->string('jenis_layanan');
                 $table->text('deskripsi')->nullable();
                 $table->integer('harga'); // Kolom untuk harga layanan
-                $table->integer('besar_bonus'); // Kolom untuk besar bonus ketika bidan melakukan pelayanan
+                $table->string('gambar')->nullable();
+                $table->integer('besar_bonus')->default(0); // Kolom untuk besar bonus ketika bidan melakukan pelayanan
                 $table->enum('status', ['aktif','tidak aktif']);
         });
     }

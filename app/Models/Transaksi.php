@@ -15,6 +15,8 @@ class Transaksi extends Model
     protected $fillable = [
         'id_pasien',
         'bidan',
+        'janji_id',
+        'keterangan',
         'tanggal',
     ];
 
@@ -22,6 +24,11 @@ class Transaksi extends Model
     public function pasien()
     {
         return $this->belongsTo(User::class, 'id_pasien');
+    }
+
+    public function janjiTemu()
+    {
+        return $this->belongsTo(JanjiTemu::class, 'janji_id');
     }
 
     // Relasi ke model User sebagai bidan

@@ -17,13 +17,9 @@ return new class extends Migration
                   ->constrained('users') // Mengacu ke tabel users
                   ->onUpdate('cascade')
                   ->onDelete('cascade');
-            $table->foreignId('layanan_id') // Foreign key untuk layanan
-                  ->constrained('layanan') // Mengacu ke tabel layanan
-                  ->onUpdate('cascade')
-                  ->onDelete('cascade');
-            $table->string('keluhan'); // Kolom keluhan
+            $table->string('keluhan')->nullable(); // Kolom keluhan
             $table->dateTime('waktu_janji'); // Kolom waktu janji temu
-            $table->enum('status', ['menunggu konfirmasi', 'ditolak', 'disetujui', 'selesai']); // Kolom status
+            $table->enum('status', ['menunggu konfirmasi', 'ditolak', 'disetujui', 'selesai'])->default('menunggu konfirmasi'); // Kolom status
             $table->string('keterangan')->nullable();
         });
     }

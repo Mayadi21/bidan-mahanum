@@ -19,16 +19,25 @@ class LoginController extends Controller
     public function authenticate(Request $request)
     {
         $credentials = $request->validate([
-            'email' => 'required|email:dns',
+            'email' => 'required',
             'password' => 'required'
         ]);
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return Auth()->user()->role === 'admin'
-                ? redirect()->intended(route('dashboard.admin'))
-                : redirect()->intended(route('dashboard'));
+        
+            // Cek peran pengguna
+            if (Auth()->user()->role == 'admin') {
+                return redirect()->route('dashboard.bidan');
+            } 
+            elseif (Auth()->user()->role == 'pegawai') {
+                return redirect()->route('dashboard.bidan');
+            }
+            else {
+                return redirect()->route('dashboard');
+            }
         }
+        
 
         return back()->with('loginError', 'Email or password is incorrect!');
     }

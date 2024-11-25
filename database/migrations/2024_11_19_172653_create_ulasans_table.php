@@ -3,6 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
+
 
 return new class extends Migration
 {
@@ -20,7 +22,8 @@ return new class extends Migration
                   ->constrained('layanan') // Mengacu ke tabel layanan
                   ->onUpdate('cascade'); // Update cascade jika data di tabel layanan diubah
             $table->string('ulasan'); // Kolom untuk teks ulasan
-            $table->timestamp('tanggal_ulasan')->useCurrent(); // Waktu ulasan dibuat, default ke waktu sekarang
+            $table->enum('status', ['aktif','tidak aktif']); // Kolom untuk status ulasan
+            $table->date('tanggal_ulasan')->default(DB::raw('CURRENT_DATE')); // Default ke tanggal sekarang
         });
     }
 

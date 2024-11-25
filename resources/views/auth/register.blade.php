@@ -5,19 +5,9 @@
     <form method="POST" action="{{ route('register.store') }}" class="needs-validation" novalidate="" autocomplete="off">
         @csrf
         <div class="mb-3">
-            <label class="mb-2 text-muted" for="name">Name</label>
-            <input id="name" type="text" class="form-control @error('name') is-invalid @endError" name="name" value="{{ old('name') }}" required autofocus>
-            @error('name')
-                <div class="invalid-feedback">
-                    {{ $message }}	
-                </div>
-            @endError
-        </div>
-
-        <div class="mb-3">
-            <label class="mb-2 text-muted" for="username">Username</label>
-            <input id="username" type="text" class="form-control @error('username') is-invalid @endError" name="username" value="{{ old('username') }}" required>
-            @error('username')
+            <label class="mb-2 text-muted" for="nama">Nama</label>
+            <input id="nama" type="text" class="form-control @error('nama') is-invalid @endError" name="nama" value="{{ old('nama') }}" required autofocus>
+            @error('nama')
                 <div class="invalid-feedback">
                     {{ $message }}	
                 </div>
@@ -33,6 +23,48 @@
                 </div>
             @endError
         </div>
+
+
+        <div class="mb-3">
+            <label class="mb-2 text-muted" for="alamat">Alamat</label>
+            <input id="alamat" type="text" class="form-control @error('alamat') is-invalid @endError" name="alamat" value="{{ old('alamat') }}" >
+            @error('alamat')
+                <div class="invalid-feedback">
+                    {{ $message }}	
+                </div>
+            @endError
+        </div>
+        
+        <div class="mb-3">
+            <label class="mb-2 text-muted" for="tanggal_lahir">Tanggal Lahir</label>
+            <input id="tanggal_lahir" type="date" class="form-control @error('tanggal_lahir') is-invalid @endError" name="tanggal_lahir" value="{{ old('tanggal_lahir') }}" required>
+            @error('tanggal_lahir')
+                <div class="invalid-feedback">
+                    {{ $message }}	
+                </div>
+            @endError
+        </div>
+
+        <div class="mb-3">
+            <label class="mb-2 text-muted" for="pekerjaan">Pekerjaan</label>
+            <input id="pekerjaan" type="text" class="form-control @error('pekerjaan') is-invalid @endError" name="pekerjaan" value="{{ old('pekerjaan') }}" >
+            @error('pekerjaan')
+                <div class="invalid-feedback">
+                    {{ $message }}	
+                </div>
+            @endError
+        </div>
+
+        <div class="mb-3">
+            <label class="mb-2 text-muted" for="no_hp">Nomor Telepon</label>
+            <input id="no_hp" type="text" class="form-control @error('no_hp') is-invalid @endError" name="no_hp" value="{{ old('no_hp') }}" required>
+            @error('no_hp')
+                <div class="invalid-feedback">
+                    {{ $message }}	
+                </div>
+            @endError
+        </div>
+
 
         <div class="mb-3">
             <label class="mb-2 text-muted" for="password">Password</label>

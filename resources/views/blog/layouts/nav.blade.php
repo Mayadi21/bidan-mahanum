@@ -27,11 +27,11 @@
                     @auth
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                {{ auth()->user()->name }}
+                                {{ auth()->user()->nama }}
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{ auth()->user()->role == 'admin' ? route('dashboard.admin') : route('dashboard') }}">My Dashboard</a></li>
-                                <li><a class="dropdown-item" href="{{ route('profile.index') }}">My Profile</a></li>
+                                <li><a class="dropdown-item" href="{{ auth()->user()->role == 'admin' ? route('dashboard.bidan') : route('dashboard') }}">My Dashboard</a></li>
+                                <li><a class="dropdown-item" href="#">My Profile</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
@@ -49,7 +49,7 @@
                         </li>
                     @endauth
                 </ul>
-            <form action="{{ route('post.index') }}" class="d-flex mt-3 mt-lg-0" role="search">
+            <form action="" class="d-flex mt-3 mt-lg-0" role="search">
                 <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>

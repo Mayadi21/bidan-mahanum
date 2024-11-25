@@ -8,7 +8,7 @@
             <ul class="nav flex-column">
 
                 <h6 class="sidebar-heading d-flex justify-content-start align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase">
-                    <a class="link-secondary text-decoration-none" href="{{ route('post.index') }}" aria-label="Add a new report">
+                    <a class="link-secondary text-decoration-none" href="" aria-label="Add a new report">
                         <i class="bi bi-arrow-left-circle"></i>
                         <span class="ms-2">Back to Blog</span>
                     </a>
@@ -24,7 +24,7 @@
                 </h6>
 
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-dashboard') active @endif" aria-current="page" href="{{ route('dashboard.admin') }}">
+                    <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-dashboard') active @endif" aria-current="page" href="{{ route('dashboard.bidan') }}">
                         <i class="bi bi-display"></i>
                         Dashboard
                     </a>
@@ -37,45 +37,46 @@
                     </a>
                 </li>
 
+                {{-- Button Layanan --}}
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-posts') active @endif" aria-current="page" href="{{ route('admin.posts.index') }}">
+                    <a class="nav-link d-flex align-items-center gap-2 @if($active == 'layanan') active @endif" aria-current="page" href="{{ route('layanan.index') }}">
                         <i class="bi bi-file-earmark-text"></i>
-                        Posts
+                        Layanan
                     </a>
                 </li>
                 
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-comments') active @endif" aria-current="page" href="{{ route('admin.comments.index') }}">
+                    <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-janjitemu') active @endif" aria-current="page" href="{{ route('janjitemu.index') }}">
                         <i class="bi bi-chat-left-text"></i>
-                        Comments
+                        Janji Temu
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-categories') active @endif" href="{{ route('categories.index')}}">
+                    <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-transaksi') active @endif" href="{{ route('transaksi.index')}}">
                         <i class="bi bi-tags"></i>
-                        Categories
+                        Transaksi
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-reports') active @endif" href="{{ route('reports.index')}}">
+                    <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-kunjungan') active @endif" href="#">
                         <i class="bi bi-flag"></i>
-                        Reports
+                        Kunjungan
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-post-reports') active @endif" aria-current="page" href="{{ route('admin.post-reports.index') }}">
+                    <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-ulasan') active @endif" aria-current="page" href="{{ route('admin.ulasan.index') }}">
                         <i class="bi bi-stickies"></i>
-                        Post Reports
+                        Ulasan
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-comment-reports') active @endif" aria-current="page" href="{{ route('admin.comment-reports.index') }}">
+                    <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-comment-reports') active @endif" aria-current="page" href="#">
                         <i class="bi bi-chat-square"></i>
-                        Comment Reports
+                        Penggajian
                     </a>
                 </li>
 
@@ -83,36 +84,7 @@
 
                 @endcan
 
-                <h6 class="sidebar-heading d-flex justify-content-start align-items-center px-3 my-3 text-body-secondary text-uppercase">
-                    <i class="bi bi-person-circle"></i>
-                    <span class="ms-2 fw-bold">
-                        @can('admin') USER MODE @else USER @endcan
-                    </span>
-                </h6>
-                
-                <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 @if($active == 'dashboard') active @endif" aria-current="page" href="{{ route('dashboard') }}">
-                        <i class="bi bi-display"></i>
-                        Dashboard
-                    </a>
-                </li>
 
-                <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 @if($active == 'posts') active @endif" aria-current="page" href="{{ route('posts.index') }}">
-                        <i class="bi bi-file-earmark-text"></i>
-                        Posts
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 @if($active == 'comments') active @endif" aria-current="page" href="{{ route('dashboard.comments.index') }}">
-                        <i class="bi bi-chat-left-text"></i>
-                        Comments
-                    </a>
-                </li>
-            </ul>
-
-            <hr class="my-3">
 
             <ul class="nav flex-column mb-auto">
                 <li class="nav-item">

@@ -57,7 +57,7 @@
                 <h4>Email</h4>
                 <p class="text-secondary">{{ auth()->user()->maskedEmail() }}</p>
             </div>
-            <a href="{{ route('email.change')}}" class="btn btn-primary mx-4">Change Email</a>
+            <!-- <a href="{{ route('email.change')}}" class="btn btn-primary mx-4">Change Email</a> -->
 
             <hr class="my-3">
 

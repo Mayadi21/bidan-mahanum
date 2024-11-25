@@ -5,12 +5,15 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Database\Seeders\UserSeeder;
-use Database\Seeders\PostSeeder;
-use Database\Seeders\ReportSeeder;
-use Database\Seeders\CommentSeeder;
-use Database\Seeders\CategorySeeder;
-use Database\Seeders\PostReportSeeder;
-use Database\Seeders\CommentReportSeeder;
+use Database\Seeders\LayananSeeder;
+use Database\Seeders\JanjiTemuSeeder;
+use Database\Seeders\RujukanSeeder;
+use Database\Seeders\UlasanSeeder;
+use Database\Seeders\GajiPokokSeeder;
+use Database\Seeders\TransaksiSeeder;
+use Database\Seeders\DetailTransaksiSeeder;
+use Database\Seeders\PenggajianSeeder;
+
 
 
 class DatabaseSeeder extends Seeder
@@ -21,13 +24,15 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            ReportSeeder::class,
             UserSeeder::class,
-            CategorySeeder::class,
-            PostSeeder::class,
-            CommentSeeder::class,
-            PostReportSeeder::class,
-            CommentReportSeeder::class
+            LayananSeeder::class,
+            JanjiTemuSeeder::class,
+            RujukanSeeder::class,
+            UlasanSeeder::class,
+            TransaksiSeeder::class,
+            DetailTransaksiSeeder::class,
+            GajiPokokSeeder::class,
+            PenggajianSeeder::class,
         ]);
     }
 }

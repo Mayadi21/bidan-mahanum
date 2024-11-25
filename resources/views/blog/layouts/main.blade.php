@@ -8,6 +8,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" rel="stylesheet">
         <link rel="icon" type="image/jpeg" href="{{ asset('img/logo.jpeg') }}">
         <link rel="stylesheet" href="{{ asset('css/blog.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
     </head>
     <body>
 

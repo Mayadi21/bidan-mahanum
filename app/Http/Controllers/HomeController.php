@@ -3,47 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Post;
+use App\Models\Layanan;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        $latest = Post::status('published')
-            ->notHidden()
-            ->hasNotBannedUser()
-            ->orderBy('updated_at', 'desc')
-            ->take(5)->get()
-        ;
-
-        $popular = Post::status('published')
-            ->notHidden()
-            ->hasNotBannedUser()
-            ->orderBy('view', 'desc')
-            ->take(6)->get()
-        ;
-
-        $admin = Post::status('published')
-            ->notHidden()
-            ->whereHas('user', function ($query) {
-                $query->notBanned()
-                    ->role('admin');
-            })
-            ->orderBy('updated_at', 'desc')
-            ->take(6)->get()
-        ;
+        // Mengambil layanan yang statusnya 'aktif'
+        $layanan = Layanan::aktif()->get(); // Menggunakan scope isActive untuk mengambil layanan aktif
 
         return view('blog.home', [
             'page' => 'Home',
             'title' => 'Home',
             'active' => 'home',
-            'latest' => $latest,
-            'popular' => $popular,
-            'admin' => $admin
+            'layanan' => $layanan
+
         ]);
     }
-
+    
     public function about()
     {
         return view('blog.about', [
