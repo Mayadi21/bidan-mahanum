@@ -9,6 +9,27 @@
         <link rel="icon" type="image/jpeg" href="{{ asset('img/logo.jpeg') }}">
         <link rel="stylesheet" href="{{ asset('css/blog.css') }}">
         <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+         .feature-card {
+            transition: transform 0.3s;
+        }
+        .feature-card:hover {
+            transform: scale(1.05);
+        }
+        .testimonial-card {
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        footer {
+            background-color: #f8f9fa;
+            padding: 20px 0;
+        }
+        footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
     </head>
     <body>
 

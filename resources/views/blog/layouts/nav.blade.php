@@ -1,58 +1,65 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Offcanvas navbar large">
+<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom shadow-sm" aria-label="Navbar for Midwife Practice">
     <div class="container-fluid">
-        <img src="{{ asset('img/logo.jpeg') }}" alt="Blog" width="50">
-        <a class="navbar-brand" href="#">W-Blog</a>
+        <!-- Logo dan Brand -->
+        <div class="d-flex align-items-center">
+            <img src="{{ asset('img/logo.jpeg') }}" alt="Clinic Logo" width="50" class="rounded-circle me-2">
+            <a class="navbar-brand fw-bold text-primary" href="#">Bidan Mahanum</a>
+        </div>
+        <!-- Button Toggle -->
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar2" aria-controls="offcanvasNavbar2" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasNavbar2" aria-labelledby="offcanvasNavbar2Label">
+        <!-- Offcanvas -->
+        <div class="offcanvas offcanvas-end text-bg-light" tabindex="-1" id="offcanvasNavbar2" aria-labelledby="offcanvasNavbar2Label">
+            <!-- Header Offcanvas -->
             <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasNavbar2Label">Offcanvas</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <h5 class="offcanvas-title text-primary fw-bold" id="offcanvasNavbar2Label">Menu</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
+            <!-- Body Offcanvas -->
             <div class="offcanvas-body">
+                <!-- Navigasi -->
                 <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                     <li class="nav-item">
-                        <a class="nav-link @if($active === 'home') active @endif" aria-current="page" href="/">Home</a>
+                        <a class="nav-link @if($active === 'home') active fw-bold text-primary @endif" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link @if($active === 'posts') active @endif" href="/posts">Posts</a>
+                        <a class="nav-link @if($active === 'services') active fw-bold text-primary @endif" href="/services">Services</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link @if($active === 'categories') active @endif" href="/categories">Categories</a>
+                        <a class="nav-link @if($active === 'appointments') active fw-bold text-primary @endif" href="/appointments">Appointments</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link @if($active === 'about') active @endif" href="/about">About</a>
+                        <a class="nav-link @if($active === 'about') active fw-bold text-primary @endif" href="/about">About Us</a>
                     </li>
+                    <!-- Opsi Auth -->
                     @auth
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle text-primary fw-bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 {{ auth()->user()->nama }}
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{ auth()->user()->role == 'admin' ? route('dashboard.bidan') : route('dashboard') }}">My Dashboard</a></li>
-                                <li><a class="dropdown-item" href="#">My Profile</a></li>
                                 <li>
-                                    <hr class="dropdown-divider">
+                                    <a class="dropdown-item" href="{{ auth()->user()->role == 'admin' ? route('dashboard.bidan') : route('dashboard') }}">Dashboard</a>
                                 </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">My Profile</a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
                                 <li>
                                     <form action="{{ route('logout') }}" method="POST">
                                         @csrf
-                                        <button class="dropdown-item" type="submit">Log Out</button>
+                                        <button class="dropdown-item text-danger" type="submit">Log Out</button>
                                     </form>
                                 </li>
                             </ul>
                         </li>
                     @else
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">Login</a>
+                            <a class="btn btn-outline-primary fw-bold ms-2" href="{{ route('login') }}">Login</a>
                         </li>
                     @endauth
                 </ul>
-            <form action="" class="d-flex mt-3 mt-lg-0" role="search">
-                <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
             </div>
         </div>
     </div>

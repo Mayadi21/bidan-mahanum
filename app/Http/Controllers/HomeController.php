@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Layanan;
 use Illuminate\Http\Request;
+use App\Models\Ulasan;
 
 class HomeController extends Controller
 {
