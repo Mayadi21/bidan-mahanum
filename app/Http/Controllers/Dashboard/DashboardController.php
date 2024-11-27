@@ -28,4 +28,19 @@ class DashboardController extends Controller
             'janjiTemu' => $janjiTemu         
         ]);
     }
+
+    public function riwayatKunjungan($idPasien)
+    {
+        $riwayatKunjungan = DB::table('view_kunjungan_pasien')
+            ->where('id_pasien', $idPasien)
+            ->get();
+
+        return view('dashboard.riwayat-kunjungan.index', [
+            'page' => 'Buat Layanan',
+            'active' => 'layanan',
+            'riwayatKunjungan' => $riwayatKunjungan,
+
+        ]);
+    }
+
 }

@@ -16,7 +16,9 @@ class Penggajian extends Model
         'id_bidan',
         'gaji_pokok',
         'bonus',
-        'tanggal_gajian',
+        'bulan_gaji',
+        'tahun_gaji',
+        'tanggal_penggajian',
         'status',
     ];
 }

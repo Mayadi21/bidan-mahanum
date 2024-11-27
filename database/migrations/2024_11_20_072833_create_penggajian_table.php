@@ -18,7 +18,9 @@ return new class extends Migration
                 ->onUpdate('cascade'); // Update cascade jika data di tabel users diubah
             $table->integer('gaji_pokok'); // Kolom gaji pokok
             $table->integer('bonus')->default(0); // Kolom bonus dengan default 0
-            $table->date('tanggal_gajian'); // Kolom tanggal gajian
+            $table->enum('bulan_gaji', [1,2,3,4,5,6,7,8,9,10,11,12]);
+            $table->date('tanggal_penggajian')->nullable(); // Kolom tanggal gajian
+            $table->integer('tahun_gaji');
             $table->enum('status', ['0', '1'])->default('0'); // Kolom status (0: belum dibayar, 1: sudah dibayar)
         });
     }

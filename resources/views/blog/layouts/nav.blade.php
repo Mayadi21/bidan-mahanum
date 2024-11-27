@@ -43,7 +43,7 @@
                                     <a class="dropdown-item" href="{{ auth()->user()->role == 'admin' ? route('dashboard.bidan') : route('dashboard') }}">Dashboard</a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="#">My Profile</a>
+                                    <a class="dropdown-item" href="{{ route('profile.index') }}">My Profile</a>
                                 </li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li>

@@ -18,8 +18,9 @@ return new class extends Migration
                   ->onUpdate('cascade'); // Update cascade
 
             $table->foreignId('janji_id') // Foreign key ke tabel users (id_pasien)
+            ->nullable()
             ->constrained('janji_temu') // Referensi ke tabel users
-            ->onUpdate('cascade')->nullable(); // Update cascade
+            ->onUpdate('cascade'); // Update cascade
 
             $table->foreignId('bidan') // Foreign key ke tabel users (bidan)
                   ->constrained('users') // Referensi ke tabel users

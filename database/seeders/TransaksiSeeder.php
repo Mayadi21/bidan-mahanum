@@ -36,6 +36,12 @@ class TransaksiSeeder extends Seeder
                 'keterangan' => 'Pengecekan sdh dilakukan dan asam urat normal'      
       
             ],
+            [
+                'id_pasien' => 5,  // ID pasien
+                'bidan' => 2,
+                'keterangan' => 'Pengecekan sdh dilakukan dan asam urat normal'      
+      
+            ],
         ];
 
         foreach ($transaksi as $key => $value) {
