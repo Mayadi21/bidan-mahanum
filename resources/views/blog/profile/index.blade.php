@@ -8,12 +8,7 @@
             <h2 class="my-3 pb-3 border-bottom">Profile</h2>
 
 
-            @if(session()->has('password-success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('password-success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
+
 
             <!-- Alert Section -->
                 @if(session('success'))

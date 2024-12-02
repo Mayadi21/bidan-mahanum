@@ -7,21 +7,24 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\Dashboard\PostsController as DashboardPostsController;
-use App\Http\Controllers\Dashboard\CommentsController as DashboardCommentsController;
-use App\Http\Controllers\Dashboard\DashboardController;
-use App\Http\Controllers\Dashboard\AdminUsersController;
-use App\Http\Controllers\Dashboard\AdminPostsController; 
-use App\Http\Controllers\Dashboard\AdminReportsController;
-use App\Http\Controllers\Dashboard\AdminCommentsController;
-use App\Http\Controllers\Dashboard\AdminDashboardController; 
-use App\Http\Controllers\Dashboard\AdminCategoriesController;
-use App\Http\Controllers\Dashboard\AdminPostReportsController;
-use App\Http\Controllers\Dashboard\AdminCommentReportsController;
-use App\Http\Controllers\Dashboard\LayananController;
-use App\Http\Controllers\Dashboard\AdminJanjiTemuController;
-use App\Http\Controllers\Dashboard\AdminTransaksiController;
-use App\Http\Controllers\Dashboard\AdminUlasanController;
+use App\Http\Controllers\PostsController as DashboardPostsController;
+use App\Http\Controllers\CommentsController as DashboardCommentsController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AdminUsersController;
+use App\Http\Controllers\AdminPostsController; 
+use App\Http\Controllers\AdminReportsController;
+use App\Http\Controllers\AdminCommentsController;
+use App\Http\Controllers\AdminDashboardController; 
+use App\Http\Controllers\AdminCategoriesController;
+use App\Http\Controllers\AdminPostReportsController;
+use App\Http\Controllers\AdminCommentReportsController;
+use App\Http\Controllers\LayananController;
+use App\Http\Controllers\AdminJanjiTemuController;
+use App\Http\Controllers\AdminTransaksiController;
+use App\Http\Controllers\AdminPenggajianController;
+use App\Http\Controllers\UlasanController;
+
+
 
 
 Route::get('/banned', [HomeController::class, 'banned'])->name('banned');
@@ -30,28 +33,6 @@ Route::middleware('notBanned')->group(function () {
 
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/about', [HomeController::class, 'about'])->name('about');
-
-    // Route::get('/posts', [PostController::class, 'index'])->name('post.index');
-    // Route::get('/posts/{post:slug}', [PostController::class, 'show'])->name('post.show');
-    // Route::get('/user/{user:username}', [PostController::class, 'user'])->name('post.user');
-    
-    // Route::get('/categories', [CategoryController::class, 'index'])->name('category.index');
-    // Route::get('/categories/{category:category_slug}', [CategoryController::class, 'show'])->name('category.show');
-});
-
-Route::middleware(['auth', 'notBanned'])->group(function () {
-
-    // Route::post('/posts/{post:slug}/report', [PostController::class, 'report'])->name('post.report');
-
-    // Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
-    // Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-    // Route::post('/profile/', [ProfileController::class, 'update'])->name('profile.update');
-
-    // Route::post('/comment', [CommentController::class, 'store'])->name('comment.store');
-    // Route::delete('/comment/{comment}', [CommentController::class, 'destroy'])->name('comment.destroy');
-
-    // Route::post('/comment/{comment}/report', [CommentController::class, 'report'])->name('comment.report');
-
 });
 
 Route::middleware(['auth', 'notBanned'])->group(function () {
@@ -59,47 +40,23 @@ Route::middleware(['auth', 'notBanned'])->group(function () {
     Route::prefix('dashboard')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
         Route::resource('/posts', DashboardPostsController::class);
-        
-        // Route::get('/comments', [DashboardCommentsController::class, 'index'])->name('dashboard.comments.index');
-        // Route::get('/comments/{comment:id}', [DashboardCommentsController::class, 'show'])->name('dashboard.comments.show');
-        // Route::put('/comments/{comment:id}', [DashboardCommentsController::class, 'report'])->name('dashboard.comments.report');
-        
+                
         Route::get('/layanan', [LayananController::class, 'index'])->name('layanan.index');
         Route::get('/layanan/{id}', [LayananController::class, 'show'])->name('layanan.show');
+
+        Route::post('/layanan/{layanan}/ulasan', [UlasanController::class, 'store'])->name('ulasan.store');
+        Route::put('/ulasan/{id}', [UlasanController::class, 'update'])->name('ulasan.update');
+
+        Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+        Route::put('/profile/update/{id}', [ProfileController::class, 'update'])->name('profile.update');
+
+
         
         Route::prefix('admin')->middleware(['admin'])->group(function () {
             Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard.bidan');
         
-            Route::get('/users', [AdminUsersController::class, 'index'])->name('admin.users.index');
-            // Route::put('/users/{user:username}/ban', [AdminUsersController::class, 'ban'])->name('admin.users.ban');
-            // Route::delete('/users/{user:username}', [AdminUsersController::class, 'destroy'])->name('admin.users.destroy');
-        
-            // Route::get('/users/details/{user:username}', [AdminUsersController::class, 'show'])->name('admin.users.detail');
-            // Route::get('/users/{user:username}/hidden-posts/{post:id}', [AdminUsersController::class, 'hiddenPosts'])->name('admin.users.hidden-posts');
-            // Route::get('/users/{user:username}/hidden-comments/{comment:id}', [AdminUsersController::class, 'hiddenComments'])->name('admin.users.hidden-comments');
-            
-            // Route::get('/posts', [AdminPostsController::class, 'index'])->name('admin.posts.index');
-            // Route::get('/posts/{post:slug}', [AdminPostsController::class, 'show'])->name('admin.posts.show');
-            // Route::put('/posts/{post:slug}', [AdminPostsController::class, 'hide'])->name('admin.posts.hide');
-        
-            // Route::get('/comments', [AdminCommentsController::class, 'index'])->name('admin.comments.index');
-            // Route::get('/comments/{comment:id}', [AdminCommentsController::class, 'show'])->name('admin.comments.show');
-            // Route::put('/comments/{comment:id}', [AdminCommentsController::class, 'hide'])->name('admin.comments.hide');
-        
-            // Route::resource('/categories', AdminCategoriesController::class)->except('show');
-            
-            // Route::resource('/reports', AdminReportsController::class)->except('show');
-        
-            // Route::get('/post-reports', [AdminPostReportsController::class, 'index'])->name('admin.post-reports.index');
-            // Route::get('/post-reports/{post:slug}', [AdminPostReportsController::class, 'show'])->name('admin.post-reports.show');
-            // Route::put('/post-reports/{post:slug}/hide', [AdminPostReportsController::class, 'hide'])->name('admin.post-reports.hide');
-            // Route::delete('/post-reports/{post:id}', [AdminPostReportsController::class, 'deleteReports'])->name('admin.post-reports.delete');
-        
-            // Route::get('/comment-reports', [AdminCommentReportsController::class, 'index'])->name('admin.comment-reports.index');
-            // Route::get('/comment-reports/{comment:id}', [AdminCommentReportsController::class, 'show'])->name('admin.comment-reports.show');
-            // Route::put('/comment-reports/{comment:id}', [AdminCommentReportsController::class, 'hide'])->name('admin.comment-reports.hide');
-            // Route::delete('/comment-reports/{comment:id}', [AdminCommentReportsController::class, 'deleteReports'])->name('admin.comment-reports.delete');
-            
+            Route::get('/users', [AdminUsersController::class, 'index'])->name('admin.users.index');            
+   
             // layanan untuk admin
             Route::put('/layanan/{id}', [LayananController::class, 'update'])->name('layanan.update');
             Route::get('/layanan/{id}/edit', [LayananController::class, 'edit'])->name('layanan.edit');
@@ -126,11 +83,24 @@ Route::middleware(['auth', 'notBanned'])->group(function () {
        
             // Daftar transaksi
             Route::get('/transaksi', [AdminTransaksiController::class, 'index'])->name('transaksi.index');
-    
-    
-            Route::get('/ulasan', [AdminUlasanController::class, 'index'])->name('admin.ulasan.index');
-            Route::put('/ulasan/{ulasan}/blok', [AdminUlasanController::class, 'block'])->name('ulasan.blok');
-            Route::put('/ulasan/{ulasan}/aktifkan', [AdminUlasanController::class, 'activate'])->name('ulasan.aktifkan');        
+            Route::post('/transaksi/store', [AdminTransaksiController::class, 'storeTransaction'])->name('transaksi.store');
+
+            //route untuk ulasan
+            Route::get('/ulasan', [UlasanController::class, 'index'])->name('admin.ulasan.index');
+            Route::put('/ulasan/{ulasan}/blok', [UlasanController::class, 'block'])->name('ulasan.blok');
+            Route::put('/ulasan/{ulasan}/aktifkan', [UlasanController::class, 'activate'])->name('ulasan.aktifkan');        
+
+            //route untuk sistem penggajian
+            Route::get('/pengajian', [AdminPenggajianController::class, 'index'])->name('admin.penggajian.index');
+            //route untuk halaman gaji pokok
+            Route::get('/gaji-pokok', [AdminPenggajianController::class, 'indexGajiPokok'])->name('gaji-pokok.index');
+            Route::put('/gaji-pokok/{id}', [AdminPenggajianController::class, 'updateGajiPokok'])->name('gaji-pokok.update');
+
+        });
+
+        Route::prefix('user')->middleware(['user'])->group(function () {
+            //route untuk user melihat riwayat kunjungan 
+            Route::get('/riwayat-kunjungan/{idPasien}', [DashboardController::class, 'riwayatKunjungan'])->name('riwayat.kunjungan');
         });
     });
 });

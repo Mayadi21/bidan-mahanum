@@ -33,7 +33,8 @@ return new class extends Migration
             LEFT JOIN 
                 users bidan ON t.bidan = bidan.id  -- JOIN dengan tabel users untuk bidan
             GROUP BY 
-                t.id, pasien.id,pasien.nama, bidan.nama, t.keterangan, t.tanggal;
+                t.id, pasien.id,pasien.nama, bidan.nama, t.keterangan, t.tanggal
+            ORDER BY tanggal DESC;
         ");
     }
 

@@ -42,6 +42,11 @@ class DetailTransaksiSeeder extends Seeder
                 'layanan_id' => 2,    
                 'harga' => 25000,      
             ],
+            [
+                'transaksi_id' => 4,
+                'layanan_id' => 2,    
+                'harga' => 25000,      
+            ],
         ];
 
         // Insert data detailtransaksi ke tabel menggunakan Eloquent

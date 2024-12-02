@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Events\Registered;
 use App\Models\User;
+use Illuminate\Database\QueryException;
 
 class RegisterController extends Controller
 {
@@ -20,36 +21,50 @@ class RegisterController extends Controller
 
     public function store(Request $request)
     {
-        // Validasi input dari form
-        $validated = $request->validate([
-            'nama' => ['required', 'string', 'max:255'],             // Nama wajib diisi
-            'email' => ['required', 'string', 'email:dns', 'max:255', 'unique:users'], // Email valid dan unik
-            'password' => ['required', 'string', 'min:8', 'confirmed'], // Password minimal 8 karakter dan dikonfirmasi
-            'password_confirmation' => ['required', 'string'],      // Konfirmasi password wajib
-            'alamat' => ['nullable', 'string', 'max:255'],          // Alamat opsional
-            'tanggal_lahir' => ['required', 'date'],                // Tanggal lahir wajib diisi dan harus berupa tanggal yang valid
-            'pekerjaan' => ['nullable', 'string', 'max:255'],       // Pekerjaan opsional
-            'no_hp' => ['nullable', 'string', 'max:20'],            // Nomor HP opsional
-        ]);
+        try {
+            // Validasi input dari form
+            $validated = $request->validate([
+                'nama' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email:dns', 'max:255', 'unique:users,email'],
+                'password' => ['required', 'string', 'min:8', 'confirmed'],
+                'password_confirmation' => ['required', 'string'],
+                'alamat' => ['nullable', 'string', 'max:255'],
+                'tanggal_lahir' => ['required', 'date'],
+                'pekerjaan' => ['nullable', 'string', 'max:255'],
+                'no_hp' => ['nullable', 'string', 'max:20', 'unique:users,no_hp'],
+            ]);
     
-        // Hash password sebelum menyimpan
-        $validated['password'] = Hash::make($validated['password']);
-        
-        // Set nilai default untuk status dan role
-        $validated['status'] = 'aktif'; // Status pengguna otomatis aktif
-        $validated['role'] = 'user';   // Default role adalah user
+            // Hash password sebelum menyimpan
+            $validated['password'] = Hash::make($validated['password']);
     
-        // Simpan data pengguna ke database
-        $user = User::create($validated);
+            // Set nilai default untuk status dan role
+            $validated['status'] = 'aktif';
+            $validated['role'] = 'user';
     
-        // Memicu event untuk pengguna baru
-        event(new Registered($user));
+            // Simpan data pengguna ke database
+            $user = User::create($validated);
     
-        // Login otomatis untuk pengguna yang baru mendaftar
-        Auth::login($user);
+            // Memicu event untuk pengguna baru
+            event(new Registered($user));
     
-        // Redirect ke halaman yang sesuai setelah login
-        return redirect()->route('dashboard');  // Gantilah 'dashboard' dengan rute yang sesuai dengan aplikasi Anda
+            // Login otomatis untuk pengguna yang baru mendaftar
+            Auth::login($user);
+    
+            // Redirect ke halaman yang sesuai setelah login
+            return redirect(route('verification.notice'));
+        } catch (QueryException $e) {
+            // Jika error duplicate entry terjadi, tangani secara manual
+            if ($e->getCode() === '23000') { // Kode error untuk integrity constraint violation
+                return back()
+                    ->withErrors([
+                        'email' => 'Email atau nomor HP sudah digunakan. Silakan gunakan yang lain.',
+                    ])
+                    ->withInput();
+            }
+    
+            // Jika ada error lain, lempar kembali exception-nya
+            throw $e;
+        }
     }
     
     

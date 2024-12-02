@@ -63,8 +63,10 @@ class Kernel extends HttpKernel
         'precognitive' => \Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests::class,
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        // 'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class, // ku comment karena kita gak make email verifikasi
+        'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class, // ku comment karena kita gak make email verifikasi
         'admin' => \App\Http\Middleware\IsAdmin::class,
+        'pegawai' => \App\Http\Middleware\IsPegawai::class,
+        'user' => \App\Http\Middleware\IsUser::class,
         'notBanned' => \App\Http\Middleware\UserNotBanned::class,
     ];
 }

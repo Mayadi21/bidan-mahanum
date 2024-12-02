@@ -3,7 +3,7 @@
         <!-- Logo dan Brand -->
         <div class="d-flex align-items-center">
             <img src="{{ asset('img/logo.jpeg') }}" alt="Clinic Logo" width="50" class="rounded-circle me-2">
-            <a class="navbar-brand fw-bold text-primary">Bidan Mahanum</a>
+            <a class="navbar-brand bg-light fw-bold text-primary">Bidan Mahanum</a>
         </div>
         <!-- Button Toggle -->
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar2" aria-controls="offcanvasNavbar2" aria-label="Toggle navigation">
@@ -43,7 +43,7 @@
                                     <a class="dropdown-item" href="{{ auth()->user()->role == 'admin' ? route('dashboard.bidan') : route('dashboard') }}">Dashboard</a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="#">My Profile</a>
+                                    <a class="dropdown-item" href="{{ route('profile.index') }}">My Profile</a>
                                 </li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li>

@@ -29,6 +29,7 @@ class UserSeeder extends Seeder
                 'email' => 'owner@example.com',
                 'alamat' => 'Jalan Bromo',
                 'pekerjaan' => 'bidan',
+                'email_verified_at' => now(),
                 'no_hp' => '081262225235',
                 'tanggal_lahir' => '1961/08/15',
                 'status' => 'aktif',
@@ -44,6 +45,7 @@ class UserSeeder extends Seeder
                 'no_hp' => '081262225226',
                 'tanggal_lahir' => '1995/05/11',
                 'status' => 'aktif',
+                'email_verified_at' => now(),
                 'role' => 'pegawai',
                 'password' => bcrypt('password'),
 
@@ -55,6 +57,7 @@ class UserSeeder extends Seeder
                 'no_hp' => '081264346226',
                 'tanggal_lahir' => '1997/2/16',
                 'status' => 'aktif',
+                'email_verified_at' => now(),
                 'role' => 'pegawai',
                 'password' => bcrypt('password'),
             ],
@@ -65,6 +68,7 @@ class UserSeeder extends Seeder
                 'pekerjaan' => 'mahasiswa',
                 'no_hp' => '081262225236',
                 'tanggal_lahir' => '2005/08/21',
+                'email_verified_at' => now(),
                 'status' => 'aktif',
                 'password' => bcrypt('password'),
 
