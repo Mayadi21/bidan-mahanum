@@ -17,9 +17,9 @@ return new class extends Migration
                   ->constrained('users') // Referensi ke tabel users
                   ->onUpdate('cascade'); // Update cascade
 
-            $table->foreignId('janji_id') // Foreign key ke tabel users (id_pasien)
+            $table->foreignId('janji_id') 
             ->nullable()
-            ->constrained('janji_temu') // Referensi ke tabel users
+            ->constrained('janji_temu') 
             ->onUpdate('cascade'); // Update cascade
 
             $table->foreignId('bidan') // Foreign key ke tabel users (bidan)
@@ -43,3 +43,13 @@ return new class extends Migration
         Schema::dropIfExists('transaksi');
     }
 };
+
+
+
+
+
+
+
+
+
+

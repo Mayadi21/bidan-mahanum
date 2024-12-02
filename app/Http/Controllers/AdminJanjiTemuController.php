@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard;
+namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\JanjiTemu;
 use App\Models\User;
 use Illuminate\Database\QueryException;
@@ -65,7 +64,7 @@ class AdminJanjiTemuController extends Controller
                  'id_pasien' => $validated['id_pasien'],
                  'keluhan' => $validated['keluhan'],
                  'waktu_janji' => $validated['waktu_janji'],
-                 'status' => 'menunggu konfirmasi',
+                 'status' => 'disetujui',
              ]);
      
              // Redirect dengan pesan sukses jika berhasil

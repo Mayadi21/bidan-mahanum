@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard;
+namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -10,7 +10,7 @@ use App\Models\User;
 use App\Models\Layanan;
 use Illuminate\Database\QueryException;
 
-class AdminUlasanController extends Controller
+class UlasanController extends Controller
 {
     public function index()
     {
@@ -29,6 +29,28 @@ class AdminUlasanController extends Controller
         ]);
     }
 
+    public function store(Request $request, $layananId)
+    {
+        // Validasi input
+        $request->validate([
+            'ulasan' => 'required|string|max:255',
+        ]);
+
+        // Ambil layanan yang dimaksud
+        $layanan = Layanan::findOrFail($layananId);
+
+        // Simpan ulasan
+        Ulasan::create([
+            'id_pengguna' => Auth::id(),
+            'layanan_id' => $layanan->id,
+            'ulasan' => $request->ulasan,
+            'status' => 'aktif', // Status aktif, bisa diubah jika diperlukan
+        ]);
+
+        // Redirect ke halaman layanan dengan pesan sukses
+        return redirect()->route('layanan.show', $layanan->id)->with('success', 'Ulasan berhasil diberikan.');
+    }
+
 // Metode untuk memblokir ulasan (mengubah status menjadi tidak aktif)
 public function block(Ulasan $ulasan)
 {
@@ -45,4 +67,28 @@ public function activate(Ulasan $ulasan)
     return redirect()->route('admin.ulasan.index')->with('success', 'Ulasan berhasil diaktifkan.');
 }
 
+
+public function update(Request $request, $id)
+{
+    $request->validate([
+        'ulasan' => 'required|string',
+    ]);
+
+    $ulasan = Ulasan::findOrFail($id);
+
+    if ($ulasan->id_pengguna !== auth()->id()) {
+        return redirect()->back()->with('error', 'Anda tidak diizinkan mengedit ulasan ini.');
+    }
+
+    $ulasan->update([
+        'ulasan' => $request->ulasan,
+    ]);
+
+    return redirect()->back()->with('success', 'Ulasan berhasil diperbarui.');
 }
+
+
+
+
+}
+

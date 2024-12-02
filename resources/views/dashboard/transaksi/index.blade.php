@@ -74,7 +74,6 @@
     </table>
 </div>
 
-<!-- Modal untuk menambah transaksi -->
 <div class="modal fade" id="add-transaction-modal" tabindex="-1" aria-labelledby="add-transaction-modal-label" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -82,19 +81,39 @@
                 <h5 class="modal-title" id="add-transaction-modal-label">Tambah Transaksi</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="#" method="POST">
+            <form action="{{ route('transaksi.store') }}" method="POST">
                 @csrf
                 <div class="modal-body">
+
+                    <!-- Pilihan tambahan -->
                     <div class="mb-3">
+                        <label for="janji_temu" class="form-label">Transaksi dari Janji Temu?</label>
+                        <select class="form-select" id="janji_temu" name="janji_temu">
+                            <option value="tidak" selected>Tidak</option>
+                            <option value="ya">Ya</option>
+                        </select>
+                    </div>
+
+                    <div id="daftar-janji" class="mb-3" style="display: none;">
+                        <label for="janji_id" class="form-label">Pilih Janji Temu</label>
+                        <select class="form-select" id="janji_id" name="janji_id">
+                            <option value="" selected>-- Pilih Janji Temu --</option>
+                            @foreach($janji_temu as $janji)
+                                <option value="{{ $janji->id }}">{{ $janji->pasien_nama }} ({{ $janji->waktu_janji }})</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div id="pasien-container" class="mb-3">
                         <label for="pasien" class="form-label">Pasien</label>
-                        <select class="form-select" id="pasien" name="pasien_id" required>
+                        <select class="form-select" id="pasien" name="pasien_id" >
                             <option value="" selected>-- Pilih Pasien --</option>
                             @foreach($pasien as $p)
                                 <option value="{{ $p->id }}">{{ $p->nama }}</option>
                             @endforeach
                         </select>
                     </div>
-                    
+
                     <div class="mb-3">
                         <label for="bidan" class="form-label">Bidan</label>
                         <select class="form-select" id="bidan" name="bidan_id" required>
@@ -104,7 +123,7 @@
                             @endforeach
                         </select>
                     </div>
-                    
+
                     <div class="mb-3">
                         <label for="layanan" class="form-label">Layanan</label>
                         <div id="layanan-container">
@@ -119,38 +138,12 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="mb-3">
                         <label for="keterangan" class="form-label">Keterangan</label>
                         <textarea class="form-control" id="keterangan" name="keterangan"></textarea>
                     </div>
-                    <!-- Pilihan tambahan -->
-                    <div class="mb-3">
-                        <label for="janji_temu" class="form-label">Transaksi dari Janji Temu?</label>
-                        <select class="form-select" id="janji_temu" name="janji_temu">
-                            <option value="tidak" selected>Tidak</option>
-                            <option value="ya">Ya</option>
-                        </select>
-                    </div>
-                    <div id="daftar-janji" class="mb-3" style="display: none;">
-                        <label for="daftar_janji" class="form-label">Pilih Janji Temu</label>
-                        <select class="form-select" id="daftar_janji" name="daftar_janji">
-                            <option value="" selected>-- Pilih Janji Temu --</option>
-                            @foreach($janji_temu as $janji)
-                                <option value="{{ $janji->id }}">{{ $janji->pasien_nama }} ({{ $janji->waktu_janji }})</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="janji_selanjutnya" class="form-label">Pasien Harus Datang Lagi?</label>
-                        <select class="form-select" id="janji_selanjutnya" name="janji_selanjutnya">
-                            <option value="tidak" selected>Tidak</option>
-                            <option value="ya">Ya</option>
-                        </select>
-                    </div>
-                    <div id="tanggal-janji" class="mb-3" style="display: none;">
-                        <label for="tanggal_janji" class="form-label">Tanggal Janji Temu Selanjutnya</label>
-                        <input type="date" class="form-control" id="tanggal_janji" name="tanggal_janji">
-                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -194,17 +187,22 @@
                 alert('Maksimal 5 layanan yang dapat ditambahkan.');
             }
         });
-    });
 
         // Interaksi dengan janji temu
-        document.getElementById('janji_temu').addEventListener('change', function () {
-        document.getElementById('daftar-janji').style.display = this.value === 'ya' ? 'block' : 'none';
-    });
+        const janjiTemuSelect = document.getElementById('janji_temu');
+        const daftarJanjiContainer = document.getElementById('daftar-janji');
+        const pasienContainer = document.getElementById('pasien-container');
 
-    document.getElementById('janji_selanjutnya').addEventListener('change', function () {
-        document.getElementById('tanggal-janji').style.display = this.value === 'ya' ? 'block' : 'none';
+        janjiTemuSelect.addEventListener('change', function () {
+            const isFromJanji = this.value === 'ya';
+            daftarJanjiContainer.style.display = isFromJanji ? 'block' : 'none';
+            pasienContainer.style.display = isFromJanji ? 'none' : 'block';
+        });
+
+
     });
 </script>
+
 
 
 @endsection

@@ -2,6 +2,20 @@
 
 @section('content')
     <h1 class="fs-4 card-title fw-bold mb-4">Register</h1>
+    <div class="container">
+        <!-- Pesan Notifikasi -->
+        @if(session('success'))
+        <div class="alert alert-success col-lg-8">
+            {{ session('success') }}
+        </div>
+        @endif
+    
+        @if(session('error'))
+        <div class="alert alert-danger col-lg-8">
+            {{ session('error') }}
+        </div>
+        @endif
+    </div>
     <form method="POST" action="{{ route('register.store') }}" class="needs-validation" novalidate="" autocomplete="off">
         @csrf
         <div class="mb-3">
@@ -23,7 +37,6 @@
                 </div>
             @endError
         </div>
-
 
         <div class="mb-3">
             <label class="mb-2 text-muted" for="alamat">Alamat</label>

@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard;
+namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\Layanan;
+use App\Models\Ulasan;
+
 
 
 class LayananController extends Controller
 {
-    // Menampilkan layanan untuk pasien dan admin dalam satu view
     public function index()
     {
     // Cek role pengguna
@@ -25,8 +25,6 @@ class LayananController extends Controller
             'page' => 'Layanan',
             'active' => 'layanan',
             'layanan' => $layanan    
-            
-
         ]);
     }
 
@@ -34,6 +32,8 @@ class LayananController extends Controller
     public function show($id)
     {
         $layanan = Layanan::findOrFail($id);  // Ambil layanan berdasarkan ID
+        $ulasan = Ulasan::with('user')->where('layanan_id', $id)->orderBy('tanggal_ulasan', 'desc')->get(); // Ambil semua ulasan terkait
+
         return view('dashboard.layanan.show', [
             'page' => 'Layanan',
             'active' => 'layanan',

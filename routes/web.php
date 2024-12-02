@@ -7,22 +7,22 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\Dashboard\PostsController as DashboardPostsController;
-use App\Http\Controllers\Dashboard\CommentsController as DashboardCommentsController;
-use App\Http\Controllers\Dashboard\DashboardController;
-use App\Http\Controllers\Dashboard\AdminUsersController;
-use App\Http\Controllers\Dashboard\AdminPostsController; 
-use App\Http\Controllers\Dashboard\AdminReportsController;
-use App\Http\Controllers\Dashboard\AdminCommentsController;
-use App\Http\Controllers\Dashboard\AdminDashboardController; 
-use App\Http\Controllers\Dashboard\AdminCategoriesController;
-use App\Http\Controllers\Dashboard\AdminPostReportsController;
-use App\Http\Controllers\Dashboard\AdminCommentReportsController;
-use App\Http\Controllers\Dashboard\LayananController;
-use App\Http\Controllers\Dashboard\AdminJanjiTemuController;
-use App\Http\Controllers\Dashboard\AdminTransaksiController;
-use App\Http\Controllers\Dashboard\AdminPenggajianController;
-use App\Http\Controllers\Dashboard\AdminUlasanController;
+use App\Http\Controllers\PostsController as DashboardPostsController;
+use App\Http\Controllers\CommentsController as DashboardCommentsController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AdminUsersController;
+use App\Http\Controllers\AdminPostsController; 
+use App\Http\Controllers\AdminReportsController;
+use App\Http\Controllers\AdminCommentsController;
+use App\Http\Controllers\AdminDashboardController; 
+use App\Http\Controllers\AdminCategoriesController;
+use App\Http\Controllers\AdminPostReportsController;
+use App\Http\Controllers\AdminCommentReportsController;
+use App\Http\Controllers\LayananController;
+use App\Http\Controllers\AdminJanjiTemuController;
+use App\Http\Controllers\AdminTransaksiController;
+use App\Http\Controllers\AdminPenggajianController;
+use App\Http\Controllers\UlasanController;
 
 
 
@@ -43,6 +43,9 @@ Route::middleware(['auth', 'notBanned'])->group(function () {
                 
         Route::get('/layanan', [LayananController::class, 'index'])->name('layanan.index');
         Route::get('/layanan/{id}', [LayananController::class, 'show'])->name('layanan.show');
+
+        Route::post('/layanan/{layanan}/ulasan', [UlasanController::class, 'store'])->name('ulasan.store');
+        Route::put('/ulasan/{id}', [UlasanController::class, 'update'])->name('ulasan.update');
 
         Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
         Route::put('/profile/update/{id}', [ProfileController::class, 'update'])->name('profile.update');
@@ -80,11 +83,12 @@ Route::middleware(['auth', 'notBanned'])->group(function () {
        
             // Daftar transaksi
             Route::get('/transaksi', [AdminTransaksiController::class, 'index'])->name('transaksi.index');
-    
+            Route::post('/transaksi/store', [AdminTransaksiController::class, 'storeTransaction'])->name('transaksi.store');
+
             //route untuk ulasan
-            Route::get('/ulasan', [AdminUlasanController::class, 'index'])->name('admin.ulasan.index');
-            Route::put('/ulasan/{ulasan}/blok', [AdminUlasanController::class, 'block'])->name('ulasan.blok');
-            Route::put('/ulasan/{ulasan}/aktifkan', [AdminUlasanController::class, 'activate'])->name('ulasan.aktifkan');        
+            Route::get('/ulasan', [UlasanController::class, 'index'])->name('admin.ulasan.index');
+            Route::put('/ulasan/{ulasan}/blok', [UlasanController::class, 'block'])->name('ulasan.blok');
+            Route::put('/ulasan/{ulasan}/aktifkan', [UlasanController::class, 'activate'])->name('ulasan.aktifkan');        
 
             //route untuk sistem penggajian
             Route::get('/pengajian', [AdminPenggajianController::class, 'index'])->name('admin.penggajian.index');

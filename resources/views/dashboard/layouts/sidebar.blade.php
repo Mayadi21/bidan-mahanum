@@ -83,7 +83,7 @@
                     <hr class="my-3">
 
                 @endcan
-
+                @can('user')
                 {{-- DASHBOARD USERRRRRR --}}
             <li class="nav-item">
                 <a class="nav-link d-flex align-items-center gap-2 @if($active === 'dashboard') active @endif" aria-current="page" href="{{ route('dashboard') }}">
@@ -113,6 +113,7 @@
                     Layanan
                 </a>
             </li>
+            @endcan
 
 
             <ul class="nav flex-column mb-auto">

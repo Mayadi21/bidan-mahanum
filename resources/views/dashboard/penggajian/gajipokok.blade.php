@@ -9,17 +9,17 @@
       <!-- Button untuk melihat gaji pokok -->
     </div>
     <!-- Pesan Notifikasi -->
-@if(session('success'))
-<div class="alert alert-success col-lg-8">
-    {{ session('success') }}
-</div>
-@endif
+    @if(session('success'))
+    <div class="alert alert-success col-lg-8">
+        {{ session('success') }}
+    </div>
+    @endif
 
-@if(session('error'))
-<div class="alert alert-danger col-lg-8">
-    {{ session('error') }}
-</div>
-@endif
+    @if(session('error'))
+    <div class="alert alert-danger col-lg-8">
+        {{ session('error') }}
+    </div>
+    @endif
     <table class="table table-bordered mt-3">
         <thead>
             <tr>
