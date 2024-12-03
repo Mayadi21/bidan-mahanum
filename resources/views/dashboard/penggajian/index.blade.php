@@ -34,11 +34,18 @@
                     <td>{{ $item->tahun_gaji }}</td>
 
                     <td>
-                        <span class="badge {{ $item->status === 'Belum Diserahkan' ? 'bg-warning' : 'bg-success' }}">
-                            {{ $item->status }}
-                        </span>
+                        @if($item->status === 'Belum Diserahkan')
+                            <form action="{{ route('gaji-update-status', $item->id_penggajian) }}" method="POST" id="statusForm-{{ $item->id_penggajian }}">
+                                @csrf
+                                @method('PUT')
+                                <button type="button" class="btn btn-warning" onclick="confirmUpdate({{ $item->id_penggajian }})">Tandai Sudah Diserahkan</button>
+                            </form>
+                        @else
+                            <span class="badge bg-success">{{ $item->status }}</span>
+                        @endif
                     </td>
-                    <td>{{ \Carbon\Carbon::parse($item->tanggal_penggajian)->format('d M Y') }}</td>
+                        
+                    <td>{{ $item->tanggal_penggajian ? \Carbon\Carbon::parse($item->tanggal_penggajian)->format('d M Y') : '-' }}</td>
                 </tr>
             @empty
                 <tr>
@@ -48,4 +55,15 @@
         </tbody>
     </table>
 </div>
+
+<script>
+    function confirmUpdate(id) {
+        const confirmation = confirm('Apakah Anda yakin ingin menyerahkan gaji ini?');
+        if (confirmation) {
+            // If the user confirms, submit the form
+            document.getElementById('statusForm-' + id).submit();
+        }
+    }
+</script>
+
 @endsection

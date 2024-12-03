@@ -29,7 +29,7 @@ return new class extends Migration
             $table->string('keterangan')->nullable(); // Kolom untuk teks ulasan
 
 
-            $table->timestamp('tanggal')->useCurrent(); // Kolom tanggal transaksi
+            $table->datetime('tanggal')->useCurrent(); // Kolom tanggal transaksi
         });
     }
 

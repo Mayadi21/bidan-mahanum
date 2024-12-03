@@ -24,14 +24,14 @@
                         <a class="nav-link @if($active === 'home') active fw-bold text-primary @endif" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link @if($active === 'services') active fw-bold text-primary @endif" href="/services">Services</a>
+                        <a class="nav-link @if($active === 'services') active fw-bold text-primary @endif" href="{{route('layanan.index') }}">Services</a>
                     </li>
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a class="nav-link @if($active === 'appointments') active fw-bold text-primary @endif" href="/appointments">Appointments</a>
-                    </li>
-                    <li class="nav-item">
+                    </li> --}}
+                    {{-- <li class="nav-item">
                         <a class="nav-link @if($active === 'about') active fw-bold text-primary @endif" href="/about">About Us</a>
-                    </li>
+                    </li> --}}
                     <!-- Opsi Auth -->
                     @auth
                         <li class="nav-item dropdown">

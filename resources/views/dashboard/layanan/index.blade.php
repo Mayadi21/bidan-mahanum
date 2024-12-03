@@ -1,4 +1,12 @@
-@extends('dashboard.layouts.main')
+@php
+    $layout = Auth::check() ? 'dashboard.layouts.main' : 'blog.layouts.main';
+@endphp
+@extends($layout)
+
+
+
+
+
 
 @section('content')
     <h1>Daftar Layanan</h1>

@@ -16,7 +16,7 @@
                 
                 <hr class="my-3">
                 
-                @can('admin')
+                @canany(['admin', 'pegawai'])
                 
                     <h6 class="sidebar-heading d-flex justify-content-start align-items-center px-3 my-3 text-body-secondary text-uppercase">
                         <i class="bi bi-person-vcard"></i>
@@ -72,6 +72,7 @@
                             Ulasan
                         </a>
                     </li>
+                    @can('admin')
 
                     <li class="nav-item">
                         <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-penggajian') active @endif" aria-current="page" href="{{ route('admin.penggajian.index') }}">
@@ -79,10 +80,10 @@
                             Penggajian
                         </a>
                     </li>
-
+                    @endcan
                     <hr class="my-3">
 
-                @endcan
+                @endcanany
                 @can('user')
                 {{-- DASHBOARD USERRRRRR --}}
             <li class="nav-item">
@@ -94,7 +95,7 @@
             
             {{-- Button Layanan --}}
             <li class="nav-item">
-                <a class="nav-link d-flex align-items-center gap-2 @if($active == 'layanan') active @endif" aria-current="page" href="#">
+                <a class="nav-link d-flex align-items-center gap-2 @if($active == 'layanan') active @endif" aria-current="page" href="{{ route('user.janjitemu.index') }}">
                     <i class="bi bi-file-earmark-text"></i>
                     Janji Temu
                 </a>

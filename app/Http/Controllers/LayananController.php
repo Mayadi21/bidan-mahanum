@@ -14,7 +14,7 @@ class LayananController extends Controller
     public function index()
     {
     // Cek role pengguna
-    if (auth()->user()->role === 'user') {
+    if (!auth()->check() || auth()->user()->role === 'user') {
         $layanan = DB::table('layanan')->where('status', 'aktif')->get();
     } else {
         $layanan = DB::table('layanan')->get();
