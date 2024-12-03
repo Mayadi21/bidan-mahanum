@@ -10,19 +10,29 @@ use App\Models\Ulasan;
 class HomeController extends Controller
 {
     public function index()
-    {
-        // Mengambil layanan yang statusnya 'aktif'
-        $layanan = Layanan::aktif()->get(); // Menggunakan scope isActive untuk mengambil layanan aktif
+{
+    // Mengambil layanan yang statusnya 'aktif'
+    $layanan = Layanan::aktif()->get(); // Menggunakan scope isActive untuk mengambil layanan aktif
 
-        return view('blog.home', [
-            'page' => 'Home',
-            'title' => 'Home',
-            'active' => 'home',
-            'layanan' => $layanan
+    // Mengambil ulasan untuk layanan yang aktif
+    $ulasan = Ulasan::with(['user', 'layanan']) // Mengambil data relasi pasien dan layanan
+                    ->whereHas('layanan', function ($query) {
+                        $query->where('status', 'aktif'); // Filter layanan yang aktif
+                    })
+                    ->take(10)
+                    ->get();
 
-        ]);
-    }
-    
+    // Mengirimkan data layanan dan ulasan ke home.blade.php
+    return view('blog.home', [
+        'page' => 'Home',
+        'title' => 'Home',
+        'active' => 'home',
+        'layanan' => $layanan, // Mengirimkan data layanan
+        'ulasan' => $ulasan,   // Mengirimkan data ulasan
+    ]);
+}
+
+
     public function about()
     {
         return view('blog.about', [

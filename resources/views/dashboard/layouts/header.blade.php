@@ -24,7 +24,7 @@
                         <a class="nav-link @if($active === 'home') active fw-bold text-primary @endif" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link @if($active === 'services') active fw-bold text-primary @endif" href="/services">Services</a>
+                        <a class="nav-link @if($active === 'services') active fw-bold text-primary @endif" href="{{ route('layanan.index') }}">Services</a>
                     </li>
                     {{-- <li class="nav-item">
                         <a class="nav-link @if($active === 'appointments') active fw-bold text-primary @endif" href="/appointments">Appointments</a>

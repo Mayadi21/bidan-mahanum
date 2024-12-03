@@ -114,7 +114,6 @@ Route::middleware(['auth', 'notBanned'])->group(function () {
 
 
         Route::prefix('user')->middleware(['user'])->group(function () {
-            //route untuk user melihat riwayat kunjungan 
             Route::get('/riwayat-kunjungan/{idPasien}', [DashboardController::class, 'riwayatKunjungan'])->name('riwayat.kunjungan');
             Route::get('/janji-temu', [UserJanjiTemuController::class, 'index'])->name('user.janjitemu.index');
             Route::post('/janji-temu', [UserJanjiTemuController::class, 'store'])->name('user.janjitemu.store');

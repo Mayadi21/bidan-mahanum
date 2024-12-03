@@ -1,13 +1,119 @@
+/* General Style */
 .bi {
   display: inline-block;
   width: 1rem;
   height: 1rem;
 }
 
-/*
- * Sidebar
- */
+/* Sidebar */
+.sidebar {
+  height: 100em;
+  overflow: auto;
+  background-color: #e3f2fd; /* Latar belakang biru muda */
+  border-radius: 15px; /* Membuat sudut membulat */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Efek bayangan halus */
+  padding: 1rem; /* Menambahkan jarak di dalam sidebar */
+}
 
+.sidebar .nav-link {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #0d47a1; /* Teks biru navy */
+  padding: 0.6rem 1rem; /* Padding untuk memberi ruang lebih */
+  border-radius: 10px; /* Membuat link lebih membulat */
+  transition: all 0.3s ease-in-out;
+}
+
+.sidebar .nav-link:hover {
+  background-color: #bbdefb; /* Efek hover biru muda lebih gelap */
+  color: #1e88e5; /* Teks biru lebih terang */
+  transform: scale(1.05); /* Efek zoom lembut */
+}
+
+.sidebar .nav-link.active {
+  color: #ffffff;
+  font-weight: bold;
+  background-color: #add6fb; /* Background aktif */
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Bayangan untuk aktif */
+}
+
+.sidebar-heading {
+  font-size: 0.75rem;
+  color: #1e88e5; /* Warna heading biru cerah */
+  text-transform: uppercase;
+  margin-bottom: 1rem; /* Jarak bawah heading */
+}
+
+/* Navbar */
+.navbar-brand {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  background-color: #1e88e5; /* Navbar warna biru cerah */
+  color: #fff; /* Teks putih */
+  border-radius: 15px; /* Membuat sudut navbar membulat */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Efek bayangan */
+}
+
+.navbar .form-control {
+  padding: 0.75rem 1rem;
+  border: 1px solid #90caf9; /* Border biru lembut */
+  border-radius: 10px; /* Membuat sudut form lebih halus */
+}
+
+.navbar .form-control:focus {
+  outline: none;
+  border-color: #1e88e5;
+  box-shadow: 0 0 0 2px rgba(30, 136, 229, 0.5);
+}
+
+/* Buttons */
+.btn-bd-primary {
+  font-weight: 600;
+  background-color: #1e88e5; /* Warna tombol biru cerah */
+  border-color: #1e88e5;
+  border-radius: 20px; /* Membulatkan tombol */
+  padding: 0.6rem 1.2rem;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Bayangan tombol */
+}
+
+.btn-bd-primary:hover {
+  background-color: #1565c0; /* Hover warna biru gelap */
+  transform: translateY(-2px); /* Efek hover naik */
+}
+
+.btn-bd-primary:active {
+  background-color: #aac8f5; /* Warna biru navy untuk tombol aktif */
+  transform: translateY(1px); /* Efek klik turun */
+}
+
+/* Placeholder */
+.bd-placeholder-img {
+  font-size: 1.125rem;
+  text-anchor: middle;
+  user-select: none;
+}
+
+@media (min-width: 768px) {
+  .bd-placeholder-img-lg {
+    font-size: 3.5rem;
+  }
+}
+
+/* Divider */
+.b-example-divider {
+  width: 100%;
+  height: 3rem;
+  background-color: rgba(30, 136, 229, 0.1); /* Divider biru lembut */
+  border: solid rgba(30, 136, 229, 0.15);
+  border-width: 1px 0;
+  border-radius: 10px; /* Membulatkan divider */
+  box-shadow: inset 0 0.5em 1.5em rgba(30, 136, 229, 0.1),
+    inset 0 0.125em 0.5em rgba(30, 136, 229, 0.15);
+}
+
+/* Responsive Styling */
 @media (min-width: 768px) {
   .sidebar .offcanvas-lg {
     position: -webkit-sticky;
@@ -19,63 +125,6 @@
   }
 }
 
-.sidebar {
-  
-  height: 100em;
-  overflow: auto;
-}
-
-.sidebar .nav-link {
-  font-size: .875rem;
-  font-weight: 500;
-}
-
-.sidebar .nav-link.active {
-  color: #2470dc;
-}
-
-.sidebar-heading {
-  font-size: .75rem;
-}
-
-/*
- * Navbar
- */
-
-.navbar-brand {
-  padding-top: .75rem;
-  padding-bottom: .75rem;
-  background-color: rgba(0, 0, 0, .25);
-  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
-}
-
-.navbar .form-control {
-  padding: .75rem 1rem;
-}
-
-.bd-placeholder-img {
-  font-size: 1.125rem;
-  text-anchor: middle;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  user-select: none;
-}
-
-@media (min-width: 768px) {
-  .bd-placeholder-img-lg {
-    font-size: 3.5rem;
-  }
-}
-
-.b-example-divider {
-  width: 100%;
-  height: 3rem;
-  background-color: rgba(0, 0, 0, .1);
-  border: solid rgba(0, 0, 0, .15);
-  border-width: 1px 0;
-  box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-}
-
 .b-example-vr {
   flex-shrink: 0;
   width: 1.5rem;
@@ -83,7 +132,7 @@
 }
 
 .bi {
-  vertical-align: -.125em;
+  vertical-align: -0.125em;
   fill: currentColor;
 }
 
@@ -105,23 +154,7 @@
   -webkit-overflow-scrolling: touch;
 }
 
-.btn-bd-primary {
-  --bd-violet-bg: #712cf9;
-  --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
-
-  --bs-btn-font-weight: 600;
-  --bs-btn-color: var(--bs-white);
-  --bs-btn-bg: var(--bd-violet-bg);
-  --bs-btn-border-color: var(--bd-violet-bg);
-  --bs-btn-hover-color: var(--bs-white);
-  --bs-btn-hover-bg: #6528e0;
-  --bs-btn-hover-border-color: #6528e0;
-  --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
-  --bs-btn-active-color: var(--bs-btn-hover-color);
-  --bs-btn-active-bg: #5a23c8;
-  --bs-btn-active-border-color: #5a23c8;
-}
-
+/* Mode Toggle */
 .bd-mode-toggle {
   z-index: 1500;
 }
@@ -129,4 +162,134 @@
 .bd-mode-toggle .dropdown-menu .active .bi {
   display: block !important;
 }
-    
+
+/* Menata Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Styling untuk Kartu */
+.card {
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: none;
+  background-color: #ffffff;
+}
+
+/* Card Header */
+.card-header {
+  background-color: #1e88e5;
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 600;
+  padding: 15px 20px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+/* Card Body */
+.card-body {
+  padding: 20px;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Styling Tabel */
+.table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.table th, .table td {
+  padding: 12px 15px;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.table th {
+  background-color: #e3f2fd;
+  color: #0d47a1;
+  font-weight: 600;
+}
+
+.table tbody tr:nth-child(odd) {
+  background-color: #f1f8ff;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #ffffff;
+}
+
+/* Styling untuk Alert Info */
+.alert-info {
+  background-color: #bbdefb;
+  color: #0d47a1;
+  font-size: 1rem;
+  padding: 15px;
+  border-radius: 5px;
+  border: 1px solid #1e88e5;
+  margin-top: 20px;
+}
+
+/* Responsif: Sesuaikan untuk layar kecil */
+@media (max-width: 767px) {
+  .card-header {
+      font-size: 1.1rem;
+  }
+
+  .table th, .table td {
+      font-size: 0.85rem;
+      padding: 10px;
+  }
+}
+/* Flexbox untuk menampilkan card secara berdampingan */
+.account-summary {
+  display: flex;
+  justify-content: space-between; /* Memberikan jarak antar card */
+  gap: 20px; /* Spasi antar card */
+  margin-top: 20px;
+}
+
+.card-summary {
+  width: 48%; /* Lebar setiap card */
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.card-summary .card-header {
+  background-color: #f0f4f8; /* Warna latar belakang header card */
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #1e88e5;
+  padding: 10px;
+  text-align: center;
+}
+
+.card-summary .card-body {
+  padding: 15px;
+  font-size: 1rem;
+  color: #333;
+}
+
+.card-summary .card-body p {
+  margin: 0;
+}
+
+/* Notifikasi Card */
+.card .alert-info {
+  background-color: #e3f2fd;
+  color: #0277bd;
+  font-size: 2rem;
+  text-align: center;
+  padding: 15px;
+}
+
+.text-center-large {
+  text-align: center;
+  font-size: 2rem; /* Ukuran font lebih besar */
+  font-weight: bold; /* Membuat teks tebal */
+  color: #04233d; /* Warna teks */
+}

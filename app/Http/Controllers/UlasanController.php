@@ -87,7 +87,16 @@ public function update(Request $request, $id)
     return redirect()->back()->with('success', 'Ulasan berhasil diperbarui.');
 }
 
-
+// public function review()
+// {
+//     // Mengambil data ulasan dengan relasi user dan layanan
+//     $ulasan = Ulasan::with(['user', 'layanan']) // Mengambil data relasi pasien dan layanan
+//     ->whereHas('layanan', function($query) {
+//         $query->where('status', 'aktif'); // Filter layanan yang aktif
+//     })
+//     ->get();
+//     return view('blog.home', compact('ulasan'));
+// }
 
 
 }

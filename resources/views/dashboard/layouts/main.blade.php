@@ -11,6 +11,7 @@
     <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
     <link href="{{ asset('css/trix.css') }}" rel="stylesheet">
     <link rel="icon" type="image/jpeg" href="{{ asset('img/logo.jpeg') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 
     <style>
         trix-toolbar [data-trix-button-group="file-tools"] {
