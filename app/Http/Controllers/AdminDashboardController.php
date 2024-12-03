@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;  // Pastikan DB di-import
+use App\Models\JanjiTemu;
+use App\Models\Ulasan;
 
 class AdminDashboardController extends Controller
 {
@@ -15,8 +17,15 @@ class AdminDashboardController extends Controller
 
         // Mengambil jumlah transaksi hari ini
         $transaksiHariIni = DB::table('transaksi')
-        ->whereDate('tanggal', '=', now()->toDateString())  // Mengambil transaksi yang terjadi hari ini
-        ->count();
+            ->whereDate('tanggal', '=', now()->toDateString())  // Mengambil transaksi yang terjadi hari ini
+            ->count();
+
+        // Hitung jumlah janji temu yang menunggu konfirmasi
+        $janjiTemuPending = JanjiTemu::where('status', 'menunggu konfirmasi')->count();
+
+        // Hitung jumlah total ulasan
+        $totalUlasan = Ulasan::count();
+
 
         // Ambil data janji temu hari ini dari view_janji_temu
         $janjiTemuHariIni = DB::table('view_jadwal_janji_temu')->where('status', 'disetujui')->where('waktu_janji', today())->get(); // Mengambil semua data janji temu hari ini
@@ -26,8 +35,10 @@ class AdminDashboardController extends Controller
             'active' => 'admin-dashboard',
             'users' => User::aktif(),
             'transaksi' => $transaksi,
-            'transaksiHariIni' => $transaksiHariIni,  // Menambahkan jumlah transaksi hari ini ke view
-            'janjiTemuHariIni' => $janjiTemuHariIni, // Menambahkan data janji temu hari ini ke view
+            'transaksiHariIni' => $transaksiHariIni,
+            'janjiTemuPending' => $janjiTemuPending, // Perbaiki nama variabel menjadi konsisten
+            'totalUlasan' => $totalUlasan, // Perbaiki nama variabel menjadi konsisten
+            'janjiTemuHariIni' => $janjiTemuHariIni
         ]);
     }
 }
