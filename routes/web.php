@@ -23,6 +23,7 @@ use App\Http\Controllers\AdminJanjiTemuController;
 use App\Http\Controllers\AdminTransaksiController;
 use App\Http\Controllers\AdminPenggajianController;
 use App\Http\Controllers\UlasanController;
+use App\Http\Controllers\JanjiTemuController;
 
 
 
@@ -32,7 +33,6 @@ Route::get('/banned', [HomeController::class, 'banned'])->name('banned');
 Route::middleware('notBanned')->group(function () {
 
     Route::get('/', [HomeController::class, 'index'])->name('home');
-    Route::get('/about', [HomeController::class, 'about'])->name('about');
 });
 
 Route::middleware(['auth', 'notBanned'])->group(function () {
@@ -55,7 +55,8 @@ Route::middleware(['auth', 'notBanned'])->group(function () {
         Route::prefix('admin')->middleware(['admin'])->group(function () {
             Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard.bidan');
         
-            Route::get('/users', [AdminUsersController::class, 'index'])->name('admin.users.index');            
+            Route::get('/users', [AdminUsersController::class, 'index'])->name('admin.users.index');   
+            Route::get('/ulasan', [UlasanController::class, 'review'])->name('ulasan.home');         
    
             // layanan untuk admin
             Route::put('/layanan/{id}', [LayananController::class, 'update'])->name('layanan.update');
@@ -99,8 +100,9 @@ Route::middleware(['auth', 'notBanned'])->group(function () {
         });
 
         Route::prefix('user')->middleware(['user'])->group(function () {
-            //route untuk user melihat riwayat kunjungan 
             Route::get('/riwayat-kunjungan/{idPasien}', [DashboardController::class, 'riwayatKunjungan'])->name('riwayat.kunjungan');
+            Route::get('/janji-temu/{idPasien}', [DashboardController::class, 'janjiTemu'])->name('janji.temu');
+            Route::post('/janji-temu', [janjitemuController::class, 'store'])->name('janji.temu.store');
         });
     });
 });
