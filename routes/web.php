@@ -24,6 +24,7 @@ use App\Http\Controllers\AdminTransaksiController;
 use App\Http\Controllers\AdminPenggajianController;
 use App\Http\Controllers\UlasanController;
 use App\Http\Controllers\UserJanjiTemuController;
+use App\Http\Controllers\janjitemuController;
 
 
 
@@ -118,7 +119,10 @@ Route::middleware(['auth', 'notBanned'])->group(function () {
             Route::get('/janji-temu', [UserJanjiTemuController::class, 'index'])->name('user.janjitemu.index');
             Route::post('/janji-temu', [UserJanjiTemuController::class, 'store'])->name('user.janjitemu.store');
             Route::put('/janji-temu/{id}', [UserJanjiTemuController::class, 'update'])->name('user.janjitemu.update');
-        });
+//
+Route::get('/riwayat-kunjungan/{idPasien}', [DashboardController::class, 'riwayatKunjungan'])->name('riwayat.kunjungan');
+Route::get('/janji-temu/{idPasien}', [DashboardController::class, 'janjiTemu'])->name('janji.temu');
+Route::post('/janji-temu', [janjitemuController::class, 'store'])->name('janji.temu.store');        });
     });
 });
 

@@ -47,8 +47,39 @@
                     </a>
                 </li>
 
-                <hr class="my-3" style="border-color: #bbdefb;">
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-transaksi') active @endif" href="{{ route('transaksi.index') }}" style="color: #1e88e5;">
+                        <i class="bi bi-chat-left-text"></i>
+                        <span style="font-family: 'Poppins', sans-serif;">Transaksi</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-kunjungan') active @endif" href="#" style="color: #1e88e5;">
+                        <i class="bi bi-chat-left-text"></i>
+                        <span style="font-family: 'Poppins', sans-serif;">Kunjungan</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-ulasan') active @endif" href="{{ route('admin.ulasan.index') }}" style="color: #1e88e5;">
+                        <i class="bi bi-chat-left-text"></i>
+                        <span style="font-family: 'Poppins', sans-serif;">Ulasan</span>
+                    </a>
+                </li>
+
+                @can('admin')
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-penggajian') active @endif" href="{{ route('admin.penggajian.index') }}" style="color: #1e88e5;">
+                        <i class="bi bi-chat-left-text"></i>
+                        <span style="font-family: 'Poppins', sans-serif;">Penggajian</span>
+                    </a>
+                </li>
                 @endcan
+
+
+                <hr class="my-3" style="border-color: #bbdefb;">
+                @endcanany
 
                 @can('user')
                 <!-- User Section -->
