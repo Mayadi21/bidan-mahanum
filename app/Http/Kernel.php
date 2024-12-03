@@ -66,6 +66,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class, // ku comment karena kita gak make email verifikasi
         'admin' => \App\Http\Middleware\IsAdmin::class,
         'pegawai' => \App\Http\Middleware\IsPegawai::class,
+        'adminOrPegawai' => \App\Http\Middleware\AdminOrPegawaiMiddleware::class,
         'user' => \App\Http\Middleware\IsUser::class,
         'notBanned' => \App\Http\Middleware\UserNotBanned::class,
     ];

@@ -49,4 +49,18 @@ class AdminPenggajianController extends Controller
   }
   
 
+  public function updateStatus($id)
+{
+    // Find the record by ID
+    $penggajian = Penggajian::findOrFail($id);
+
+    // Update the status to 'Sudah Diserahkan'
+    $penggajian->status = '1';  // '1' for 'Sudah Diserahkan'
+    $penggajian->tanggal_penggajian = now();
+    $penggajian->save();
+
+    // Redirect back with a success message
+    return redirect()->back()->with('success', 'Status penggajian berhasil diperbarui.');
+}
+
 }

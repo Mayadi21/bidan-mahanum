@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('layanan'); // Nama layanan
             $table->date('tanggal'); // Tanggal log transaksi
             $table->integer('biaya'); // Biaya transaksi
-            $table->timestamp('waktu_log')->useCurrent(); // Waktu pembuatan log, default waktu saat ini
+            $table->datetime('waktu_log')->useCurrent(); // Waktu pembuatan log, default waktu saat ini
 
         });
     }

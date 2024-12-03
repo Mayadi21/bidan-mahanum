@@ -166,46 +166,46 @@ public function storeTransaction(Request $request)
     }
 }
 
-public function store(Request $request)
-    {
-        $validatedData = $request->validate([
-            'pasien_id' => 'required_if:janji_temu,tidak|exists:users,id',
-            'janji_temu' => 'required|in:ya,tidak',
-            'janji_id' => 'nullable|exists:janji_temu,id',
-            'bidan_id' => 'required|exists:users,id',
-            'layanan' => 'required|array|min:1',
-            'layanan.*' => 'exists:layanan,id',
-            'keterangan' => 'nullable|string',
-        ]);
+// public function store(Request $request)
+//     {
+//         $validatedData = $request->validate([
+//             'pasien_id' => 'required_if:janji_temu,tidak|exists:users,id',
+//             'janji_temu' => 'required|in:ya,tidak',
+//             'janji_id' => 'nullable|exists:janji_temu,id',
+//             'bidan_id' => 'required|exists:users,id',
+//             'layanan' => 'required|array|min:1',
+//             'layanan.*' => 'exists:layanan,id',
+//             'keterangan' => 'nullable|string',
+//         ]);
 
-        // Simpan data transaksi
-        $transaksi = new Transaksi();
-        $transaksi->id_pasien = $request->janji_temu === 'ya' ? JanjiTemu::find($request->janji_id)->id_pasien : $request->pasien_id;
-        $transaksi->janji_id = $request->janji_temu === 'ya' ? $request->janji_id : null;
-        $transaksi->bidan = $request->bidan_id;
-        $transaksi->keterangan = $request->keterangan;
-        $transaksi->save();
+//         // Simpan data transaksi
+//         $transaksi = new Transaksi();
+//         $transaksi->id_pasien = $request->janji_temu === 'ya' ? JanjiTemu::find($request->janji_id)->id_pasien : $request->pasien_id;
+//         $transaksi->janji_id = $request->janji_temu === 'ya' ? $request->janji_id : null;
+//         $transaksi->bidan = $request->bidan_id;
+//         $transaksi->keterangan = $request->keterangan;
+//         $transaksi->save();
 
-        // Simpan detail transaksi untuk setiap layanan
-        foreach ($request->layanan as $layanan_id) {
-            $layanan = \App\Models\Layanan::find($layanan_id);
-            $detailTransaksi = new DetailTransaksi();
-            $detailTransaksi->transaksi_id = $transaksi->id;
-            $detailTransaksi->layanan_id = $layanan_id;
-            $detailTransaksi->harga = $layanan->harga;
-            $detailTransaksi->save();
-        }
+//         // Simpan detail transaksi untuk setiap layanan
+//         foreach ($request->layanan as $layanan_id) {
+//             $layanan = \App\Models\Layanan::find($layanan_id);
+//             $detailTransaksi = new DetailTransaksi();
+//             $detailTransaksi->transaksi_id = $transaksi->id;
+//             $detailTransaksi->layanan_id = $layanan_id;
+//             $detailTransaksi->harga = $layanan->harga;
+//             $detailTransaksi->save();
+//         }
 
-        // Update status janji temu jika ada
-        if ($transaksi->janji_id) {
-            $janjiTemu = JanjiTemu::find($transaksi->janji_id);
-            $janjiTemu->status = 'selesai';
-            $janjiTemu->keterangan = $request->keterangan;
-            $janjiTemu->save();
-        }
+//         // Update status janji temu jika ada
+//         if ($transaksi->janji_id) {
+//             $janjiTemu = JanjiTemu::find($transaksi->janji_id);
+//             $janjiTemu->status = 'selesai';
+//             $janjiTemu->keterangan = $request->keterangan;
+//             $janjiTemu->save();
+//         }
 
-        return redirect()->back()->with('success', 'Transaksi berhasil ditambahkan.');
-    }
+//         return redirect()->back()->with('success', 'Transaksi berhasil ditambahkan.');
+//     }
 
 
 }

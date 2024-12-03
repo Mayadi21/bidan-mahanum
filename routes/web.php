@@ -23,7 +23,8 @@ use App\Http\Controllers\AdminJanjiTemuController;
 use App\Http\Controllers\AdminTransaksiController;
 use App\Http\Controllers\AdminPenggajianController;
 use App\Http\Controllers\UlasanController;
-use App\Http\Controllers\JanjiTemuController;
+use App\Http\Controllers\UserJanjiTemuController;
+use App\Http\Controllers\janjitemuController;
 
 
 
@@ -33,6 +34,11 @@ Route::get('/banned', [HomeController::class, 'banned'])->name('banned');
 Route::middleware('notBanned')->group(function () {
 
     Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/about', [HomeController::class, 'about'])->name('about');
+    Route::get('/layanan', [LayananController::class, 'index'])->name('layanan.index');
+    Route::get('/layanan/{id}', [LayananController::class, 'show'])->name('layanan.show');
+
+
 });
 
 Route::middleware(['auth', 'notBanned'])->group(function () {
@@ -41,8 +47,6 @@ Route::middleware(['auth', 'notBanned'])->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
         Route::resource('/posts', DashboardPostsController::class);
                 
-        Route::get('/layanan', [LayananController::class, 'index'])->name('layanan.index');
-        Route::get('/layanan/{id}', [LayananController::class, 'show'])->name('layanan.show');
 
         Route::post('/layanan/{layanan}/ulasan', [UlasanController::class, 'store'])->name('ulasan.store');
         Route::put('/ulasan/{id}', [UlasanController::class, 'update'])->name('ulasan.update');
@@ -53,10 +57,7 @@ Route::middleware(['auth', 'notBanned'])->group(function () {
 
         
         Route::prefix('admin')->middleware(['admin'])->group(function () {
-            Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard.bidan');
-        
-            Route::get('/users', [AdminUsersController::class, 'index'])->name('admin.users.index');   
-            Route::get('/ulasan', [UlasanController::class, 'review'])->name('ulasan.home');         
+          
    
             // layanan untuk admin
             Route::put('/layanan/{id}', [LayananController::class, 'update'])->name('layanan.update');
@@ -64,11 +65,29 @@ Route::middleware(['auth', 'notBanned'])->group(function () {
             Route::patch('/layanan/{id}/nonaktifkan', [LayananController::class, 'nonaktifkan'])->name('layanan.nonaktifkan');
             Route::patch('/layanan/{id}/aktifkan', [LayananController::class, 'aktifkan'])->name('layanan.aktifkan');
             Route::post('layanan', [LayananController::class, 'store'])->name('layanan.store');
-            Route::get('layanan/create', [LayananController::class, 'create'])->name('layanan.create');
+            Route::get('layanan/create', [LayananController::class, 'create'])->name('layanan.create');       
+              
+
+            //route untuk sistem penggajian
+            Route::get('/penggajian', [AdminPenggajianController::class, 'index'])->name('admin.penggajian.index');
+            Route::put('/update-status-gaji/{id}', [AdminPenggajianController::class, 'updateStatus'])->name('gaji-update-status');
+
+            //route untuk halaman gaji pokok
+            Route::get('/gaji-pokok', [AdminPenggajianController::class, 'indexGajiPokok'])->name('gaji-pokok.index');
+            Route::put('/gaji-pokok/{id}', [AdminPenggajianController::class, 'updateGajiPokok'])->name('gaji-pokok.update');
+
+        });
+
         
+
+        Route::prefix('bidan')->middleware(['adminOrPegawai'])->group(function () {
+            Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard.bidan');
+    
+            Route::get('/users', [AdminUsersController::class, 'index'])->name('admin.users.index'); 
+            
             // Route untuk menampilkan form tambah pengguna
             Route::get('/dashboard/users/create', [AdminUsersController::class, 'create'])->name('users.create');
-        
+
             // Route untuk menyimpan data pengguna
             Route::post('/dashboard/users', [AdminUsersController::class, 'store'])->name('users.store');
             Route::put('/users/{id}/update-status', [AdminUsersController::class, 'updateStatus'])->name('users.update.status');
@@ -80,8 +99,8 @@ Route::middleware(['auth', 'notBanned'])->group(function () {
 
 
             Route::post('/janji-temu', [AdminJanjiTemuController::class, 'store'])->name('janjitemu.store');
-            Route::put('/janji-temu/{id}', [AdminJanjiTemuController::class, 'update'])->name('janjitemu.update');        
-       
+            Route::put('/janji-temu/{id}', [AdminJanjiTemuController::class, 'update'])->name('janjitemu.update'); 
+             
             // Daftar transaksi
             Route::get('/transaksi', [AdminTransaksiController::class, 'index'])->name('transaksi.index');
             Route::post('/transaksi/store', [AdminTransaksiController::class, 'storeTransaction'])->name('transaksi.store');
@@ -89,21 +108,21 @@ Route::middleware(['auth', 'notBanned'])->group(function () {
             //route untuk ulasan
             Route::get('/ulasan', [UlasanController::class, 'index'])->name('admin.ulasan.index');
             Route::put('/ulasan/{ulasan}/blok', [UlasanController::class, 'block'])->name('ulasan.blok');
-            Route::put('/ulasan/{ulasan}/aktifkan', [UlasanController::class, 'activate'])->name('ulasan.aktifkan');        
+            Route::put('/ulasan/{ulasan}/aktifkan', [UlasanController::class, 'activate'])->name('ulasan.aktifkan'); 
+            
+        });        
 
-            //route untuk sistem penggajian
-            Route::get('/pengajian', [AdminPenggajianController::class, 'index'])->name('admin.penggajian.index');
-            //route untuk halaman gaji pokok
-            Route::get('/gaji-pokok', [AdminPenggajianController::class, 'indexGajiPokok'])->name('gaji-pokok.index');
-            Route::put('/gaji-pokok/{id}', [AdminPenggajianController::class, 'updateGajiPokok'])->name('gaji-pokok.update');
 
-        });
 
         Route::prefix('user')->middleware(['user'])->group(function () {
             Route::get('/riwayat-kunjungan/{idPasien}', [DashboardController::class, 'riwayatKunjungan'])->name('riwayat.kunjungan');
-            Route::get('/janji-temu/{idPasien}', [DashboardController::class, 'janjiTemu'])->name('janji.temu');
-            Route::post('/janji-temu', [janjitemuController::class, 'store'])->name('janji.temu.store');
-        });
+            Route::get('/janji-temu', [UserJanjiTemuController::class, 'index'])->name('user.janjitemu.index');
+            Route::post('/janji-temu', [UserJanjiTemuController::class, 'store'])->name('user.janjitemu.store');
+            Route::put('/janji-temu/{id}', [UserJanjiTemuController::class, 'update'])->name('user.janjitemu.update');
+//
+Route::get('/riwayat-kunjungan/{idPasien}', [DashboardController::class, 'riwayatKunjungan'])->name('riwayat.kunjungan');
+Route::get('/janji-temu/{idPasien}', [DashboardController::class, 'janjiTemu'])->name('janji.temu');
+Route::post('/janji-temu', [janjitemuController::class, 'store'])->name('janji.temu.store');        });
     });
 });
 

@@ -1,4 +1,8 @@
-@extends('dashboard.layouts.main')
+@php
+    $layout = Auth::check() ? 'dashboard.layouts.main' : 'blog.layouts.main';
+@endphp
+@extends($layout)
+
 
 @section('content')
     <div class="container">
@@ -46,7 +50,7 @@
                     @endif
                 @endcan
 
-                <!-- Form Tambah Ulasan -->
+                <!-- Form Tambah Ulasan hanya untuk pengguna yang sudah login -->
                 @auth
                     <h6>Berikan Ulasan:</h6>
                     <form action="{{ route('ulasan.store', $layanan->id) }}" method="POST">
