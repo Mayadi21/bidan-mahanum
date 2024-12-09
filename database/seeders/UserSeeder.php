@@ -26,11 +26,11 @@ class UserSeeder extends Seeder
         $users = [
             [
                 'nama' => 'Mahanum',
-                'email' => 'owner@example.com',
+                'email' => 'mahanum@gmail.com',
                 'alamat' => 'Jalan Bromo',
                 'pekerjaan' => 'bidan',
                 'email_verified_at' => now(),
-                'no_hp' => '081262225235',
+                'no_hp' => '081234345235',
                 'tanggal_lahir' => '1961/08/15',
                 'status' => 'aktif',
                 'role' => 'admin',
@@ -39,7 +39,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'nama' => 'Ade',
-                'email' => 'bidan1@example.com',
+                'email' => 'ade234@gmail.com',
                 'alamat' => 'Jalan Bromo',
                 'pekerjaan' => 'bidan',
                 'no_hp' => '081262225226',
@@ -51,7 +51,7 @@ class UserSeeder extends Seeder
 
             ],            [
                 'nama' => 'Fatimah',
-                'email' => 'bidan2@example.com',
+                'email' => 'fatimah21@gmail.com',
                 'alamat' => 'Jalan SetiaBudi No. 232',
                 'pekerjaan' => 'bidan',
                 'no_hp' => '081264346226',
@@ -63,7 +63,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'nama' => 'Mayadi',
-                'email' => 'mayadi@example.com',
+                'email' => 'mayadi@gmail.com',
                 'alamat' => 'Jalan Gelas',
                 'pekerjaan' => 'mahasiswa',
                 'no_hp' => '081262225236',
