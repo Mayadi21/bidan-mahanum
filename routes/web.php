@@ -3,21 +3,10 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\PostController;
-use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\PostsController as DashboardPostsController;
-use App\Http\Controllers\CommentsController as DashboardCommentsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminUsersController;
-use App\Http\Controllers\AdminPostsController;
-use App\Http\Controllers\AdminReportsController;
-use App\Http\Controllers\AdminCommentsController;
 use App\Http\Controllers\AdminDashboardController;
-use App\Http\Controllers\AdminCategoriesController;
-use App\Http\Controllers\AdminPostReportsController;
-use App\Http\Controllers\AdminCommentReportsController;
 use App\Http\Controllers\LayananController;
 use App\Http\Controllers\AdminJanjiTemuController;
 use App\Http\Controllers\AdminTransaksiController;
@@ -43,7 +32,6 @@ Route::middleware(['auth', 'notBanned'])->group(function () {
 
     Route::prefix('dashboard')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-        Route::resource('/posts', DashboardPostsController::class);
 
 
         Route::post('/layanan/{layanan}/ulasan', [UlasanController::class, 'store'])->name('ulasan.store');
@@ -124,4 +112,4 @@ Route::middleware(['auth', 'notBanned'])->group(function () {
     });
 });
 
-require __DIR__ . '/auth.php'; // pastikan auth routes juga terinclude
+require __DIR__ . '/auth.php'; 
