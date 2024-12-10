@@ -37,8 +37,8 @@
             @foreach ($janjiTemu as $index => $janji)
             <tr>
                 <td>{{ $index + 1 }}</td>
-                <td>{{ \Carbon\Carbon::parse($janji->waktu_janji)->format('d M Y') }}</td>
-                <td>{{ \Carbon\Carbon::parse($janji->waktu_janji)->format('H:i') }}</td>
+                <td>{{ \Carbon\Carbon::parse($janji->waktu_mulai)->format('d M Y') }}</td>
+                <td>{{ \Carbon\Carbon::parse($janji->waktu_mulai)->format('H:i') }}</td>
                 <td>{{ $janji->keluhan }}</td>
                 <td>
                     @if($janji->status === 'disetujui')
@@ -68,8 +68,8 @@
                                                     <textarea class="form-control" id="keluhan-{{ $janji->id }}" name="keluhan" rows="3" required>{{ $janji->keluhan }}</textarea>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="waktu_janji-{{ $janji->id }}" class="form-label">Waktu Janji</label>
-                                                    <input type="datetime-local" class="form-control" id="waktu_janji-{{ $janji->id }}" name="waktu_janji" value="{{ \Carbon\Carbon::parse($janji->waktu_janji)->format('Y-m-d\TH:i') }}" required>
+                                                    <label for="waktu_mulai-{{ $janji->id }}" class="form-label">Waktu Janji</label>
+                                                    <input type="datetime-local" class="form-control" id="waktu_mulai-{{ $janji->id }}" name="waktu_mulai" value="{{ \Carbon\Carbon::parse($janji->waktu_mulai)->format('Y-m-d\TH:i') }}" required>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">

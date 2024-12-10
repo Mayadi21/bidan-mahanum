@@ -4,9 +4,10 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2">Janji Temu</h1>
     
-    <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#tambahJanjiTemuModal">
+    <a href="{{ route('janjitemu.create') }}" class="btn btn-primary mb-3">
         Tambah Janji Temu
-    </button>
+    </a>
+    
     
 
     <div class="btn-group btn-group-sm me-2" role="group" aria-label="Filter Status">
@@ -51,8 +52,8 @@
                         <textarea class="form-control" id="keluhan" name="keluhan" rows="3" placeholder="Masukkan keluhan pasien..."></textarea>
                     </div>
                     <div class="mb-3">
-                        <label for="waktu_janji" class="form-label">Waktu Janji</label>
-                        <input type="datetime-local" class="form-control" id="waktu_janji" name="waktu_janji" required>
+                        <label for="waktu_mulai" class="form-label">Waktu Janji</label>
+                        <input type="datetime-local" class="form-control" id="waktu_mulai" name="waktu_mulai" required>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -97,12 +98,11 @@
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $appointment->pasien_nama }}</td>
                     <td>{{ $appointment->keluhan }}</td>
-                    <td>{{ $appointment->waktu_janji }}</td>
+                    <td>{{ $appointment->waktu_mulai }}</td>
                     <td>{{ ucfirst($appointment->status) }}</td>
                     <td>{{ $appointment->keterangan ?? '-' }}</td>
                     <td>
                         @if($appointment->status === 'menunggu konfirmasi')
-                            <!-- Tombol Setujui -->
                             <form action="{{ route('janjitemu.update', $appointment->id) }}" method="post" style="display: inline;">
                                 @csrf
                                 @method('PUT')
@@ -111,10 +111,8 @@
                                     Setujui
                                 </button>
                             </form>
-                            <!-- Tombol Tolak -->
                             <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#tolakModal-{{ $appointment->id }}">Tolak</button>
 
-                            <!-- Modal untuk Tolak -->
                             <div class="modal fade" id="tolakModal-{{ $appointment->id }}" tabindex="-1" aria-labelledby="tolakModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -147,4 +145,12 @@
         </tbody>
     </table>
 </div>
+
+<!-- Tombol Sediakan Jadwal Janji Temu -->
+<div class="container">
+    <a href="{{ route('jadwal.sediakan') }}" class="btn btn-success btn-lg d-block position-fixed bottom-0 start-0 end-0" style="border-radius: 0; margin-bottom: 0;">
+        Sediakan Jadwal Janji Temu
+    </a>
+</div>
+
 @endsection

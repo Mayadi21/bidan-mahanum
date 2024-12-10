@@ -14,12 +14,26 @@ return new class extends Migration
         Schema::create('janji_temu', function (Blueprint $table) {
             $table->id(); // Primary key
             $table->foreignId('id_pasien') // Foreign key untuk user
-                  ->constrained('users') // Mengacu ke tabel users
-                  ->onUpdate('cascade')
-                  ->onDelete('cascade');
+            ->nullable() //bisa null jika memakai id pasien tidak terdaftar
+            ->constrained('users') // Mengacu ke tabel users
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
+            $table->foreignId('pasien_tidak_terdaftar_id') // Foreign key untuk pasien tidak terdaftar
+            ->nullable() // Bisa null jika pasien adalah pengguna terdaftar
+            ->constrained('pasien_tidak_terdaftar')
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
+            $table->foreignId('promo_id') // Foreign key untuk tabel promo
+            ->nullable() // Bisa null jika tidak mendaftar promo
+            ->constrained('event_promo')
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
             $table->string('keluhan')->nullable(); // Kolom keluhan
-            $table->dateTime('waktu_janji'); // Kolom waktu janji temu
-            $table->enum('status', ['menunggu konfirmasi', 'ditolak', 'disetujui', 'selesai'])->default('menunggu konfirmasi'); // Kolom status
+            $table->dateTime('waktu_mulai'); // Kolom waktu janji temu dimulai
+            $table->dateTime('waktu_selesai')->nullable(); // Kolom waktu janji temu selesai
+            $table->enum('status', ['menunggu konfirmasi', 'ditolak', 'disetujui', 'selesai'])
+            ->nullable() // Memungkinkan NULL
+            ->default('menunggu konfirmasi'); // Nilai default tetap ada
             $table->string('keterangan')->nullable();
         });
     }

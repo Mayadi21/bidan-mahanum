@@ -21,7 +21,7 @@
         <div class="card-header">Janji temu berikutnya</div>
         <div class="card-body">
             @if ($janjiTemu)
-            <p class="text-center-large"><strong>{{ $janjiTemu->waktu_janji }}</strong></p>
+            <p class="text-center-large"><strong>{{ $janjiTemu->waktu_mulai }}</strong></p>
             @else
             <p class="text-center-large text-muted">Anda belum memiliki janji temu yang disetujui.</p>
             @endif

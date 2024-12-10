@@ -21,7 +21,8 @@ return new class extends Migration
                     ->onDelete('cascade');
             $table->integer('diskon'); // Besar diskon
             $table->integer('kuota'); // Kuota maksimal dari promo
-            $table->date('tanggal_event'); // Tanggal promo berlangsung (hanya 1 hari)
+            $table->date('tanggal_mulai'); // Tanggal promo 
+            $table->date('tanggal_selesai'); // Tanggal promo 
         }); 
     }
 

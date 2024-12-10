@@ -18,19 +18,19 @@ class JanjiTemuSeeder extends Seeder
             [
                 'id_pasien' => 5,
                 'keluhan' => 'Ingin imunisasi anak',
-                'waktu_janji' => '2024-11-22 09:00:00',
+                'waktu_mulai' => '2024-11-22 09:00:00',
                 'status' => 'disetujui'
             ],
             [
                 'id_pasien' => 6,
                 'keluhan' => 'Mau cek asam urat',
-                'waktu_janji' => '2024-12-22 14:00:00',
+                'waktu_mulai' => '2024-12-22 14:00:00',
                 'status' => 'disetujui'
             ],
             [
                 'id_pasien' => 7, // ID pasien dari tabel users
                 'keluhan' => 'Sakit kepala terus-menerus',
-                'waktu_janji' => '2024-12-27 10:00:00',
+                'waktu_mulai' => '2024-12-27 10:00:00',
                 'status' => 'disetujui'
             ],
         ];

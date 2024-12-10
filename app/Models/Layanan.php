@@ -19,6 +19,11 @@ class Layanan extends Model
         'besar_bonus',
         'status'
     ];
+
+    public function promo()
+    {
+        return $this->hasMany(EventPromo::class, 'layanan_id');
+    }
     
     // Scope untuk status aktif
     public function scopeAktif($query)

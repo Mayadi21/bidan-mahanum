@@ -20,7 +20,15 @@ return new class extends Migration
             $table->foreignId('janji_id') 
             ->nullable()
             ->constrained('janji_temu') 
-            ->onUpdate('cascade'); // Update cascade
+            ->onUpdate('cascade')
+            ->onDelete('cascade'); // Update cascade
+
+            $table->foreignId('pasien_tidak_terdaftar_id')
+            ->nullable()
+            ->constrained('pasien_tidak_terdaftar')
+            ->onUpdate('cascade')
+            ->onDelete('cascade'); // Pasien tidak terdaftar
+
 
             $table->foreignId('bidan') // Foreign key ke tabel users (bidan)
                   ->constrained('users') // Referensi ke tabel users
