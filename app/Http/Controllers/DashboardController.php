@@ -27,13 +27,13 @@ class DashboardController extends Controller
         $janjiTemu = DB::table('view_jadwal_janji_temu')
             ->where('id_pasien', $idUser)
             ->where('status', 'disetujui')
-            ->orderBy('waktu_janji', 'asc') // Pastikan janji temu terdekat diambil lebih dulu
+            ->orderBy('waktu_mulai', 'asc') // Pastikan janji temu terdekat diambil lebih dulu
             ->first();
     
         $sisaWaktu = null;
     
         if ($janjiTemu) {
-            $waktuJanji = Carbon::parse($janjiTemu->waktu_janji);
+            $waktuJanji = Carbon::parse($janjiTemu->waktu_mulai);
             $sekarang = Carbon::now();
     
             // Menghitung sisa waktu secara detail

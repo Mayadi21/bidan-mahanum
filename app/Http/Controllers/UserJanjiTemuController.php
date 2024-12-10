@@ -43,7 +43,7 @@ class UserJanjiTemuController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'keluhan' => 'required|string|max:255',
-            'waktu_janji' => 'required|date|after:now',
+            'waktu_mulai' => 'required|date|after:now',
         ]);
 
         if ($validator->fails()) {
@@ -54,7 +54,7 @@ class UserJanjiTemuController extends Controller
         DB::table('janji_temu')->insert([
             'id_pasien' => Auth::id(),
             'keluhan' => $request->keluhan,
-            'waktu_janji' => $request->waktu_janji,
+            'waktu_mulai' => $request->waktu_mulai,
             'status' => 'menunggu konfirmasi'
         ]);
 
@@ -65,7 +65,7 @@ class UserJanjiTemuController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'keluhan' => 'required|string|max:255',
-            'waktu_janji' => 'required|date|after:now',
+            'waktu_mulai' => 'required|date|after:now',
         ]);
 
         if ($validator->fails()) {
@@ -88,7 +88,7 @@ class UserJanjiTemuController extends Controller
             ->where('id', $id)
             ->update([
                 'keluhan' => $request->keluhan,
-                'waktu_janji' => $request->waktu_janji,
+                'waktu_mulai' => $request->waktu_mulai,
             ]);
 
         return redirect()->route('user.janjitemu.index')->with('success', 'Janji temu berhasil diperbarui.');

@@ -20,11 +20,11 @@ class AdminTransaksiController extends Controller
       $transaksi = DB::table('view_transaksi')->get();
       $janji_temu = DB::table('view_jadwal_janji_temu')
         ->where('status', 'disetujui')
-        ->whereBetween('waktu_janji', [
+        ->whereBetween('waktu_mulai', [
             now()->subDays(2)->startOfDay()->toDateTimeString(),
             now()->endOfDay()->toDateTimeString()
         ])
-        ->orderBy('waktu_janji', 'desc')
+        ->orderBy('waktu_mulai', 'desc')
         ->get();
       $layanan = Layanan::aktif()->get();
       $pasien = User::aktif()->where('role', 'user')->get();
@@ -48,11 +48,11 @@ class AdminTransaksiController extends Controller
       $transaksi = DB::table('view_transaksi')->get();
       $janji_temu = DB::table('view_jadwal_janji_temu')
         ->where('status', 'disetujui')
-        ->whereBetween('waktu_janji', [
+        ->whereBetween('waktu_mulai', [
             now()->subDays(2)->startOfDay()->toDateTimeString(),
             now()->endOfDay()->toDateTimeString()
         ])
-        ->orderBy('waktu_janji', 'desc')
+        ->orderBy('waktu_mulai', 'desc')
         ->get();
       $layanan = Layanan::aktif()->get();
       $pasien = User::aktif()->where('role', 'user')->get();

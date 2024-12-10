@@ -25,10 +25,10 @@ public function store(Request $request)
     $waktuJanji = Carbon::parse($validated['tanggal'] . ' ' . $validated['waktu'])->format('Y-m-d H:i:s');
 
     try {
-        // Simpan janji temu dengan menambahkan id_pasien dan waktu_janji yang sudah digabungkan
+        // Simpan janji temu dengan menambahkan id_pasien dan waktu_mulai yang sudah digabungkan
         JanjiTemu::create([
             'id_pasien' => auth()->id(),  // id pengguna yang sedang login
-            'waktu_janji' => $waktuJanji,  // Menggunakan waktu gabungan
+            'waktu_mulai' => $waktuJanji,  // Menggunakan waktu gabungan
             'keluhan' => $validated['keluhan'] ?? null,
             'status' => 'menunggu konfirmasi',  // Status awal
         ]);

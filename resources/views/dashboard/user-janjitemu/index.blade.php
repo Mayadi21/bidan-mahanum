@@ -41,8 +41,8 @@
                         <textarea class="form-control" id="keluhan" name="keluhan" rows="3" placeholder="Masukkan keluhan Anda..." required></textarea>
                     </div>
                     <div class="mb-3">
-                        <label for="waktu_janji" class="form-label">Waktu Janji</label>
-                        <input type="datetime-local" class="form-control" id="waktu_janji" name="waktu_janji" required>
+                        <label for="waktu_mulai" class="form-label">Waktu Janji</label>
+                        <input type="datetime-local" class="form-control" id="waktu_mulai" name="waktu_mulai" required>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -83,7 +83,7 @@
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $appointment->keluhan }}</td>
-                    <td>{{ $appointment->waktu_janji }}</td>
+                    <td>{{ $appointment->waktu_mulai }}</td>
                     <td>{{ ucfirst($appointment->status) }}</td>
                     <td>{{ $appointment->keterangan ?? '-' }}</td>
                     <td>
@@ -110,8 +110,8 @@
                                                     <textarea class="form-control" id="keluhan-{{ $appointment->id }}" name="keluhan" rows="3" required>{{ $appointment->keluhan }}</textarea>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="waktu_janji-{{ $appointment->id }}" class="form-label">Waktu Janji</label>
-                                                    <input type="datetime-local" class="form-control" id="waktu_janji-{{ $appointment->id }}" name="waktu_janji" value="{{ \Carbon\Carbon::parse($appointment->waktu_janji)->format('Y-m-d\TH:i') }}" required>
+                                                    <label for="waktu_mulai-{{ $appointment->id }}" class="form-label">Waktu Janji</label>
+                                                    <input type="datetime-local" class="form-control" id="waktu_mulai-{{ $appointment->id }}" name="waktu_mulai" value="{{ \Carbon\Carbon::parse($appointment->waktu_mulai)->format('Y-m-d\TH:i') }}" required>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">

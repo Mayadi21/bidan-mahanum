@@ -63,7 +63,7 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $item->pasien_nama }}</td> <!-- Nama Pasien -->
                             <td>{{ $item->keluhan }}</td> <!-- Keluhan -->
-                            <td>{{ \Carbon\Carbon::parse($item->waktu_janji)->format('d-m-Y H:i') }}</td> <!-- Waktu Janji -->
+                            <td>{{ \Carbon\Carbon::parse($item->waktu_mulai)->format('d-m-Y H:i') }}</td> <!-- Waktu Janji -->
                             <td>{{ $item->status }}</td> <!-- Status -->
                         </tr>
                     @endforeach

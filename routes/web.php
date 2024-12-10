@@ -81,10 +81,12 @@ Route::middleware(['auth', 'notBanned'])->group(function () {
             // Rute untuk halaman daftar janji temu
             Route::get('/janjitemu', [AdminJanjiTemuController::class, 'index'])
                 ->name('janjitemu.index');
-
-
             Route::post('/janji-temu', [AdminJanjiTemuController::class, 'store'])->name('janjitemu.store');
             Route::put('/janji-temu/{id}', [AdminJanjiTemuController::class, 'update'])->name('janjitemu.update');
+            Route::get('/janji-temu/sediakan-jadwal', [AdminJanjiTemuController::class, 'createJadwal'])->name('jadwal.sediakan');
+            Route::post('/janji-temu/jadwal', [AdminJanjiTemuController::class, 'storeJadwal'])->name('jadwal.store');
+            Route::get('/janji-temu/jadwal', [AdminJanjiTemuController::class, 'getJanjiTemuByDate'])->name('jadwal.janjitemu');
+            Route::get('/janji-temu/create', [AdminJanjiTemuController::class, 'create'])->name('janjitemu.create');
 
             // Daftar transaksi
             Route::get('/transaksi', [AdminTransaksiController::class, 'index'])->name('transaksi.index');

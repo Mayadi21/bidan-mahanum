@@ -12,20 +12,22 @@ class JanjiTemu extends Model
     // Tentukan nama tabel
     protected $table = 'janji_temu';
     public $timestamps = false;
-
-    // Tentukan kolom yang dapat diisi
-    protected $fillable = [
-        'id_pasien',
-        'keluhan',
-        'waktu_janji',
-        'status',
-        'keterangan'
-    ];
+    protected $guarded = ['id'];
 
     // Relasi dengan model User
     public function user()
     {
         return $this->belongsTo(User::class, 'id_pasien'); // Ganti user_id menjadi id_pasien
+    }
+
+    public function promo()
+    {
+        return $this->belongsTo(EventPromo::class, 'promo_id'); 
+    }
+
+    public function pasienTidakTerdaftar()
+    {
+        return $this->belongsTo(PasienTidakTerdaftar::class, 'pasien_tidak_terdaftar_id'); 
     }
 
     public function transaksi()

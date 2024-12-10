@@ -11,20 +11,20 @@ class Transaksi extends Model
 
     protected $table = 'transaksi'; // Nama tabel
     public $timestamps = false;
+    protected $guarded = ['id'];
 
-    protected $fillable = [
-        'id_pasien',
-        'bidan',
-        'janji_id',
-        'keterangan',
-        'tanggal',
-    ];
+    public function pasienTidakTerdaftar()
+    {
+        return $this->belongsTo(PasienTidakTerdaftar::class, 'id_pasien');
+    }
+
 
     // Relasi ke model User sebagai id_pasien
     public function pasien()
     {
         return $this->belongsTo(User::class, 'id_pasien');
     }
+
 
     public function janjiTemu()
     {
