@@ -50,6 +50,7 @@
                     <th scope="col">Pekerjaan</th>
                     <th scope="col">Nomor HP</th>
                     <th scope="col">Role</th>
+                    <th scope="col">Aksi</th>
                 </tr>
             </thead>
             <tbody>
