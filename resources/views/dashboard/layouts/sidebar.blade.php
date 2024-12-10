@@ -9,8 +9,6 @@
         <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
             <ul class="nav flex-column">
 
-                <!-- Back to Blog -->
-                                
                 @canany(['admin', 'pegawai'])
                 <!-- Admin Section -->
                 <h6 class="sidebar-heading d-flex justify-content-start align-items-center px-3 my-3 text-uppercase" style="color: #0d47a1;">
@@ -19,48 +17,55 @@
                 </h6>
                 <hr class="my-3" style="border-color: #bbdefb;">
 
+                <!-- Dashboard -->
                 <li class="nav-item">
                     <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-dashboard') active @endif" href="{{ route('dashboard.bidan') }}" style="color: #1e88e5;">
-                        <i class="bi bi-display"></i>
-                        <span style="font-family: 'Poppins', sans-serif;">Dashboard</span>
+                        <i class="bi bi-display"></i> <!-- Ikon dashboard -->
+                        <span style="font-family: 'Poppins', sans-serif;">Beranda</span>
                     </a>
                 </li>
-                
+
+                <!-- Pengguna -->
                 <li class="nav-item">
                     <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-users') active @endif" href="{{ route('admin.users.index') }}" style="color: #1e88e5;">
-                        <i class="bi bi-person-circle"></i>
+                        <i class="bi bi-people"></i> <!-- Ikon pengguna -->
                         <span style="font-family: 'Poppins', sans-serif;">Pengguna</span>
                     </a>
                 </li>
 
+                <!-- Layanan -->
                 <li class="nav-item">
                     <a class="nav-link d-flex align-items-center gap-2 @if($active == 'layanan') active @endif" href="{{ route('layanan.index') }}" style="color: #1e88e5;">
-                        <i class="bi bi-file-earmark-text"></i>
+                        <i class="bi bi-briefcase"></i> <!-- Ikon layanan -->
                         <span style="font-family: 'Poppins', sans-serif;">Layanan</span>
                     </a>
                 </li>
-                
+
+                <!-- Janji Temu -->
                 <li class="nav-item">
                     <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-janjitemu') active @endif" href="{{ route('janjitemu.index') }}" style="color: #1e88e5;">
-                        <i class="bi bi-chat-left-text"></i>
+                        <i class="bi bi-calendar-check"></i> <!-- Ikon janji temu -->
                         <span style="font-family: 'Poppins', sans-serif;">Janji Temu</span>
                     </a>
                 </li>
 
+                <!-- Transaksi -->
                 <li class="nav-item">
                     <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-transaksi') active @endif" href="{{ route('transaksi.index') }}" style="color: #1e88e5;">
-                        <i class="bi bi-chat-left-text"></i>
+                        <i class="bi bi-credit-card"></i> <!-- Ikon transaksi -->
                         <span style="font-family: 'Poppins', sans-serif;">Transaksi</span>
                     </a>
                 </li>
 
+                <!-- Kunjungan -->
                 <li class="nav-item">
                     <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-kunjungan') active @endif" href="{{ route('kunjungan.index') }}" style="color: #1e88e5;">
-                        <i class="bi bi-chat-left-text"></i>
+                        <i class="bi bi-clipboard-data"></i> <!-- Ikon kunjungan -->
                         <span style="font-family: 'Poppins', sans-serif;">Kunjungan</span>
                     </a>
                 </li>
 
+                <!-- Ulasan -->
                 <li class="nav-item">
                     <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-promo') active @endif" href="{{ route('promo.index') }}" style="color: #1e88e5;">
                         <i class="bi bi-chat-left-text"></i>
@@ -70,15 +75,23 @@
 
                 <li class="nav-item">
                     <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-ulasan') active @endif" href="{{ route('admin.ulasan.index') }}" style="color: #1e88e5;">
-                        <i class="bi bi-chat-left-text"></i>
+                        <i class="bi bi-chat-dots"></i> <!-- Ikon ulasan -->
                         <span style="font-family: 'Poppins', sans-serif;">Ulasan</span>
                     </a>
                 </li>
 
-                @can('admin')
+                <!-- Rujukan -->
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-penggajian') active @endif" href="{{ route('admin.penggajian.index') }}" style="color: #1e88e5;">
-                        <i class="bi bi-chat-left-text"></i>
+                    <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-rujukan') active @endif" href="{{ route('admin.rujukan.index') }}" style="color: #1e88e5;">
+                        <i class="bi bi-hospital"></i> <!-- Ikon rumah sakit -->
+                        <span style="font-family: 'Poppins', sans-serif;">Rujukan</span>
+                    </a>
+                </li>
+
+                @can('pegawai')
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2 @if($active === 'penggajian') active @endif" href="{{ route('gaji.pegawai') }}" style="color: #1e88e5;">
+                        <i class="bi bi-wallet2"></i> <!-- Ikon penggajian -->
                         <span style="font-family: 'Poppins', sans-serif;">Penggajian</span>
                     </a>
                 </li>
@@ -91,6 +104,15 @@
                 </li>
                 @endcan
 
+                <!-- Penggajian (Admin Only) -->
+                @can('admin')
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-penggajian') active @endif" href="{{ route('admin.penggajian.index') }}" style="color: #1e88e5;">
+                        <i class="bi bi-wallet2"></i> <!-- Ikon penggajian -->
+                        <span style="font-family: 'Poppins', sans-serif;">Penggajian</span>
+                    </a>
+                </li>
+                @endcan
 
                 <hr class="my-3" style="border-color: #bbdefb;">
                 @endcanany
@@ -103,30 +125,34 @@
                 </h6>
                 <hr class="my-3" style="border-color: #bbdefb;">
 
+                <!-- Beranda -->
                 <li class="nav-item">
                     <a class="nav-link d-flex align-items-center gap-2 @if($active === 'dashboard') active @endif" href="{{ route('dashboard') }}" style="color: #1e88e5;">
-                        <i class="bi bi-house"></i>
+                        <i class="bi bi-house"></i> <!-- Ikon beranda -->
                         <span style="font-family: 'Poppins', sans-serif;">Beranda</span>
                     </a>
                 </li>
-                
+
+                <!-- Janji Temu -->
                 <li class="nav-item">
                     <a class="nav-link d-flex align-items-center gap-2 @if($active == 'janji') active @endif" href="{{ route('janji.temu', ['idPasien' => auth()->id()]) }}" style="color: #1e88e5;">
-                        <i class="bi bi-calendar-event"></i>
+                        <i class="bi bi-calendar-event"></i> <!-- Ikon janji -->
                         <span style="font-family: 'Poppins', sans-serif;">Janji Temu</span>
                     </a>
                 </li>
-                
+
+                <!-- Riwayat Kunjungan -->
                 <li class="nav-item">
                     <a class="nav-link d-flex align-items-center gap-2 @if($active == 'riwayat') active @endif" href="{{ route('riwayat.kunjungan', ['idPasien' => auth()->id()]) }}" style="color: #1e88e5;">
-                        <i class="bi bi-clock-history"></i>
+                        <i class="bi bi-clock-history"></i> <!-- Ikon riwayat -->
                         <span style="font-family: 'Poppins', sans-serif;">Riwayat Kunjungan</span>
                     </a>
                 </li>
-                
+
+                <!-- Layanan -->
                 <li class="nav-item">
                     <a class="nav-link d-flex align-items-center gap-2 @if($active == 'layanan') active @endif" href="{{ route('layanan.index') }}" style="color: #1e88e5;">
-                        <i class="bi bi-heart"></i>
+                        <i class="bi bi-heart"></i> <!-- Ikon layanan -->
                         <span style="font-family: 'Poppins', sans-serif;">Layanan</span>
                     </a>
                 </li>

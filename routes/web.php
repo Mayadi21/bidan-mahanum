@@ -15,6 +15,7 @@ use App\Http\Controllers\UlasanController;
 use App\Http\Controllers\PromoController;
 use App\Http\Controllers\UserJanjiTemuController;
 use App\Http\Controllers\janjitemuController;
+use App\Http\Controllers\RujukanController;
 
 
 
@@ -104,6 +105,17 @@ Route::middleware(['auth', 'notBanned'])->group(function () {
             Route::get('/ulasan', [UlasanController::class, 'index'])->name('admin.ulasan.index');
             Route::put('/ulasan/{ulasan}/blok', [UlasanController::class, 'block'])->name('ulasan.blok');
             Route::put('/ulasan/{ulasan}/aktifkan', [UlasanController::class, 'activate'])->name('ulasan.aktifkan');
+
+            Route::get('/rujukan', [RujukanController::class, 'index'])->name('admin.rujukan.index');
+            Route::get('/rujukan/create', [RujukanController::class, 'create'])->name('rujukan.create');
+            Route::post('/rujukan', [RujukanController::class, 'store'])->name('rujukan.store');
+            Route::get('/rujukan/{id}/edit', [RujukanController::class, 'edit'])->name('rujukan.edit');
+            Route::put('/rujukan/{id}', [RujukanController::class, 'update'])->name('rujukan.update');
+            Route::delete('/rujukan/{id}', [RujukanController::class, 'destroy'])->name('rujukan.destroy');
+            Route::get('/rujukan/{id}/cetak', [RujukanController::class, 'cetak'])->name('rujukan.cetak');
+
+            Route::get('/gaji-pegawai', [AdminPenggajianController::class, 'show'])->name('gaji.pegawai');
+
         });
 
 
@@ -120,4 +132,4 @@ Route::middleware(['auth', 'notBanned'])->group(function () {
     });
 });
 
-require __DIR__ . '/auth.php'; 
+require __DIR__ . '/auth.php';
