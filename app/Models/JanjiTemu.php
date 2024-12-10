@@ -22,7 +22,7 @@ class JanjiTemu extends Model
 
     public function promo()
     {
-        return $this->belongsTo(EventPromo::class, 'promo_id'); 
+        return $this->belongsTo(Promo::class, 'promo_id'); 
     }
 
     public function pasienTidakTerdaftar()

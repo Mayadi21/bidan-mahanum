@@ -4,7 +4,7 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2">Daftar Transaksi</h1>
     <!-- Button untuk menambah transaksi -->
-    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-transaction-modal">Tambah Transaksi</button>
+    <a href="{{ route('transaksi.create') }}" class="btn btn-primary">Tambah Transaksi</a>
 </div>
 
 <!-- Bagian untuk menampilkan pesan -->
@@ -99,7 +99,7 @@
                         <select class="form-select" id="janji_id" name="janji_id">
                             <option value="" selected>-- Pilih Janji Temu --</option>
                             @foreach($janji_temu as $janji)
-                                <option value="{{ $janji->id }}">{{ $janji->pasien_nama }} ({{ $janji->waktu_janji }})</option>
+                                <option value="{{ $janji->id }}">{{ $janji->pasien_nama }} ({{ $janji->waktu_mulai }})</option>
                             @endforeach
                         </select>
                     </div>

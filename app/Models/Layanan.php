@@ -22,7 +22,7 @@ class Layanan extends Model
 
     public function promo()
     {
-        return $this->hasMany(EventPromo::class, 'layanan_id');
+        return $this->hasMany(Promo::class, 'layanan_id');
     }
     
     // Scope untuk status aktif

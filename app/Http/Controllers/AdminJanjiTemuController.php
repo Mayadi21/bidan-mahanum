@@ -159,13 +159,11 @@ class AdminJanjiTemuController extends Controller
     public function create()
     {
         // Ambil semua pengguna dari database (jika hanya pengguna tertentu, sesuaikan query-nya)
-        $users = User::all();
+        $users = User::aktif()->role('user');
         $pasienTidakTerdaftar = PasienTidakTerdaftar::all(); // Pasien dari tabel pasien_tidak_terdaftar
         $jadwalTersedia = JanjiTemu::whereNull('id_pasien')
                                    ->whereNull('pasien_tidak_terdaftar_id')
                                    ->get();
-
-;
 
         return view('dashboard.admin-janjitemu.create', [
             'page' => 'Daftarkan Janji Temu',
