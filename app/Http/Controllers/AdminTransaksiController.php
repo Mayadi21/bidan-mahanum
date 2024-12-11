@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Database\QueryException;
 use App\Models\DetailTransaksi;
 use App\Models\JanjiTemu;
+use App\Models\PasienTidakTerdaftar;
 use App\Models\Layanan;
 
 class AdminTransaksiController extends Controller
@@ -41,6 +42,35 @@ class AdminTransaksiController extends Controller
 
       ]);
   }
+
+    public function create()
+    {
+        $janji_temu = DB::table('view_jadwal_janji_temu')
+        ->where('status', 'disetujui')
+        ->whereBetween('waktu_mulai', [
+            now()->subDays(2)->startOfDay()->toDateTimeString(),
+            now()->endOfDay()->toDateTimeString()
+        ])
+        ->orderBy('waktu_mulai', 'desc')
+        ->get();
+      $layanan = Layanan::aktif()->get();
+      $pasien = User::aktif()->where('role', 'user')->get();
+      $pasien_tidak_terdaftar = PasienTidakTerdaftar::all();
+      $bidan = User::aktif()->where('role', 'admin')->orWhere('role', 'pegawai')->get();
+
+        return view('dashboard.transaksi.create', [
+            'page' => 'Tambah Transaksi',
+            'active' => 'admin-transaksi',
+            'pasien' => $pasien,
+            'janji_temu' => $janji_temu,
+            'layanan' => $layanan,
+            'pasien' => $pasien,
+            'pasien_tidak_terdaftar' => $pasien_tidak_terdaftar,
+            'bidan' => $bidan,
+        ]);
+
+    }
+
 
   public function kunjungan()
   {

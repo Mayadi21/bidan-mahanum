@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('event_promo', function (Blueprint $table) {
+        Schema::create('promo', function (Blueprint $table) {
             $table->id(); // Primary key
             $table->string('judul_promo'); // Nama promo
             $table->text('deskripsi'); // Deskripsi promo
@@ -21,9 +21,9 @@ return new class extends Migration
                     ->onDelete('cascade');
             $table->integer('diskon'); // Besar diskon
             $table->integer('kuota'); // Kuota maksimal dari promo
-            $table->date('tanggal_mulai'); // Tanggal promo 
-            $table->date('tanggal_selesai'); // Tanggal promo 
-        }); 
+            $table->date('tanggal_mulai'); // Tanggal dan waktu mulai promo
+            $table->date('tanggal_selesai'); // Tanggal dan waktu selesai promo
+        });
     }
 
     /**
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('event_promo');
+        Schema::dropIfExists('promo');
     }
 };

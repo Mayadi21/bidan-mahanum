@@ -23,7 +23,7 @@ return new class extends Migration
             jt.waktu_selesai, -- Waktu janji temu selesai
             jt.status, -- Status janji temu
             jt.keterangan, -- Keterangan tambahan
-            ep.judul_promo -- Nama promo dari tabel event_promo
+            ep.judul_promo -- Nama promo dari tabel promo
         FROM 
             janji_temu jt
         LEFT JOIN 
@@ -31,7 +31,7 @@ return new class extends Migration
         LEFT JOIN 
             pasien_tidak_terdaftar ptt ON jt.pasien_tidak_terdaftar_id = ptt.id -- Left join dengan pasien_tidak_terdaftar
         LEFT JOIN 
-            event_promo ep ON jt.promo_id = ep.id -- Left join dengan event_promo
+            promo ep ON jt.promo_id = ep.id -- Left join dengan promo
         ORDER BY 
             jt.waktu_mulai DESC;
         ");
