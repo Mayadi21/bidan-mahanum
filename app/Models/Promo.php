@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class EventPromo extends Model
+class Promo extends Model
 {
     use HasFactory;
-    protected $table = 'event_promo';
+    protected $table = 'promo';
     public $timestamps = false;
     protected $guarded = ['id'];
 
@@ -20,7 +20,7 @@ class EventPromo extends Model
 
     public function layanan()
     {
-        return $this->belongsTo(User::class, 'layanan_id'); // Mengarah ke kolom 'id' di tabel 'layanan'
+        return $this->belongsTo(Layanan::class, 'layanan_id'); // Mengarah ke kolom 'id' di tabel 'layanan'
     }
 
 }

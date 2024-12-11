@@ -67,6 +67,13 @@
 
                 <!-- Ulasan -->
                 <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-promo') active @endif" href="{{ route('promo.index') }}" style="color: #1e88e5;">
+                        <i class="bi bi-chat-left-text"></i>
+                        <span style="font-family: 'Poppins', sans-serif;">Promo</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
                     <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-ulasan') active @endif" href="{{ route('admin.ulasan.index') }}" style="color: #1e88e5;">
                         <i class="bi bi-chat-dots"></i> <!-- Ikon ulasan -->
                         <span style="font-family: 'Poppins', sans-serif;">Ulasan</span>
@@ -86,6 +93,13 @@
                     <a class="nav-link d-flex align-items-center gap-2 @if($active === 'penggajian') active @endif" href="{{ route('gaji.pegawai') }}" style="color: #1e88e5;">
                         <i class="bi bi-wallet2"></i> <!-- Ikon penggajian -->
                         <span style="font-family: 'Poppins', sans-serif;">Penggajian</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-log') active @endif" href="#" style="color: #1e88e5;">
+                        <i class="bi bi-chat-left-text"></i>
+                        <span style="font-family: 'Poppins', sans-serif;">LOG</span>
                     </a>
                 </li>
                 @endcan
@@ -140,6 +154,13 @@
                     <a class="nav-link d-flex align-items-center gap-2 @if($active == 'layanan') active @endif" href="{{ route('layanan.index') }}" style="color: #1e88e5;">
                         <i class="bi bi-heart"></i> <!-- Ikon layanan -->
                         <span style="font-family: 'Poppins', sans-serif;">Layanan</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2 @if($active == 'admin-promo') active @endif" href="{{ route('promo.index') }}" style="color: #1e88e5;">
+                        <i class="bi bi-heart"></i>
+                        <span style="font-family: 'Poppins', sans-serif;">Promo</span>
                     </a>
                 </li>
                 @endcan

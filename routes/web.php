@@ -12,6 +12,7 @@ use App\Http\Controllers\AdminJanjiTemuController;
 use App\Http\Controllers\AdminTransaksiController;
 use App\Http\Controllers\AdminPenggajianController;
 use App\Http\Controllers\UlasanController;
+use App\Http\Controllers\PromoController;
 use App\Http\Controllers\UserJanjiTemuController;
 use App\Http\Controllers\janjitemuController;
 use App\Http\Controllers\RujukanController;
@@ -41,6 +42,9 @@ Route::middleware(['auth', 'notBanned'])->group(function () {
         Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
         Route::put('/profile/update/{id}', [ProfileController::class, 'update'])->name('profile.update');
 
+        Route::get('/promo', [PromoController::class, 'index'])->name('promo.index');
+        Route::get('/promo/{id}', [PromoController::class, 'show'])->name('promo.show');
+        Route::get('/promo/{id}/register-patient', [PromoController::class, 'registerPatientForm'])->name('promo.registerPatientForm');
 
 
         Route::prefix('admin')->middleware(['admin'])->group(function () {
@@ -89,9 +93,13 @@ Route::middleware(['auth', 'notBanned'])->group(function () {
             Route::get('/janji-temu/jadwal', [AdminJanjiTemuController::class, 'getJanjiTemuByDate'])->name('jadwal.janjitemu');
             Route::get('/janji-temu/create', [AdminJanjiTemuController::class, 'create'])->name('janjitemu.create');
 
+            Route::get('/promo/create', [PromoController::class, 'create'])->name('promo.create');
+            Route::post('/promo', [PromoController::class, 'store'])->name('promo.store');
+
             // Daftar transaksi
             Route::get('/transaksi', [AdminTransaksiController::class, 'index'])->name('transaksi.index');
             Route::post('/transaksi/store', [AdminTransaksiController::class, 'storeTransaction'])->name('transaksi.store');
+            Route::get('/transaksi/create', [AdminTransaksiController::class, 'create'])->name('transaksi.create');
 
             Route::get('/kunjungan', [AdminTransaksiController::class, 'kunjungan'])->name('kunjungan.index');
 

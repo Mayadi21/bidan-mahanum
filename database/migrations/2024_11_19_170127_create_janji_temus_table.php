@@ -25,7 +25,7 @@ return new class extends Migration
             ->onDelete('cascade');
             $table->foreignId('promo_id') // Foreign key untuk tabel promo
             ->nullable() // Bisa null jika tidak mendaftar promo
-            ->constrained('event_promo')
+            ->constrained('promo')
             ->onUpdate('cascade')
             ->onDelete('cascade');
             $table->string('keluhan')->nullable(); // Kolom keluhan
