@@ -25,6 +25,7 @@
                 <th>Kuota</th>
                 <th>Tanggal Mulai</th>
                 <th>Tanggal Selesai</th>
+                <th>Aksi</th> <!-- Tambahkan kolom baru untuk tombol detail -->
             </tr>
         </thead>
         <tbody>
@@ -40,6 +41,9 @@
                 <td>{{ $promo->kuota }}</td>
                 <td>{{ $promo->tanggal_mulai }}</td>
                 <td>{{ $promo->tanggal_selesai }}</td>
+                <td>
+                    <a href="{{ route('promo.show', $promo->id) }}" class="btn btn-info btn-sm">Detail</a> <!-- Tombol detail -->
+                </td>
             </tr>
             @endforeach
         </tbody>

@@ -64,4 +64,29 @@ class PromoController extends Controller
         // Redirect ke halaman daftar promo setelah data berhasil disimpan
         return redirect()->route('promo.index')->with('success', 'Promo berhasil ditambahkan!');
     }
+
+    // Metode untuk menampilkan detail promo
+    public function show($id)
+    {
+        // Ambil promo berdasarkan ID
+        $promo = Promo::with('layanan')->findOrFail($id);
+
+        // Tampilkan view detail promo
+        return view('dashboard.promo.show', [
+            'page' => 'Tambah Promo',
+            'active' => 'admin-promo',
+            'promo' => $promo  
+        ]);
+    }
+
+    // Metode untuk menampilkan formulir pendaftaran pasien
+    public function registerPatientForm($id)
+    {
+        $promo = Promo::findOrFail($id);
+        return view('dashboard.promo.register-pasien', [
+            'page' => 'Daftarkan ke Promo',
+            'active' => 'admin-promo',
+            'promo' => $promo  
+        ]);
+    }
 }

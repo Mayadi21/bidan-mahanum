@@ -43,6 +43,8 @@ Route::middleware(['auth', 'notBanned'])->group(function () {
         Route::put('/profile/update/{id}', [ProfileController::class, 'update'])->name('profile.update');
 
         Route::get('/promo', [PromoController::class, 'index'])->name('promo.index');
+        Route::get('/promo/{id}', [PromoController::class, 'show'])->name('promo.show');
+        Route::get('/promo/{id}/register-patient', [PromoController::class, 'registerPatientForm'])->name('promo.registerPatientForm');
 
 
         Route::prefix('admin')->middleware(['admin'])->group(function () {
