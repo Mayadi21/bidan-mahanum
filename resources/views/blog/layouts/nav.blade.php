@@ -40,7 +40,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" href="{{ auth()->user()->role == 'admin' ? route('dashboard.bidan') : route('dashboard') }}">Dashboard</a>
+                                    <a class="dropdown-item" href="{{ auth()->user()->role == 'admin' ? route('dashboard.bidan') : route('dashboard') }}">Beranda</a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="{{ route('profile.index') }}">My Profile</a>
