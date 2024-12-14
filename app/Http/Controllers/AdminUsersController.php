@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
-
+use PhpParser\Node\Stmt\Break_;
 
 class AdminUsersController extends Controller
 {
@@ -27,6 +27,12 @@ class AdminUsersController extends Controller
                     break;
                 case 'pegawai':
                     $users = User::aktif()->role('pegawai');
+                    break;
+                case 'null':
+                    $users = User::aktif()->WhereNull('email');
+                    break;
+                case 'not null':
+                    $users = User::aktif()->whereNotNull('email');
                     break;
             }
         } else {

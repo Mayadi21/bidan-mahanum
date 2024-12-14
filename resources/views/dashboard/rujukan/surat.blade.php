@@ -30,7 +30,7 @@
 <body>
     <div class="header">
         <h2>Surat Rujukan</h2>
-        <p>Bidan Mahanum</p>
+        <p>Praktek Mandiri Bidan</p>
     </div>
     <div class="content">
         <p><strong>Kepada Yth.</strong></p>

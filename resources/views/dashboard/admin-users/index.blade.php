@@ -4,14 +4,7 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Users</h1>
         
-        <div class="btn-group btn-group-sm me-2" role="group" aria-label="Basic outlined example">
-            <form action="{{ route('admin.users.index') }}" method="get">
-                <button type="submit" name="status" value="aktif" class="btn btn-outline-primary">Pengguna Aktif</button>
-                <button type="submit" name="status" value="admin" class="btn btn-outline-success">Admin</button>
-                <button type="submit" name="status" value="pegawai" class="btn btn-outline-success">Pegawai</button>
-                <button type="submit" name="status" value="tidak aktif" class="btn btn-outline-danger">Pengguna Tidak Aktif</button>
-            </form>
-        </div>
+        
 
         <form action="{{ route('admin.users.index') }}" class="d-flex mt-3 mt-lg-0" role="search">
             <input type="hidden" name="status" value="{{ request('status') }}">
@@ -24,6 +17,20 @@
             Tambah Pengguna
         </button>
     </div>
+    @canany(['admin', 'pegawai'])
+    <div class="btn-group btn-group-sm me-2" role="group" aria-label="Basic outlined example">
+            <form action="{{ route('admin.users.index') }}" method="get">
+                <button type="submit" name="status" value="aktif" class="btn btn-outline-primary">Pengguna Aktif</button>
+                <button type="submit" name="status" value="tidak aktif" class="btn btn-outline-danger">Pengguna Tidak Aktif</button>
+                <button type="submit" name="status" value="not null" class="btn btn-outline-warning">Pengguna Dengan Akun</button>
+                <button type="submit" name="status" value="null" class="btn btn-outline-secondary">Pengguna Tanpa Akun</button>
+                @can('admin')
+                <button type="submit" name="status" value="admin" class="btn btn-outline-success">Admin</button>
+                <button type="submit" name="status" value="pegawai" class="btn btn-outline-success">Pegawai</button>
+                @endcan
+            </form>
+        </div>
+    @endcanany
     
     <!-- Bagian untuk menampilkan pesan -->
     @if(session('success'))

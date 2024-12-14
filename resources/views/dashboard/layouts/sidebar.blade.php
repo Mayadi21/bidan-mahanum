@@ -29,7 +29,7 @@
                 <li class="nav-item">
                     <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-users') active @endif" href="{{ route('admin.users.index') }}" style="color: #1e88e5;">
                         <i class="bi bi-people"></i> <!-- Ikon pengguna -->
-                        <span style="font-family: 'Poppins', sans-serif;">Pengguna</span>
+                        <span style="font-family: 'Poppins', sans-serif;">Pasien</span>
                     </a>
                 </li>
 
@@ -95,13 +95,6 @@
                         <span style="font-family: 'Poppins', sans-serif;">Penggajian</span>
                     </a>
                 </li>
-
-                <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-log') active @endif" href="#" style="color: #1e88e5;">
-                        <i class="bi bi-chat-left-text"></i>
-                        <span style="font-family: 'Poppins', sans-serif;">LOG</span>
-                    </a>
-                </li>
                 @endcan
 
                 <!-- Penggajian (Admin Only) -->
@@ -110,6 +103,13 @@
                     <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-penggajian') active @endif" href="{{ route('admin.penggajian.index') }}" style="color: #1e88e5;">
                         <i class="bi bi-wallet2"></i> <!-- Ikon penggajian -->
                         <span style="font-family: 'Poppins', sans-serif;">Penggajian</span>
+                    </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-log') active @endif" href="#" style="color: #1e88e5;">
+                        <i class="bi bi-chat-left-text"></i>
+                        <span style="font-family: 'Poppins', sans-serif;">LOG</span>
                     </a>
                 </li>
                 @endcan
