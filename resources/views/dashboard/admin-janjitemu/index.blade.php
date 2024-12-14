@@ -45,7 +45,6 @@
                 <th scope="col">Nama Pasien</th>
                 <th scope="col">Keluhan</th>
                 <th scope="col">Jadwal</th>
-                <th scope="col">Waktu Janji</th>
                 <th scope="col">Status</th>
                 <th scope="col">Keterangan</th>
             </tr>
