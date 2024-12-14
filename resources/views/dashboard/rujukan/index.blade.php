@@ -41,17 +41,45 @@
                 <td>{{ $rujukan->tujuan_rujukan }}</td>
                 <td>{{ $rujukan->keterangan ?? '-' }}</td>
                 <td>
-                    <!-- Tombol Edit -->
-                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#edit-rujukan-modal-{{ $rujukan->id }}">Edit</button>
+                    <!-- Tombol lihat -->
+                    <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#rujukan-modal-{{ $rujukan->id }}">lihat</button>
+
+                    <!-- <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#edit-rujukan-modal-{{ $rujukan->id }}">Edit</button> -->
                     <!-- Tombol Hapus -->
-                    <form action="{{ route('rujukan.cetak', $rujukan->id) }}" method="GET" class="d-inline" target="_blank">
+                    <!-- <form action="{{ route('rujukan.cetak', $rujukan->id) }}" method="GET" class="d-inline" target="_blank">
                         @csrf
                         <button type="submit" class="btn btn-sm btn-secondary" onclick="window.print()">Cetak</button>
-                    </form>
+                    </form> -->
 
                 </td>
             </tr>
+<!-- Modal Detail Rujukan -->
+<div class="modal fade" id="rujukan-modal-{{ $rujukan->id }}" tabindex="-1" aria-labelledby="rujukanModalLabel-{{ $rujukan->id }}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="rujukanModalLabel-{{ $rujukan->id }}">Detail Rujukan</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Detail Rujukan -->
+                <p><strong>Nama Pasien:</strong> {{ $rujukan->nama_pasien }}</p>
+                <p><strong>Tujuan Rujukan:</strong> {{ $rujukan->tujuan_rujukan }}</p>
+                <p><strong>Tanggal Rujukan:</strong> {{ $rujukan->tanggal_rujukan }}</p>
+                <p><strong>Keterangan:</strong> {{ $rujukan->keterangan }}</p>
+            </div>
+            <div class="modal-footer">
+                <!-- Tombol Close -->
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 
+                <!-- Tombol Edit -->
+                <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#edit-rujukan-modal-{{ $rujukan->id }}">Edit</button>
+                <!-- Tombol Cetak -->
+                <a href="{{ route('rujukan.cetak', $rujukan->id) }}" target="_blank" class="btn btn-primary">Cetak</a>
+            </div>
+        </div>
+    </div>
+</div>
             <!-- Modal Edit Rujukan -->
             <div class="modal fade" id="edit-rujukan-modal-{{ $rujukan->id }}" tabindex="-1" aria-labelledby="edit-rujukan-modal-label-{{ $rujukan->id }}" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
