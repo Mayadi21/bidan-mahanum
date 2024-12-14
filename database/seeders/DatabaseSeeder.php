@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Database\Seeders\UserSeeder;
 use Database\Seeders\LayananSeeder;
+use Database\Seeders\JadwalSeeder;
 use Database\Seeders\JanjiTemuSeeder;
 use Database\Seeders\RujukanSeeder;
 use Database\Seeders\UlasanSeeder;
@@ -26,6 +27,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             LayananSeeder::class,
+            JadwalSeeder::class,
             JanjiTemuSeeder::class,
             RujukanSeeder::class,
             UlasanSeeder::class,
