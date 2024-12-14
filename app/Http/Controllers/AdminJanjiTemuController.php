@@ -211,26 +211,42 @@ public function storeJadwal(Request $request)
         'kuota.*' => 'required|integer|min:1',
     ]);
 
-    // Loop setiap waktu mulai dan waktu selesai
-    foreach ($request->waktu_mulai as $index => $waktuMulai) {
-        $waktuSelesai = $request->waktu_selesai[$index];
-        $kuota = $request->kuota[$index];
+    try {
+        // Loop setiap waktu mulai dan waktu selesai
+        foreach ($request->waktu_mulai as $index => $waktuMulai) {
+            $waktuSelesai = $request->waktu_selesai[$index];
+            $kuota = $request->kuota[$index];
 
-        // Gabungkan tanggal dengan waktu
-        $waktuMulaiFull = $request->tanggal . ' ' . $waktuMulai;
-        $waktuSelesaiFull = $request->tanggal . ' ' . $waktuSelesai;
+            // Gabungkan tanggal dengan waktu
+            $waktuMulaiFull = $request->tanggal . ' ' . $waktuMulai;
+            $waktuSelesaiFull = $request->tanggal . ' ' . $waktuSelesai;
 
-        // Simpan ke tabel jadwal_janji_temu
-        JadwalJanjiTemu::create([
-            'waktu_mulai' => $waktuMulaiFull,
-            'waktu_selesai' => $waktuSelesaiFull,
-            'kuota' => $kuota,
-        ]);
+            // Simpan ke tabel jadwal_janji_temu
+            JadwalJanjiTemu::create([
+                'waktu_mulai' => $waktuMulaiFull,
+                'waktu_selesai' => $waktuSelesaiFull,
+                'kuota' => $kuota,
+            ]);
+        }
+
+        // Redirect ke halaman sebelumnya dengan pesan sukses
+        return redirect()->back()->with('success', 'Jadwal berhasil disimpan.');
+
+    } catch (\Illuminate\Database\QueryException $e) {
+        // Tangkap pesan error dari trigger
+        if ($e->getCode() === '45000') {
+            $errorMessage = $e->getPrevious()->getMessage();
+        } else {
+            $errorMessage = 'Terjadi kesalahan saat menyimpan jadwal.';
+        }
+
+        // Redirect ke halaman sebelumnya dengan pesan error
+        return redirect()->back()->withErrors(['error' => $errorMessage]);
     }
-
-    // Redirect ke halaman sebelumnya dengan pesan sukses
-    return redirect()->back()->with('success', 'Jadwal berhasil disimpan.');
 }
+
+    
+    
 
 
 

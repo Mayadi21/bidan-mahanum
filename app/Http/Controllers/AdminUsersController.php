@@ -55,51 +55,40 @@ class AdminUsersController extends Controller
         // Validasi form input
         $request->validate([
             'nama' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email', // Validasi unique email
             'alamat' => 'nullable|string',
             'tanggal_lahir' => 'required|date',
             'pekerjaan' => 'nullable|string',
-            'no_hp' => 'required|string|max:15|unique:users,no_hp', // Validasi unique no_hp
-            'role' => 'required|string', // Validasi role
-            'password' => 'required|string|min:8|confirmed', // Validasi password
+            'no_hp' => 'required|string|max:15|unique:users,no_hp',
+            'has_account' => 'required|in:yes,no',
+            'email' => 'nullable|email|unique:users,email|required_if:has_account,yes',
+            'password' => 'nullable|string|min:8|confirmed|required_if:has_account,yes',
         ]);
     
         try {
             // Menyimpan pengguna baru ke database
-            User::create([
+            $user = new User([
                 'nama' => $request->nama,
-                'email' => $request->email,
                 'alamat' => $request->alamat,
                 'tanggal_lahir' => $request->tanggal_lahir,
                 'pekerjaan' => $request->pekerjaan,
                 'no_hp' => $request->no_hp,
                 'status' => 'aktif', // Status otomatis aktif
-                'role' => $request->role,
-                'password' => Hash::make($request->password), // Enkripsi password
             ]);
     
-            // Redirect atau memberikan response
-            return redirect()->route('admin.users.index')->with('success', 'Pengguna berhasil ditambahkan!');
-        } catch (\Illuminate\Database\QueryException $e) {
-            if ($e->errorInfo[1] === 1062) { // Kode error untuk duplicate entry
-                // Ambil kolom yang menyebabkan error
-                $errorColumn = '';
-                if (str_contains($e->getMessage(), 'users_email_unique')) {
-                    $errorColumn = 'email';
-                } elseif (str_contains($e->getMessage(), 'users_no_hp_unique')) {
-                    $errorColumn = 'no_hp';
-                }
-    
-                return redirect()->back()->withInput()->with(
-                    'error',
-                    "Gagal menambahkan pengguna! {$errorColumn} yang Anda masukkan sudah terdaftar."
-                );
+            // Tambahkan data akun jika pasien memiliki akun
+            if ($request->has_account === 'yes') {
+                $user->email = $request->email;
+                $user->password = Hash::make($request->password);
             }
     
-            // Tangani error lain
-            return redirect()->back()->withInput()->with('error', 'Terjadi kesalahan saat menyimpan data.');
+            $user->save();
+    
+            return redirect()->route('admin.users.index')->with('success', 'Pengguna berhasil ditambahkan!');
+        } catch (\Exception $e) {
+            return redirect()->back()->withInput()->with('error', 'Terjadi kesalahan saat menyimpan data: ' . $e->getMessage());
         }
     }
+    
 
     public function updateStatus(Request $request, $id)
     {

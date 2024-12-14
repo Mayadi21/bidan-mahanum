@@ -131,6 +131,8 @@ Route::middleware(['auth', 'notBanned'])->group(function () {
             //
             Route::get('/janji-temu/{idPasien}', [DashboardController::class, 'janjiTemu'])->name('janji.temu');
             Route::post('/janji-temu', [janjitemuController::class, 'store'])->name('janji.temu.store');
+
+            Route::get('/jadwal/janji-temu', [janjitemuController::class, 'jadwalTersedia'])->name('jadwal.janji.temu.tersedia');
         });
     });
 });
