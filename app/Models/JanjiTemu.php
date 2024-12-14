@@ -14,6 +14,11 @@ class JanjiTemu extends Model
     public $timestamps = false;
     protected $guarded = ['id'];
 
+    public function jadwal()
+    {
+        return $this->belongsTo(JadwalJanjiTemu::class, 'jadwal_id'); 
+    }
+
     // Relasi dengan model User
     public function user()
     {
@@ -25,14 +30,9 @@ class JanjiTemu extends Model
         return $this->belongsTo(Promo::class, 'promo_id'); 
     }
 
-    public function pasienTidakTerdaftar()
-    {
-        return $this->belongsTo(PasienTidakTerdaftar::class, 'pasien_tidak_terdaftar_id'); 
-    }
-
     public function transaksi()
     {
-        return $this->hasMany(Transaksi::class, 'janji_id');
+        return $this->hasOne(Transaksi::class, 'janji_id');
     }
 
     public function scopeDisetujui($query)

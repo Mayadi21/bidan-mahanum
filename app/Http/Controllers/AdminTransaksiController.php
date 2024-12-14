@@ -10,7 +10,6 @@ use App\Models\User;
 use Illuminate\Database\QueryException;
 use App\Models\DetailTransaksi;
 use App\Models\JanjiTemu;
-use App\Models\PasienTidakTerdaftar;
 use App\Models\Layanan;
 
 class AdminTransaksiController extends Controller
@@ -55,7 +54,6 @@ class AdminTransaksiController extends Controller
         ->get();
       $layanan = Layanan::aktif()->get();
       $pasien = User::aktif()->where('role', 'user')->get();
-      $pasien_tidak_terdaftar = PasienTidakTerdaftar::all();
       $bidan = User::aktif()->where('role', 'admin')->orWhere('role', 'pegawai')->get();
 
         return view('dashboard.transaksi.create', [
@@ -65,7 +63,6 @@ class AdminTransaksiController extends Controller
             'janji_temu' => $janji_temu,
             'layanan' => $layanan,
             'pasien' => $pasien,
-            'pasien_tidak_terdaftar' => $pasien_tidak_terdaftar,
             'bidan' => $bidan,
         ]);
 

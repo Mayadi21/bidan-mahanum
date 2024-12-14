@@ -44,7 +44,8 @@ Route::middleware(['auth', 'notBanned'])->group(function () {
 
         Route::get('/promo', [PromoController::class, 'index'])->name('promo.index');
         Route::get('/promo/{id}', [PromoController::class, 'show'])->name('promo.show');
-        Route::get('/promo/{id}/register-patient', [PromoController::class, 'registerPatientForm'])->name('promo.registerPatientForm');
+        Route::get('/promo/{id}/register-patient', [PromoController::class, 'halamanDaftarPromo'])->name('promo.registerPatientForm');
+        Route::post('/promo/{id}/register-patient', [PromoController::class, 'registerPatient'])->name('promo.registerPatient');
 
 
         Route::prefix('admin')->middleware(['admin'])->group(function () {

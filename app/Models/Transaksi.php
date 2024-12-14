@@ -13,10 +13,7 @@ class Transaksi extends Model
     public $timestamps = false;
     protected $guarded = ['id'];
 
-    public function pasienTidakTerdaftar()
-    {
-        return $this->belongsTo(PasienTidakTerdaftar::class, 'id_pasien');
-    }
+
 
 
     // Relasi ke model User sebagai id_pasien
