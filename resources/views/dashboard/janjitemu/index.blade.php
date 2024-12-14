@@ -94,9 +94,10 @@
 </div>
 @endif
 <!-- Tombol untuk membuka modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#janjiTemuModal">
-  Pendaftaran Janji Temu
-</button>
+<a href="{{ route('jadwal.janji.temu.tersedia') }}" class="btn btn-primary">
+    Pendaftaran Janji Temu
+  </a>
+  
 </div>
 <!-- Modal -->
 <div class="modal fade" id="janjiTemuModal" tabindex="-1" aria-labelledby="janjiTemuModalLabel" aria-hidden="true">

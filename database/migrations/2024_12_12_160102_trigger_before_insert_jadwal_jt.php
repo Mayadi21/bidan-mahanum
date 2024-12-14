@@ -34,7 +34,7 @@ return new class extends Migration
                     OR (NEW.waktu_mulai < waktu_mulai AND NEW.waktu_selesai > waktu_selesai))
             ) THEN
                 SIGNAL SQLSTATE '45000'
-                SET MESSAGE_TEXT = 'Jadwal input bertabrakan dengan jadwal yang sudah ada.';
+                SET MESSAGE_TEXT = 'Terjadi Kesalahan: Jadwal input bertabrakan dengan jadwal yang sudah ada.';
             END IF;
 
         END;
