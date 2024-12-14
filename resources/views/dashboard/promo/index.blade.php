@@ -9,9 +9,9 @@
             {{ session('success') }}
         </div>
     @endif
-
+@canany(['admin', 'pegawai'])
     <a href="{{ route('promo.create') }}" class="btn btn-primary mb-3">Tambah Promo</a>
-
+@endcanany
     <table class="table table-bordered">
         <thead>
             <tr>

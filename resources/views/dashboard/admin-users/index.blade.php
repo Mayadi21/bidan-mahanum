@@ -163,10 +163,6 @@
                         <input type="text" class="form-control" id="nama" name="nama" required>
                     </div>
                     <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
-                    </div>
-                    <div class="mb-3">
                         <label for="alamat" class="form-label">Alamat</label>
                         <input type="text" class="form-control" id="alamat" name="alamat">
                     </div>
@@ -182,27 +178,32 @@
                         <label for="no_hp" class="form-label">Nomor HP</label>
                         <input type="text" class="form-control" id="no_hp" name="no_hp" required>
                     </div>
+                    
+                    <!-- Opsi Memiliki Akun -->
                     <div class="mb-3">
-                        <input type="hidden" id="status" name="status" value="aktif">
-                    </div>
-                    <div class="mb-3">
-                        <label for="role" class="form-label">Role</label>
-                        <select class="form-select" id="role" name="role">
-                            <option value="user">User</option>
-                            @can('admin')<option value="pegawai">Pegawai</option>@endcan
+                        <label class="form-label">Apakah pasien memiliki akun?</label>
+                        <select class="form-select" id="hasAccount" name="has_account" required>
+                            <option value="no">Tidak</option>
+                            <option value="yes">Ya</option>
                         </select>
                     </div>
 
+                    <!-- Kolom Email -->
+                    <div class="mb-3 d-none" id="emailField">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email">
+                    </div>
+
                     <!-- Kolom Password -->
-                    <div class="mb-3">
+                    <div class="mb-3 d-none" id="passwordField">
                         <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
+                        <input type="password" class="form-control" id="password" name="password">
                     </div>
 
                     <!-- Kolom Konfirmasi Password -->
-                    <div class="mb-3">
+                    <div class="mb-3 d-none" id="passwordConfirmField">
                         <label for="password_confirmation" class="form-label">Konfirmasi Password</label>
-                        <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
+                        <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
                     </div>
 
                     <div class="modal-footer">
@@ -214,4 +215,19 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Mengatur tampilan input email & password berdasarkan pilihan "Memiliki Akun"
+    document.getElementById('hasAccount').addEventListener('change', function () {
+        const isAccount = this.value === 'yes';
+        document.getElementById('emailField').classList.toggle('d-none', !isAccount);
+        document.getElementById('passwordField').classList.toggle('d-none', !isAccount);
+        document.getElementById('passwordConfirmField').classList.toggle('d-none', !isAccount);
+
+        // Set atribut required jika "Ya"
+        document.getElementById('email').required = isAccount;
+        document.getElementById('password').required = isAccount;
+        document.getElementById('password_confirmation').required = isAccount;
+    });
+</script>
 @endsection

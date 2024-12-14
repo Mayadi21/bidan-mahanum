@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\JanjiTemu;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Database\QueryException;
@@ -12,46 +13,57 @@ use Illuminate\Database\QueryException;
 class JanjiTemuController extends Controller
 {
 
-public function store(Request $request)
-{
-    // Validasi form
-    $validated = $request->validate([
-        'tanggal' => 'required|date',
-        'waktu' => 'required|date_format:H:i',
-        'keluhan' => 'nullable|string',
-    ]);
-
-    // Gabungkan tanggal dan waktu menjadi datetime
-    $waktuJanji = Carbon::parse($validated['tanggal'] . ' ' . $validated['waktu'])->format('Y-m-d H:i:s');
-
-    try {
-        // Simpan janji temu dengan menambahkan id_pasien dan waktu_mulai yang sudah digabungkan
-        JanjiTemu::create([
-            'id_pasien' => auth()->id(),  // id pengguna yang sedang login
-            'waktu_mulai' => $waktuJanji,  // Menggunakan waktu gabungan
-            'keluhan' => $validated['keluhan'] ?? null,
-            'status' => 'menunggu konfirmasi',  // Status awal
+    public function store(Request $request)
+    {
+        $request->validate([
+            'jadwal_id' => 'required|exists:jadwal_janji_temu,id',
+            'keluhan' => 'required|string|max:255',
         ]);
+
+        // Ambil ID user yang sedang login
+        $idPasien = Auth::id();
+
+        try {
+        // Simpan data ke tabel janji_temu
+        JanjiTemu::create([
+            'id_pasien' => $idPasien,
+            'jadwal_id' => $request->jadwal_id,
+            'keluhan' => $request->keluhan,
+            'status' => 'menunggu konfirmasi',
+        ]);
+
+        // Redirect dengan pesan sukses
+        return redirect()->back()->with('success', 'Janji temu berhasil didaftarkan. Silakan tunggu konfirmasi.');
+
+        } catch (\Illuminate\Database\QueryException $e) {
+            // Tangkap pesan error dari trigger
+            if ($e->getCode() === '45000') {
+                $errorMessage = $e->getPrevious()->getMessage();
+            } else {
+                $errorMessage = 'Terjadi kesalahan saat menyimpan jadwal.';
+            }
     
-        // Redirect dengan pesan sukses jika berhasil
-        return redirect()->route('janji.temu' , ['idPasien' => auth()->id()])->with('success', 'Janji temu berhasil dibuat!');
-    } catch (QueryException $e) {
-        // Tangkap error dari trigger database
-        if ($e->getCode() === '45000') {
-           // Proses pesan error untuk mengambil bagian relevan
-           $errorMessage = $e->getMessage();
-           if (preg_match('/Terjadi kesalahan: \[(.*?)\]/', $errorMessage, $matches)) {
-               $parsedMessage = $matches[1]; // Ambil teks di antara [ dan ]
-           } else {
-               $parsedMessage = 'Terjadi kesalahan pada janji temu.';
-           }
-    
-           return redirect()->back()->withInput()->with('error', $parsedMessage);
-       }
-    
-        // Tangkap error lainnya
-        return redirect()->back()->withInput()->with('error', 'Terjadi kesalahan saat menyimpan data.');
+            // Redirect ke halaman sebelumnya dengan pesan error
+            return redirect()->back()->withErrors(['error' => $errorMessage]);
+        }
     }
+
+public function jadwalTersedia()
+{
+    // Ambil jadwal mulai dari hari ini yang belum penuh
+    $jadwalTersedia = DB::table('jadwal_janji_temu')
+        ->leftJoin('janji_temu', 'jadwal_janji_temu.id', '=', 'janji_temu.jadwal_id')
+        ->select('jadwal_janji_temu.id', 'jadwal_janji_temu.waktu_mulai', 'jadwal_janji_temu.waktu_selesai', 'jadwal_janji_temu.kuota', DB::raw('COUNT(janji_temu.id) as total_terisi'))
+        ->where('jadwal_janji_temu.waktu_mulai', '>=', Carbon::now())
+        ->groupBy('jadwal_janji_temu.id', 'jadwal_janji_temu.waktu_mulai', 'jadwal_janji_temu.waktu_selesai', 'jadwal_janji_temu.kuota')
+        ->havingRaw('total_terisi < jadwal_janji_temu.kuota')
+        ->get();
+
+    return view('dashboard.janjitemu.jadwal', [
+        'page' => 'Halaman Janji Temu Saya',
+        'active' => 'user-janjitemu',
+        'jadwalTersedia' => $jadwalTersedia
+    ]);
 }
 
 }
