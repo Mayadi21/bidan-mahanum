@@ -29,7 +29,7 @@
                 <li class="nav-item">
                     <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-users') active @endif" href="{{ route('admin.users.index') }}" style="color: #1e88e5;">
                         <i class="bi bi-people"></i> <!-- Ikon pengguna -->
-                        <span style="font-family: 'Poppins', sans-serif;">Pengguna</span>
+                        <span style="font-family: 'Poppins', sans-serif;">Pasien</span>
                     </a>
                 </li>
 
