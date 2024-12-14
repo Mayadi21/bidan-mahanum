@@ -37,6 +37,9 @@
                 
                 <label for="waktu_selesai_1" class="form-label mt-2">Waktu Selesai</label>
                 <input type="time" class="form-control" id="waktu_selesai_1" name="waktu_selesai[]" required>
+
+                <label for="kuota_1" class="form-label mt-2">Kuota</label>
+                <input type="number" class="form-control" id="kuota_1" name="kuota[]" min="1" required>
             </div>
         </div>
 
@@ -46,21 +49,21 @@
         <a href="{{ route('dashboard') }}" class="btn btn-secondary mt-3">Kembali</a>
     </form>
 
-    <!-- Tabel daftar janji temu -->
+    <!-- Tabel daftar jadwal janji temu -->
     <div class="mt-5">
-        <h3>Daftar Janji Temu</h3>
+        <h3>Daftar Jadwal Janji Temu</h3>
         <table class="table table-bordered table-striped" id="janji-temu-table">
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Waktu Mulai</th>
                     <th>Waktu Selesai</th>
-                    <th>Status</th>
+                    <th>Kuota</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td colspan="4" class="text-center">Pilih tanggal untuk melihat janji temu.</td>
+                    <td colspan="4" class="text-center">Pilih tanggal untuk melihat jadwal janji temu.</td>
                 </tr>
             </tbody>
         </table>
@@ -82,45 +85,40 @@
         `;
 
         fetch(`{{ route('jadwal.janjitemu') }}?tanggal=${selectedDate}`)
-    .then(response => response.json())
-    .then(data => {
-        const janjiTemuTableBody = document.querySelector('#janji-temu-table tbody');
-        janjiTemuTableBody.innerHTML = '';
+        .then(response => response.json())
+        .then(data => {
+            janjiTemuTableBody.innerHTML = '';
 
-        if (data.length === 0) {
-            janjiTemuTableBody.innerHTML = `
-                <tr>
-                    <td colspan="4" class="text-center">Tidak ada janji temu pada tanggal ini.</td>
-                </tr>
-            `;
-        } else {
-            data.forEach((item) => {
-                const row = `
+            if (data.length === 0) {
+                janjiTemuTableBody.innerHTML = `
                     <tr>
-                        <td>${item.id}</td>
-                        <td>${item.waktu_mulai}</td>
-                        <td>${item.waktu_selesai}</td>
-                        <td>${item.status ? item.status : '-'}</td>
+                        <td colspan="4" class="text-center">Tidak ada jadwal janji temu pada tanggal ini.</td>
                     </tr>
                 `;
-                janjiTemuTableBody.innerHTML += row;
-            });
-        }
-    })
-    .catch(error => {
-        const janjiTemuTableBody = document.querySelector('#janji-temu-table tbody');
-        janjiTemuTableBody.innerHTML = `
-            <tr>
-                <td colspan="4" class="text-center text-danger">Gagal memuat data.</td>
-            </tr>
-        `;
-        console.error('Error:', error);
-    });
-
+            } else {
+                data.forEach((item) => {
+                    const row = `
+                        <tr>
+                            <td>${item.id}</td>
+                            <td>${item.waktu_mulai}</td>
+                            <td>${item.waktu_selesai}</td>
+                            <td>${item.kuota}</td>
+                        </tr>
+                    `;
+                    janjiTemuTableBody.innerHTML += row;
+                });
+            }
+        })
+        .catch(error => {
+            janjiTemuTableBody.innerHTML = `
+                <tr>
+                    <td colspan="4" class="text-center text-danger">Gagal memuat data.</td>
+                </tr>
+            `;
+            console.error('Error:', error);
+        });
     });
 </script>
-
-
 
 <script>
     let waktuIndex = 1;
@@ -137,6 +135,9 @@
 
             <label for="waktu_selesai_${waktuIndex}" class="form-label mt-2">Waktu Selesai</label>
             <input type="time" class="form-control" id="waktu_selesai_${waktuIndex}" name="waktu_selesai[]" required>
+
+            <label for="kuota_${waktuIndex}" class="form-label mt-2">Kuota</label>
+            <input type="number" class="form-control" id="kuota_${waktuIndex}" name="kuota[]" min="1" required>
         `;
 
         waktuContainer.appendChild(waktuGroup);

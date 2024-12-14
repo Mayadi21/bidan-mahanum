@@ -8,8 +8,6 @@
         Tambah Janji Temu
     </a>
     
-    
-
     <div class="btn-group btn-group-sm me-2" role="group" aria-label="Filter Status">
         <form action="" method="get">
             <button type="submit" name="status" value="menunggu konfirmasi" class="btn btn-outline-primary">Menunggu Konfirmasi</button>
@@ -25,46 +23,6 @@
         <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
 </div>
-
-<div class="modal fade" id="tambahJanjiTemuModal" tabindex="-1" aria-labelledby="tambahJanjiTemuModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="tambahJanjiTemuModalLabel">Tambah Janji Temu</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="{{ route('janjitemu.store') }}" method="POST">
-                @csrf
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="id_pasien" class="form-label">Pilih Pasien</label>
-                        <select class="form-select" id="id_pasien" name="id_pasien" required>
-                            <option value="" selected disabled>Pilih pasien...</option>
-                            @foreach($users as $user)
-                                <option value="{{ $user->id }}">
-                                    {{ $user->nama }} ({{ \Carbon\Carbon::parse($user->tanggal_lahir)->format('m/d/Y') }})
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="keluhan" class="form-label">Keluhan</label>
-                        <textarea class="form-control" id="keluhan" name="keluhan" rows="3" placeholder="Masukkan keluhan pasien..."></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="waktu_mulai" class="form-label">Waktu Janji</label>
-                        <input type="datetime-local" class="form-control" id="waktu_mulai" name="waktu_mulai" required>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
 
 <!-- Pesan Notifikasi -->
 @if(session('success'))
@@ -86,10 +44,10 @@
                 <th scope="col">#</th>
                 <th scope="col">Nama Pasien</th>
                 <th scope="col">Keluhan</th>
+                <th scope="col">Jadwal</th>
                 <th scope="col">Waktu Janji</th>
                 <th scope="col">Status</th>
                 <th scope="col">Keterangan</th>
-                <th scope="col">Aksi</th>
             </tr>
         </thead>
         <tbody>
@@ -98,20 +56,27 @@
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $appointment->pasien_nama }}</td>
                     <td>{{ $appointment->keluhan }}</td>
-                    <td>{{ $appointment->waktu_mulai }}</td>
-                    <td>{{ ucfirst($appointment->status) }}</td>
-                    <td>{{ $appointment->keterangan ?? '-' }}</td>
+                    <td>{{ $appointment->waktu_mulai }} s/d {{ $appointment->waktu_selesai }}</td>
                     <td>
                         @if($appointment->status === 'menunggu konfirmasi')
-                            <form action="{{ route('janjitemu.update', $appointment->id) }}" method="post" style="display: inline;">
-                                @csrf
-                                @method('PUT')
-                                <input type="hidden" name="status" value="disetujui">
-                                <button type="submit" class="btn btn-sm btn-outline-success" onclick="return confirm('Yakin ingin menyetujui janji temu ini?')">
-                                    Setujui
+                            <div class="dropdown">
+                                <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton-{{ $appointment->id }}" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Menunggu Konfirmasi
                                 </button>
-                            </form>
-                            <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#tolakModal-{{ $appointment->id }}">Tolak</button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton-{{ $appointment->id }}">
+                                    <li>
+                                        <form action="{{ route('janjitemu.update', $appointment->id) }}" method="post">
+                                            @csrf
+                                            @method('PUT')
+                                            <input type="hidden" name="status" value="disetujui">
+                                            <button type="submit" class="dropdown-item">Setujui</button>
+                                        </form>
+                                    </li>
+                                    <li>
+                                        <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#tolakModal-{{ $appointment->id }}">Tolak</button>
+                                    </li>
+                                </ul>
+                            </div>
 
                             <div class="modal fade" id="tolakModal-{{ $appointment->id }}" tabindex="-1" aria-labelledby="tolakModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
@@ -138,8 +103,11 @@
                                     </div>
                                 </div>
                             </div>
+                        @else
+                            {{ ucfirst($appointment->status) }}
                         @endif
                     </td>
+                    <td>{{ $appointment->keterangan ?? '-' }}</td>
                 </tr>
             @endforeach
         </tbody>

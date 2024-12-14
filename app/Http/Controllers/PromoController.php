@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Layanan;
 use App\Models\Promo;
-use App\Models\PasienTidakTerdaftar;
+use App\Models\JanjiTemu;
 use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Database\QueryException;
@@ -80,13 +80,41 @@ class PromoController extends Controller
     }
 
     // Metode untuk menampilkan formulir pendaftaran pasien
-    public function registerPatientForm($id)
+    public function halamanDaftarPromo($id)
     {
         $promo = Promo::findOrFail($id);
+        $patients = User::aktif()->role('user')->get(); // Ambil semua pasien yang terdaftar
         return view('dashboard.promo.register-pasien', [
             'page' => 'Daftarkan ke Promo',
             'active' => 'admin-promo',
-            'promo' => $promo  
+            'promo' => $promo  ,
+            'patients' => $patients  
         ]);
+    }
+
+
+    public function registerPatient(Request $request, $id)
+    {
+        // Validasi input
+        $validated = $request->validate([
+            'id_pasien' => 'required|exists:users,id',
+            'keterangan' => 'nullable|string',
+        ]);
+
+        // Ambil data promo berdasarkan ID
+        $promo = Promo::findOrFail($id);
+
+        // Buat janji temu baru
+        JanjiTemu::create([
+            'id_pasien' => $validated['id_pasien'],
+            'promo_id' => $promo->id,
+            'jadwal_id' => null, // Karena jadwal tidak diisi, ini bisa disesuaikan kemudian
+            'keluhan' => 'Tidak ada keluhan', // Misalnya default keluhan
+            'status' => 'disetujui',
+            'keterangan' => $validated['keterangan'],
+        ]);
+
+        return redirect()->route('promo.show', $promo->id)
+            ->with('success', 'Pasien berhasil didaftarkan untuk promo.');
     }
 }
