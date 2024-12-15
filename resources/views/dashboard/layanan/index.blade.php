@@ -5,12 +5,19 @@
 
 
 
-
-
-
 @section('content')
     <h1>Daftar Layanan</h1>
+    @if(session('success'))
+    <div class="alert alert-success col-lg-8">
+        {{ session('success') }}
+    </div>
+@endif
 
+@if(session('error'))
+    <div class="alert alert-danger col-lg-8">
+        {{ session('error') }}
+    </div>
+@endif
     <!-- Tombol Tambahkan Layanan -->
     @can('admin')
     <a href="{{ route('layanan.create') }}" class="btn btn-success mb-3">Tambahkan Layanan</a>

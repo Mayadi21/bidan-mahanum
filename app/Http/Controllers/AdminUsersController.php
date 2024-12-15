@@ -72,6 +72,8 @@ class AdminUsersController extends Controller
     
         try {
             // Menyimpan pengguna baru ke database
+            DB::statement("SET @modifier_id = ?", [auth()->id()]);
+
             $user = new User([
                 'nama' => $request->nama,
                 'alamat' => $request->alamat,
@@ -98,6 +100,7 @@ class AdminUsersController extends Controller
 
     public function updateStatus(Request $request, $id)
     {
+        DB::statement("SET @modifier_id = ?", [auth()->id()]);
         $user = User::findOrFail($id);
         $user->status = $request->input('status'); // 'aktif' atau 'tidak aktif'
         $user->save();
@@ -108,6 +111,7 @@ class AdminUsersController extends Controller
     
     public function update(Request $request, $id)
     {
+        DB::statement("SET @modifier_id = ?", [auth()->id()]);
         $user = User::findOrFail($id);
     
         $validatedData = $request->validate([
