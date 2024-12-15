@@ -16,6 +16,7 @@ use App\Http\Controllers\PromoController;
 use App\Http\Controllers\UserJanjiTemuController;
 use App\Http\Controllers\janjitemuController;
 use App\Http\Controllers\RujukanController;
+use App\Http\Controllers\LogController;
 
 
 
@@ -65,6 +66,9 @@ Route::middleware(['auth', 'notBanned'])->group(function () {
             //route untuk halaman gaji pokok
             Route::get('/gaji-pokok', [AdminPenggajianController::class, 'indexGajiPokok'])->name('gaji-pokok.index');
             Route::put('/gaji-pokok/{id}', [AdminPenggajianController::class, 'updateGajiPokok'])->name('gaji-pokok.update');
+
+            Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
+
         });
 
 

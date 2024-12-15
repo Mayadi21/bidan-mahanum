@@ -29,9 +29,8 @@ return new class extends Migration
         JSON_OBJECT(
             'id_pasien', NEW.id_pasien,
             'jadwal_id', NEW.jadwal_id,
-            'promo_id', NEW.promo_id,
             'keluhan', NEW.keluhan,
-            'keterangan', NEW.keterangan,
+            'keterangan', NEW.keterangan
         ), -- Nilai baru
         NOW() -- Waktu log
         );
@@ -56,14 +55,12 @@ return new class extends Migration
         JSON_OBJECT(
             'id_pasien', OLD.id_pasien,
             'jadwal_id', OLD.jadwal_id,
-            'promo_id', OLD.promo_id,
             'status', OLD.status,
-            'keterangan', OLD.keterangan,
+            'keterangan', OLD.keterangan
         ), -- Tidak ada nilai lama untuk operasi INSERT
         JSON_OBJECT(
             'id_pasien', NEW.id_pasien,
             'jadwal_id', NEW.jadwal_id,
-            'promo_id', NEW.promo_id,
             'status', NEW.status,
             'keterangan', NEW.keterangan
         ), -- Nilai baru

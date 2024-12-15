@@ -26,7 +26,6 @@ BEGIN
         NULL,
         JSON_OBJECT(
             'id_pasien', NEW.id_pasien,
-            'promo_id', NEW.promo_id,
             'janji_id', NEW.janji_id,
             'bidan', NEW.bidan,
             'keterangan', NEW.keterangan,

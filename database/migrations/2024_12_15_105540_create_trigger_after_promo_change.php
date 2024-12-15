@@ -28,10 +28,7 @@ BEGIN
             'judul_promo', NEW.judul_promo,
             'deskripsi', NEW.deskripsi,
             'layanan_id', NEW.layanan_id,
-            'diskon', NEW.diskon,
-            'kuota', NEW.kuota,
-            'tanggal_mulai', NEW.tanggal_mulai,
-            'tanggal_selesai', NEW.tanggal_selesai
+            'diskon', NEW.diskon
         ),
         NOW()
     );
