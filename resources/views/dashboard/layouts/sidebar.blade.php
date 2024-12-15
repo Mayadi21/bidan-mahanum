@@ -107,7 +107,7 @@
                 </li>
                 
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-log') active @endif" href="#" style="color: #1e88e5;">
+                    <a class="nav-link d-flex align-items-center gap-2 @if($active === 'admin-log') active @endif" href="{{ route('logs.index') }}" style="color: #1e88e5;">
                         <i class="bi bi-chat-left-text"></i>
                         <span style="font-family: 'Poppins', sans-serif;">LOG</span>
                     </a>
