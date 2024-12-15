@@ -66,37 +66,41 @@ class LayananController extends Controller
 
     // Menyimpan layanan baru ke database
     public function store(Request $request)
-    {
-        DB::statement("SET @modifier_id = ?", [auth()->id()]);
-        // Validasi file gambar
-        $request->validate([
-            'gambar' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
-            'jenis_layanan' => 'required|string|max:255',
-            'harga' => 'required|numeric',
-            'deskripsi' => 'nullable|string',
-        ]);
-        
-        // Mengambil file gambar
+{
+    
+    // Validasi input
+    $request->validate([
+        'gambar' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048', // Gambar menjadi opsional
+        'jenis_layanan' => 'required|string|max:255',
+        'harga' => 'required|numeric',
+        'deskripsi' => 'nullable|string',
+    ]);
+    
+    // Default value untuk path gambar
+    $filePath = null;
+    
+    // Proses file gambar jika diunggah
+    if ($request->hasFile('gambar')) {
         $file = $request->file('gambar');
-    
-        // Menentukan nama file dan path penyimpanan
         $fileName = time() . '.' . $file->getClientOriginalExtension();
-    
-        // Menyimpan gambar ke public/images folder
         $file->move(public_path('images'), $fileName);
-    
-        // Menyimpan data layanan ke database
-        Layanan::create([
-            'gambar' => 'images/' . $fileName,  // Menyimpan path gambar
-            'jenis_layanan' => $request->jenis_layanan,
-            'harga' => $request->harga,
-            'deskripsi' => $request->deskripsi,
-            'status' => 'aktif',  // Bisa menambahkan status default jika diperlukan
-        ]);
-    
-        // Redirect atau return response sesuai kebutuhan
-        return redirect()->route('layanan.index')->with('success', 'Layanan berhasil ditambahkan!');
+        $filePath = 'images/' . $fileName; // Path gambar yang akan disimpan
     }
+    
+    // Menyimpan data layanan ke database
+    Layanan::create([
+        'gambar' => $filePath, // Bisa null jika gambar tidak diunggah
+        'jenis_layanan' => $request->jenis_layanan,
+        'harga' => $request->harga,
+        'deskripsi' => $request->deskripsi,
+        'status' => 'aktif', // Status default
+    ]);
+    DB::statement("SET @modifier_id = ?", [auth()->id()]);
+    
+    // Redirect atau return response sesuai kebutuhan
+    return redirect()->route('layanan.index')->with('success', 'Layanan berhasil ditambahkan!');
+}
+
 
     // Melakukan update layanan (hanya untuk admin)
     public function update(Request $request, $id)

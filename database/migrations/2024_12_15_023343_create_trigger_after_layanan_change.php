@@ -47,7 +47,6 @@ return new class extends Migration
         AFTER UPDATE ON layanan
         FOR EACH ROW
         BEGIN
-            SET NEW.modifier_id = @modifier_id;
         INSERT INTO log (modifier_id, table_name, log_target, log_action, old_value, new_value, log_time)
         VALUES (
         @modifier_id, -- ID pengguna yang memodifikasi
