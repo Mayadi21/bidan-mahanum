@@ -46,6 +46,7 @@ class LayananController extends Controller
     // Menampilkan form untuk mengedit layanan (hanya untuk admin)
     public function edit($id)
     {
+
         $layanan = DB::table('layanan')->where('id', $id)->first();
 
         return view('dashboard.layanan.edit', [
@@ -67,6 +68,7 @@ class LayananController extends Controller
     // Menyimpan layanan baru ke database
     public function store(Request $request)
     {
+        DB::statement("SET @modifier_id = ?", [auth()->id()]);
         // Validasi file gambar
         $request->validate([
             'gambar' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
@@ -74,7 +76,7 @@ class LayananController extends Controller
             'harga' => 'required|numeric',
             'deskripsi' => 'nullable|string',
         ]);
-    
+        
         // Mengambil file gambar
         $file = $request->file('gambar');
     
@@ -100,13 +102,13 @@ class LayananController extends Controller
     // Melakukan update layanan (hanya untuk admin)
     public function update(Request $request, $id)
     {
+        DB::statement("SET @modifier_id = ?", [auth()->id()]);
         $request->validate([
             'jenis_layanan' => 'required|string|max:255',
             'deskripsi' => 'nullable|string',
             'harga' => 'required|integer',
             'gambar' => 'nullable|image',
         ]);
-
         // Update data layanan
         DB::table('layanan')->where('id', $id)->update([
             'jenis_layanan' => $request->jenis_layanan,

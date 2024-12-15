@@ -13,14 +13,13 @@ return new class extends Migration
     {
         Schema::create('log', function (Blueprint $table) {
             $table->id(); // Primary key
-            $table->unsignedInteger('id_user');// id user yang melakukan aktivitas
-            $table->string('nama');// nama user
-            $table->string('objek'); // nama tabel
-            $table->string('log_target', 255);
-            $table->enum('log_description', ['insert', 'update', 'delete']); 
-            $table->string('old_value');
-            $table->string('new_value');
-            $table->datetime('log_time');
+            $table->string('modifier_id')->nullable();// id user
+            $table->string('table_name'); // nama tabel
+            $table->string('log_target');
+            $table->enum('log_action', ['insert', 'update', 'delete']); 
+            $table->longText('old_value')->nullable();
+            $table->longText('new_value')->nullable();
+            $table->timestamp('log_time');
         });
     }
 
