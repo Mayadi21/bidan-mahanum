@@ -27,8 +27,8 @@ class Log extends Model
     ];
 
     // Optionally, you can add casting for JSON fields if needed
-    protected $casts = [
-        'old_value' => 'string',
-        'new_value' => 'string',
-    ];
+    // protected $casts = [
+    //     'old_value' => 'string',
+    //     'new_value' => 'string',
+    // ];
 }

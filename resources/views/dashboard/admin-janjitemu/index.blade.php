@@ -60,7 +60,11 @@
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $appointment->pasien_nama }}</td>
                     <td>{{ $appointment->keluhan }}</td>
+                    @if ($appointment->waktu_mulai == $appointment->waktu_selesai )
+                    <td>{{ $appointment->waktu_mulai }}</td>
+                    @else
                     <td>{{ $appointment->waktu_mulai }} s/d {{ $appointment->waktu_selesai }}</td>
+                    @endif
                     <td>
                         @if($appointment->status === 'menunggu konfirmasi')
                             <div class="dropdown">

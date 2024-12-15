@@ -16,10 +16,7 @@ class DashboardController extends Controller
     {
         $idUser = Auth::id();
     
-        // Query ke view_kunjungan_pasien untuk data berdasarkan id_pasien
-        $riwayatKunjungan = DB::table('view_kunjungan_pasien')
-            ->where('id_pasien', $idUser)
-            ->get();
+
         
         $totalKunjungan = Transaksi::where('id_pasien', auth()->id())->count();
     
@@ -51,7 +48,6 @@ class DashboardController extends Controller
         return view('dashboard.index', [
             'page' => auth()->user()->nama,
             'active' => 'dashboard',
-            'kunjungan' => $riwayatKunjungan,   
             'janjiTemu' => $janjiTemu,
             'totalKunjungan' => $totalKunjungan,
             'sisaWaktu' => $sisaWaktu, // Kirimkan sisa waktu ke view

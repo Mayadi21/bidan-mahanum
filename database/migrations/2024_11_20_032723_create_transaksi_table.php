@@ -18,11 +18,7 @@ return new class extends Migration
                   ->onDelete('cascade') // Referensi ke tabel users
                   ->onUpdate('cascade'); // Update cascade
 
-            $table->foreignId('promo_id') // Foreign key untuk promo
-            ->nullable() // Bisa null jika tidak ada promo
-            ->constrained('promo') // Mengacu ke tabel promo
-            ->onUpdate('cascade') // Update cascade
-            ->onDelete('set null'); // Jika promo dihapus, set promo_id menjadi null
+
             $table->foreignId('janji_id') 
             ->nullable()
             ->constrained('janji_temu') 
@@ -51,13 +47,3 @@ return new class extends Migration
         Schema::dropIfExists('transaksi');
     }
 };
-
-
-
-
-
-
-
-
-
-

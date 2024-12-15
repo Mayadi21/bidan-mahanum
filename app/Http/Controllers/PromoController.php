@@ -13,8 +13,6 @@ use Illuminate\Http\Request;
 
 class PromoController extends Controller
 {
-
-
     public function index()
     {   $users = User::aktif()->role('user')->get();
         $promos = DB::table('promo_view')->get();
@@ -23,7 +21,7 @@ class PromoController extends Controller
             return view('dashboard.promo.index', [
                 'page' => 'Halaman Promo',
                 'active' => 'admin-promo',
-                'promos' => $promos , 
+                'promos' => $promos ,
                 'users' => $users  
             ]);    }
 
@@ -83,7 +81,7 @@ class PromoController extends Controller
     public function show($id)
     {
         // Ambil promo berdasarkan ID
-        $promo = Promo::with('layanan')->findOrFail($id);
+        $promo = DB::table('promo_view')->where('promo_id', $id)->first();
 
         // Tampilkan view detail promo
         return view('dashboard.promo.show', [
