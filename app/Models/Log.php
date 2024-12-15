@@ -9,16 +9,26 @@ class Log extends Model
 {
     use HasFactory;
 
-    protected $table = 'log_transaksi'; // Nama tabel
+    // Specify the table name
+    protected $table = 'log';
+
+    // Disable timestamps since the table does not have created_at or updated_at
     public $timestamps = false;
 
+    // Specify the fillable fields for mass assignment
     protected $fillable = [
-        'id_pasien',
-        'pasien',
-        'bidan',
-        'layanan',
-        'tanggal',
-        'biaya',
-        'waktu_log',
+        'modifier_id',
+        'table_name',
+        'log_target',
+        'log_action',
+        'old_value',
+        'new_value',
+        'log_time',
     ];
+
+    // Optionally, you can add casting for JSON fields if needed
+    // protected $casts = [
+    //     'old_value' => 'string',
+    //     'new_value' => 'string',
+    // ];
 }

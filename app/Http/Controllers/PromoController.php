@@ -81,7 +81,7 @@ class PromoController extends Controller
     public function show($id)
     {
         // Ambil promo berdasarkan ID
-        $promo = Promo::with('layanan')->findOrFail($id);
+        $promo = DB::table('promo_view')->where('promo_id', $id)->first();
 
         // Tampilkan view detail promo
         return view('dashboard.promo.show', [

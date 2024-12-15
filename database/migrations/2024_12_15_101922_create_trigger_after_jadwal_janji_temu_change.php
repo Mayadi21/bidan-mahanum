@@ -29,7 +29,7 @@ return new class extends Migration
         JSON_OBJECT(
             'waktu_mulai', NEW.waktu_mulai,
             'waktu_selesai', NEW.waktu_selesai,
-            'kuota', NEW.kuota,
+            'kuota', NEW.kuota
         ), -- Nilai baru
         NOW() -- Waktu log
         );

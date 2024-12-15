@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h1>Daftar Promo</h1>
+        <h1 class="my-4">Daftar Promo</h1>
 
         @if(session('success'))
             <div class="alert alert-success">
@@ -24,30 +24,20 @@
             <a href="{{ route('promo.create') }}" class="btn btn-primary mb-3">Tambah Promo</a>
         @endcanany
 
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Judul Promo</th>
-                    <th>Deskripsi</th>
-                    <th>Jenis Layanan</th>
-                    <th>Diskon</th>
-                    <th>Tanggal Mulai</th>
-                    <th>Tanggal Selesai</th>
-                    <th>Total Kuota</th>
-                    <th>Aksi</th> <!-- Tambahkan kolom untuk aksi -->
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($promos as $promo)
-                    <tr>
-                        <td>{{ $promo->judul_promo }}</td>
-                        <td>{{ $promo->deskripsi }}</td>
-                        <td>{{ $promo->jenis_layanan }}</td>
-                        <td>{{ $promo->diskon }}</td>
-                        <td>{{ $promo->tanggal_mulai }}</td>
-                        <td>{{ $promo->tanggal_selesai }}</td>
-                        <td>{{ $promo->total_kuota }}</td>
-                        <td>
+        <div class="row">
+            @foreach ($promos as $promo)
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $promo->judul_promo }}</h5>
+                            <p class="card-text">
+                                <strong>Tanggal Mulai:</strong> {{ $promo->tanggal_mulai }}<br>
+                                <strong>Tanggal Selesai:</strong> {{ $promo->tanggal_selesai }}
+                            </p>
+                        </div>
+                        <div class="card-footer d-flex justify-content-between">
+                            <a href="{{ route('promo.show', $promo->promo_id) }}" class="btn btn-info btn-sm">Lihat Detail</a>
+                            @canany(['admin', 'pegawai'])
                             <button 
                                 type="button" 
                                 class="btn btn-primary btn-sm" 
@@ -56,11 +46,13 @@
                                 data-promo-id="{{ $promo->promo_id }}"> 
                                 Daftarkan Pasien
                             </button>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+                            @endcanany
+                        </div>
+                        
+                    </div>
+                </div>
+            @endforeach
+        </div>
     </div>
 
     <!-- Modal Form Pendaftaran Pasien -->
@@ -73,9 +65,7 @@
                 </div>
                 <form action="{{ route('promo.register') }}" method="POST">
                     @csrf
-                    <!-- Hidden input untuk ID Promo -->
-                    <input name="promo_id" id="promo_id" value="{{ $promo->promo_id }}">
-                    
+                    <input name="promo_id"  id="promo_id" value="{{ $promo->promo_id }}">
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="id_pasien" class="form-label">Pilih Pasien</label>
@@ -87,7 +77,6 @@
                             </select>
                         </div>
                     </div>
-
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                         <button type="submit" class="btn btn-primary">Daftarkan</button>
@@ -102,10 +91,8 @@
 <script>
     const registerModal = document.getElementById('registerModal');
     registerModal.addEventListener('show.bs.modal', function (event) {
-        const button = event.relatedTarget; // Tombol yang diklik
-        const promoId = button.getAttribute('data-promo-id'); // Ambil nilai ID promo dari atribut data-promo-id
-
-        // Isi nilai input hidden pada modal
+        const button = event.relatedTarget;
+        const promoId = button.getAttribute('data-promo-id');
         const promoIdInput = registerModal.querySelector('#promo_id');
         promoIdInput.value = promoId;
     });
