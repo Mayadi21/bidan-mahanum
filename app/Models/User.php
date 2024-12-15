@@ -36,7 +36,10 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $query->where(function($query) use ($search) {
             $query->where('nama', 'like', '%' . $search . '%')
-                ->orWhere('pekerjaan', 'like', '%' . $search . '%');
+            ->orWhere('tanggal_lahir', 'like', '%' . $search . '%')
+            ->orWhere('alamat', 'like', '%' . $search . '%')
+            ->orWhere('no_hp', 'like', '%' . $search . '%')
+            ->orWhere('pekerjaan', 'like', '%' . $search . '%');
         });
     }
 

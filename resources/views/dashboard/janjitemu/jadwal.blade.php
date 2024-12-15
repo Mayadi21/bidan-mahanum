@@ -30,7 +30,10 @@
                         <p class="card-text">
                             <strong>Tanggal:</strong> {{ \Carbon\Carbon::parse($jadwal->waktu_mulai)->format('d M Y') }}<br>
                             <strong>Waktu:</strong> {{ \Carbon\Carbon::parse($jadwal->waktu_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($jadwal->waktu_selesai)->format('H:i') }}<br>
-                            <strong>Kuota Tersedia:</strong> {{ $jadwal->kuota - $jadwal->total_terisi }}
+                            @if ( ($jadwal->kuota - $jadwal->total_terisi) == 1)
+                            <strong class="text-warning mt-1">  Kuota hampir habis </strong>
+                            @else
+                            @endif
                         </p>
                     </div>
                     <div class="card-footer text-center">

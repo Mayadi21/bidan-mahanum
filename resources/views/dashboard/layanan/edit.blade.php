@@ -22,6 +22,11 @@
                            value="{{ old('harga', $layanan->harga) }}" required>
                 </div>
                 <div class="mb-3">
+                    <label for="besar_bonus" class="form-label">Bonus Pegawai</label>
+                    <input type="number" class="form-control" id="besar_bonus" name="besar_bonus" 
+                           value="{{ old('besar_bonus', $layanan->besar_bonus) }}" required>
+                </div>
+                <div class="mb-3">
                     <label for="gambar" class="form-label">Gambar</label>
                     <input type="file" class="form-control" id="gambar" name="gambar">
                 </div>
