@@ -20,10 +20,6 @@ class AdminTransaksiController extends Controller
       $transaksi = DB::table('view_transaksi')->get();
       $janji_temu = DB::table('view_jadwal_janji_temu')
         ->where('status', 'disetujui')
-        ->whereBetween('waktu_mulai', [
-            now()->subDays(2)->startOfDay()->toDateTimeString(),
-            now()->endOfDay()->toDateTimeString()
-        ])
         ->orderBy('waktu_mulai', 'desc')
         ->get();
       $layanan = Layanan::aktif()->get();

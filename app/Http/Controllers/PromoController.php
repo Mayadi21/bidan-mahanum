@@ -13,8 +13,6 @@ use Illuminate\Http\Request;
 
 class PromoController extends Controller
 {
-
-
     public function index()
     {   $users = User::aktif()->role('user')->get();
         $promos = DB::table('promo_view')->get();
@@ -23,7 +21,7 @@ class PromoController extends Controller
             return view('dashboard.promo.index', [
                 'page' => 'Halaman Promo',
                 'active' => 'admin-promo',
-                'promos' => $promos , 
+                'promos' => $promos ,
                 'users' => $users  
             ]);    }
 

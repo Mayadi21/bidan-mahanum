@@ -15,10 +15,9 @@ class AdminDashboardController extends Controller
         // Ambil data transaksi dari view_transaksi
         $transaksi = DB::table('view_transaksi')->get();
 
-        // Mengambil jumlah transaksi hari ini
-        $transaksiHariIni = DB::table('transaksi')
-            ->whereDate('tanggal', '=', now()->toDateString())  // Mengambil transaksi yang terjadi hari ini
-            ->count();
+        $transaksiHariIni = DB::select("SELECT get_transaksi_by_date(?) AS jumlah_transaksi", [now()->toDateString()]);
+        $transaksiHariIni = $transaksiHariIni[0]->jumlah_transaksi;
+
 
         // Hitung jumlah janji temu yang menunggu konfirmasi
         $janjiTemuPending = JanjiTemu::where('status', 'menunggu konfirmasi')->count();
@@ -28,7 +27,7 @@ class AdminDashboardController extends Controller
 
 
         // Ambil data janji temu hari ini dari view_janji_temu
-        $janjiTemuHariIni = DB::table('view_jadwal_janji_temu')->where('status', 'disetujui')->where('waktu_mulai', today())->get(); // Mengambil semua data janji temu hari ini
+        $janjiTemuHariIni = DB::table('view_jadwal_janji_temu')->whereDate('status', 'disetujui')->where('waktu_mulai', today())->get(); // Mengambil semua data janji temu hari ini
 
         return view('dashboard.bidan-index', [
             'page' => 'Admin Dashboard',

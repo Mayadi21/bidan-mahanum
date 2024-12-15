@@ -24,11 +24,12 @@ CREATE OR REPLACE VIEW view_jadwal_janji_temu AS
         p.judul_promo, -- Nama promo dari tabel promo
         -- Menambahkan waktu mulai dan waktu selesai dari tabel jadwal_janji_temu atau detail_promo
         CASE
-            WHEN jt.jadwal_id IS NOT NULL THEN jj.waktu_mulai -- Jika jadwal_id ada, ambil waktu mulai dari jadwal_janji_temu
             WHEN jt.jadwal_promo_id IS NOT NULL THEN dp.tanggal -- Jika jadwal_promo_id ada, ambil tanggal dari detail_promo
+            WHEN jt.jadwal_id IS NOT NULL THEN jj.waktu_mulai -- Jika jadwal_id ada, ambil waktu mulai dari jadwal_janji_temu
             ELSE NULL
         END AS waktu_mulai, -- Waktu mulai
         CASE
+            WHEN jt.jadwal_promo_id IS NOT NULL THEN dp.tanggal -- Jika jadwal_promo_id ada, ambil tanggal dari detail_promo
             WHEN jt.jadwal_id IS NOT NULL THEN jj.waktu_selesai -- Jika jadwal_id ada, ambil waktu selesai dari jadwal_janji_temu
             ELSE NULL -- Tidak ada waktu selesai untuk promo karena mengacu pada tanggal promo saja
         END AS waktu_selesai -- Waktu selesai
