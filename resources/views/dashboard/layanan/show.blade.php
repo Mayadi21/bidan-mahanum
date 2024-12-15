@@ -28,8 +28,9 @@
                 </p>
                 <p class="card-text">{{ $layanan->deskripsi }}</p>
                 <p class="card-text">Harga: {{ number_format($layanan->harga, 0, ',', '.') }}</p>
+                @canany(['admin', 'pegawai'])
                 <p class="card-text">Bonus Pegawai: {{ number_format($layanan->besar_bonus, 0, ',', '.') }}</p>
-
+                @endcan
                 @can('admin')
                     <p class="card-text">Status: {{ $layanan->status }}</p>
                     @if ($layanan->status === 'aktif')
@@ -64,7 +65,7 @@
 
                 <!-- Menampilkan Semua Ulasan -->
                 <h6 class="mt-4">Ulasan Pengguna:</h6>
-                @foreach ($layanan->ulasan as $ulasan)
+                @foreach ($ulasan as $ulasan)
                     <div class="mb-3 border p-3">
                         <p><strong>{{ $ulasan->user->nama ?? 'Pengguna tidak ditemukan' }}</strong> ({{ $ulasan->tanggal_ulasan }})</p>
                         <p>{{ $ulasan->ulasan }}</p>
