@@ -23,9 +23,9 @@ return new class extends Migration
                 ->constrained('jadwal_janji_temu')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->foreignId('promo_id') // Foreign key ke tabel promo
+            $table->foreignId('jadwal_promo_id') // Foreign key ke tabel jadwal
                 ->nullable()
-                ->constrained('promo')
+                ->constrained('detail_promo')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->string('keluhan')->nullable(); // Kolom keluhan

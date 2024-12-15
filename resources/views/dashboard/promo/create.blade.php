@@ -30,19 +30,18 @@
             <label for="layanan_id" class="form-label">Layanan</label>
             <select class="form-control" id="layanan_id" name="layanan_id" required>
                 <option value="">Pilih Layanan</option>
-                @foreach ($layanan as $layanan)
-                    <option value="{{ $layanan->id }}" {{ old('layanan_id') == $layanan->id ? 'selected' : '' }}>
-                        {{ $layanan->jenis_layanan }}  (Rp.{{ $layanan->harga }})
+                @foreach ($layanan as $layananItem)
+                    <option value="{{ $layananItem->id }}" {{ old('layanan_id') == $layananItem->id ? 'selected' : '' }}>
+                        {{ $layananItem->jenis_layanan }}  (Rp.{{ $layananItem->harga }})
                     </option>
                 @endforeach
             </select>
         </div>
 
         <div class="mb-3">
-          <label for="diskon" class="form-label">Pemotongan Harga</label>
-          <input type="number" class="form-control" id="diskon" name="diskon" value="{{ old('diskon') }}" min="0" required>
-      </div>
-      
+            <label for="diskon" class="form-label">Pemotongan Harga</label>
+            <input type="number" class="form-control" id="diskon" name="diskon" value="{{ old('diskon') }}" min="0" required>
+        </div>
 
         <div class="mb-3">
             <label for="kuota" class="form-label">Kuota</label>

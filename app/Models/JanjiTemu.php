@@ -25,9 +25,9 @@ class JanjiTemu extends Model
         return $this->belongsTo(User::class, 'id_pasien'); // Ganti user_id menjadi id_pasien
     }
 
-    public function promo()
+    public function jadwalPromo()
     {
-        return $this->belongsTo(Promo::class, 'promo_id'); 
+        return $this->belongsTo(DetailPromo::class, 'jadwal_promo_id'); 
     }
 
     public function transaksi()

@@ -20,9 +20,6 @@ return new class extends Migration
                     ->onUpdate('cascade')
                     ->onDelete('cascade');
             $table->integer('diskon'); // Besar diskon
-            $table->integer('kuota'); // Kuota maksimal dari promo
-            $table->date('tanggal_mulai'); // Tanggal dan waktu mulai promo
-            $table->date('tanggal_selesai'); // Tanggal dan waktu selesai promo
         });
     }
 
