@@ -23,4 +23,9 @@ class Promo extends Model
         return $this->belongsTo(Layanan::class, 'layanan_id'); // Mengarah ke kolom 'id' di tabel 'layanan'
     }
 
+    public function detailPromo()
+    {
+        return $this->hasMany(DetailPromo::class, 'promo_id');
+    }
+
 }
