@@ -4,13 +4,11 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2">Janji Temu</h1>
     
-    <a href="{{ route('janjitemu.create') }}" class="btn btn-primary mb-3">
-        Tambah Janji Temu
-    </a>
+
     
     <div class="btn-group btn-group-sm me-2" role="group" aria-label="Filter Status">
         <form action="" method="get">
-            <button type="submit" name="status" value="menunggu konfirmasi" class="btn btn-outline-primary">Menunggu Konfirmasi</button>
+            <button type="submit" name="status" value="menunggu konfirmasi" class="btn btn-outline-warning">Menunggu Konfirmasi</button>
             <button type="submit" name="status" value="disetujui" class="btn btn-outline-success">Disetujui</button>
             <button type="submit" name="status" value="selesai" class="btn btn-outline-secondary">Selesai</button>
             <button type="submit" name="status" value="ditolak" class="btn btn-outline-danger">Ditolak</button>
@@ -39,6 +37,13 @@
 
 <div class="table-responsive small col-lg-12">
     <table class="table table-striped table-sm">
+        <a href="{{ route('janjitemu.create') }}" class="btn btn-primary mb-1 btn-lg col-lg-12">
+            Buat Janji Temu
+        </a>
+            <a href="{{ route('jadwal.sediakan') }}" class="btn btn-success mb-2 btn-lg col-lg-12">
+                Sediakan Jadwal Janji Temu
+            </a>
+        
         <thead>
             <tr>
                 <th scope="col">#</th>
@@ -114,10 +119,7 @@
 </div>
 
 <!-- Tombol Sediakan Jadwal Janji Temu -->
-<div class="container">
-    <a href="{{ route('jadwal.sediakan') }}" class="btn btn-success btn-lg d-block position-fixed bottom-0 start-0 end-0" style="border-radius: 0; margin-bottom: 0;">
-        Sediakan Jadwal Janji Temu
-    </a>
-</div>
+
+
 
 @endsection

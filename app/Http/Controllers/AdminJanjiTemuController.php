@@ -52,71 +52,41 @@ class AdminJanjiTemuController extends Controller
      */
 
 
-    //  JANGAN DIHAPUS DULU
-    //  public function store(Request $request)
-    //  {
-    //      // Validasi input
-    //      $validated = $request->validate([
-    //          'id_pasien' => 'required|exists:users,id',
-    //          'keluhan' => 'nullable|string|max:255',
-    //          'waktu_mulai' => 'required|date',
-    //      ]);
-     
-    //      try {
-    //          // Menyimpan data janji temu
-    //          JanjiTemu::create([
-    //              'id_pasien' => $validated['id_pasien'],
-    //              'keluhan' => $validated['keluhan'],
-    //              'waktu_mulai' => $validated['waktu_mulai'],
-    //              'status' => 'disetujui',
-    //          ]);
-     
-    //          // Redirect dengan pesan sukses jika berhasil
-    //          return redirect()->route('janjitemu.index')->with('success', 'Janji temu berhasil ditambahkan.');
-    //      } catch (QueryException $e) {
-    //          // Tangkap error dari trigger database
-    //          if ($e->getCode() === '45000') {
-    //             // Proses pesan error untuk mengambil bagian relevan
-    //             $errorMessage = $e->getMessage();
-    //             if (preg_match('/Terjadi kesalahan: \[(.*?)\]/', $errorMessage, $matches)) {
-    //                 $parsedMessage = $matches[1]; // Ambil teks di antara [ dan ]
-    //             } else {
-    //                 $parsedMessage = 'Terjadi kesalahan pada janji temu.';
-    //             }
-    
-    //             return redirect()->back()->withInput()->with('error', $parsedMessage);
-    //         }
-     
-    //          // Tangkap error lainnya
-    //          return redirect()->back()->withInput()->with('error', 'Terjadi kesalahan saat menyimpan data.');
-    //      }
-    //  }
-
-
     public function store(Request $request)
     {
-        // Validasi input
-        $request->validate([
+        $validated = $request->validate([
+            'jadwal_id' => 'required|exists:jadwal_janji_temu,id',
             'id_pasien' => 'required|exists:users,id',
-            'janji_temu_id' => 'required|exists:janji_temu,id',
-            'keluhan' => 'nullable|string|max:255', // Ubah validasi menjadi 'nullable'
+            'keluhan' => 'required|string|max:255',
         ]);
-    
+
+        // Cek kuota jadwal
+        $jadwal = JadwalJanjiTemu::findOrFail($validated['jadwal_id']);
+        if ($jadwal->jumlah_janji_temu >= $jadwal->kuota) {
+            return redirect()->route('janjitemu.create')->with('error', 'Kuota penuh, tidak dapat menambahkan janji temu.');
+        }
         try {
-            // Cari janji temu berdasarkan ID
-            $janjiTemu = JanjiTemu::findOrFail($request->janji_temu_id);
-    
-            // Set id_pasien dari input request
-            $janjiTemu->id_pasien = $request->id_pasien;
-    
-            // Tambahkan data keluhan, jika ada
-            $janjiTemu->keluhan = $request->keluhan; // Jika keluhan kosong, maka akan tetap disimpan sebagai NULL
-            $janjiTemu->status = 'disetujui';
-            $janjiTemu->save();
-    
-            return redirect()->back()->with('success', 'Janji temu berhasil didaftarkan.');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+            // Simpan janji temu
+        JanjiTemu::create([
+            'jadwal_id' => $validated['jadwal_id'],
+            'id_pasien' => $validated['id_pasien'],
+            'keluhan' => $validated['keluhan'],
+            'status' => 'menunggu konfirmasi',
+        ]);
+
+
+
+        return redirect()->route('janjitemu.create')->with('success', 'Janji temu berhasil disimpan.');
+        } 
+        catch (\Illuminate\Database\QueryException $e) {
+            // Tangkap pesan error dari trigger
+            if ($e->getCode() === '45000') {
+                $errorMessage = $e->getPrevious()->getMessage();
+            } else {
+                $errorMessage = 'Terjadi kesalahan saat menyimpan jadwal.';
+            }
+            return redirect()->route('janjitemu.create')->withErrors(['error' => $errorMessage]);
+
         }
     }
     
@@ -149,16 +119,25 @@ class AdminJanjiTemuController extends Controller
 
     public function create()
     {
-        // Ambil semua pengguna dari database (jika hanya pengguna tertentu, sesuaikan query-nya)
-        $users = User::aktif()->role('user');
-        $jadwalTersedia = JanjiTemu::whereNull('id_pasien')
-                                   ->get();
+        
+        //  $jadwal = JadwalJanjiTemu::withCount('janjiTemu') // Mengambil jumlah janji temu yang sudah terdaftar
+        //  ->get();
+         
+         $users = User::where('role', 'user')->where('status', 'aktif')->get();
+
+        $jadwalJanjiTemu = JadwalJanjiTemu::all();
+
+        foreach ($jadwalJanjiTemu as $jadwal) {
+            $jadwal->jumlah_janji_temu = JanjiTemu::where('jadwal_id', $jadwal->id)    
+            ->where('status', '!=', 'ditolak')
+            ->count();
+        }
 
         return view('dashboard.admin-janjitemu.create', [
             'page' => 'Daftarkan Janji Temu',
             'active' => 'admin-janjitemu',
+            'jadwalJanjiTemu' => $jadwalJanjiTemu,
             'users' => $users,
-            'jadwalTersedia' => $jadwalTersedia,
         ]);
     }
 
@@ -172,30 +151,6 @@ class AdminJanjiTemuController extends Controller
             'active' => 'admin-janjitemu',
         ]);
     }
-
-    // // Menyimpan data janji temu dari form
-    // public function storeJadwal(Request $request)
-    // {
-    //     $request->validate([
-    //         'tanggal' => 'required|date',
-    //         'waktu_mulai.*' => 'required|date_format:H:i',
-    //         'waktu_selesai.*' => 'required|date_format:H:i|after:waktu_mulai.*',
-    //     ]);
-
-    //     $tanggal = $request->tanggal;
-
-    //     foreach ($request->waktu_mulai as $index => $waktu_mulai) {
-    //         $waktu_selesai = $request->waktu_selesai[$index];
-
-    //         JanjiTemu::create([
-    //             'waktu_mulai' => "$tanggal $waktu_mulai",
-    //             'waktu_selesai' => "$tanggal $waktu_selesai",
-    //             'status' => null, // Kolom status tetap kosong
-    //         ]);
-    //     }
-
-    //     return redirect()->route('jadwal.sediakan')->with('success', 'Jadwal berhasil disimpan!');
-    // }
 
 
 public function storeJadwal(Request $request)
@@ -250,17 +205,14 @@ public function storeJadwal(Request $request)
 
 
 
-// Mengambil daftar jadwal janji temu berdasarkan tanggal
-public function getJadwalJanjiTemuByDate(Request $request)
+public function getJadwalByTanggal(Request $request)
 {
     $tanggal = $request->query('tanggal');
-    $tanggal = Carbon::parse($tanggal)->format('Y-m-d');
 
-    $jadwalJanjiTemu = JadwalJanjiTemu::whereDate('waktu_mulai', '=', $tanggal)
-        ->select('id', 'waktu_mulai', 'waktu_selesai', 'kuota')
-        ->orderBy('waktu_mulai', 'asc')
-        ->get();
-    
-    return response()->json($jadwalJanjiTemu);
+    // Ambil data jadwal berdasarkan tanggal
+    $jadwal = Jadwal::whereDate('tanggal', $tanggal)->get();
+
+    // Mengembalikan data jadwal dalam format JSON
+    return response()->json($jadwal);
 }
 }

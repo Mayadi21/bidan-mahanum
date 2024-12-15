@@ -87,12 +87,13 @@ Route::middleware(['auth', 'notBanned'])->group(function () {
             // Rute untuk halaman daftar janji temu
             Route::get('/janjitemu', [AdminJanjiTemuController::class, 'index'])
                 ->name('janjitemu.index');
-            Route::post('/janji-temu', [AdminJanjiTemuController::class, 'store'])->name('janjitemu.store');
-            Route::put('/janji-temu/{id}', [AdminJanjiTemuController::class, 'update'])->name('janjitemu.update');
-            Route::get('/janji-temu/sediakan-jadwal', [AdminJanjiTemuController::class, 'createJadwal'])->name('jadwal.sediakan');
-            Route::post('/janji-temu/jadwal', [AdminJanjiTemuController::class, 'storeJadwal'])->name('jadwal.store');
-            Route::get('/janji-temu/jadwal', [AdminJanjiTemuController::class, 'getJanjiTemuByDate'])->name('jadwal.janjitemu');
-            Route::get('/janji-temu/create', [AdminJanjiTemuController::class, 'create'])->name('janjitemu.create');
+            Route::post('/janjitemu/create', [AdminJanjiTemuController::class, 'store'])->name('janjitemu.simpan');
+            Route::put('/janjitemu/{id}', [AdminJanjiTemuController::class, 'update'])->name('janjitemu.update');
+            Route::get('/janjitemu/sediakan-jadwal', [AdminJanjiTemuController::class, 'createJadwal'])->name('jadwal.sediakan');
+            Route::post('/janjitemu/jadwal', [AdminJanjiTemuController::class, 'storeJadwal'])->name('jadwal.store');
+            Route::get('/janjitemu/sediakan-jadwal/{tanggal}', [AdminJanjiTemuController::class, 'getJadwalByTanggal'])->name('jadwal.janjitemu');
+            Route::get('/janjitemu/create', [AdminJanjiTemuController::class, 'create'])->name('janjitemu.create');
+            
 
             Route::get('/promo/create', [PromoController::class, 'create'])->name('promo.create');
             Route::post('/promo', [PromoController::class, 'store'])->name('promo.store');

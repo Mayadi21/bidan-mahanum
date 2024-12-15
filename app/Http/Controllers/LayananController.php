@@ -32,14 +32,13 @@ class LayananController extends Controller
     public function show($id)
     {
         $layanan = Layanan::findOrFail($id);  // Ambil layanan berdasarkan ID
-        $ulasan = Ulasan::with('user')->where('layanan_id', $id)->orderBy('tanggal_ulasan', 'desc')->get(); // Ambil semua ulasan terkait
+        $ulasan = Ulasan::with('user')->where('layanan_id', $id)->where('status', 'aktif')->orderBy('tanggal_ulasan', 'desc')->get(); // Ambil semua ulasan terkait
 
         return view('dashboard.layanan.show', [
             'page' => 'Layanan',
             'active' => 'layanan',
-            'layanan' => $layanan    
-            
-
+            'layanan' => $layanan ,   
+            'ulasan' => $ulasan    
         ]);
     }
 
@@ -106,7 +105,8 @@ class LayananController extends Controller
         $request->validate([
             'jenis_layanan' => 'required|string|max:255',
             'deskripsi' => 'nullable|string',
-            'harga' => 'required|integer',
+            'harga' => 'required|integer|min:0',
+            'besar_bonus' => 'required|integer|min:0',
             'gambar' => 'nullable|image',
         ]);
         // Update data layanan
@@ -114,10 +114,11 @@ class LayananController extends Controller
             'jenis_layanan' => $request->jenis_layanan,
             'deskripsi' => $request->deskripsi,
             'harga' => $request->harga,
+            'besar_bonus' => $request->besar_bonus,
             'gambar' => $request->gambar,  // Pastikan gambar ditangani sesuai kebutuhan
         ]);
 
-        return redirect()->route('layanan.index')->with('success', 'Layanan berhasil diperbarui.');
+        return redirect()->route('layanan.show', $id)->with('success', 'Layanan berhasil diperbarui.');
     }
 
     public function nonaktifkan($id)
