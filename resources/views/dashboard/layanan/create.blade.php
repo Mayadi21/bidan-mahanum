@@ -1,27 +1,32 @@
-@extends('layouts.dashboard')
+@extends('dashboard.layouts.main')
 
 @section('content')
-    <h1 class="mb-4">Daftar Jadwal Janji Temu</h1>
+    <h1>Tambah Layanan</h1>
 
-    <a href="{{ route('janjitemu.create') }}" class="btn btn-primary mb-3">Tambah Janji Temu</a>
-
-    <div class="row">
-        @foreach ($jadwal as $jadwalItem)
-            <div class="col-md-4 mb-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Jadwal: {{ $jadwalItem->waktu_mulai->format('d M Y H:i') }} - {{ $jadwalItem->waktu_selesai->format('H:i') }}</h5>
-                        <p class="card-text">Kuota: {{ $jadwalItem->kuota }}</p>
-                        <p class="card-text">Jumlah Janji Temu: {{ $jadwalItem->janjiTemus_count }}</p>
-
-                        @if ($jadwalItem->janjiTemus_count >= $jadwalItem->kuota)
-                            <p class="text-danger">Jadwal ini sudah penuh</p>
-                        @else
-                            <a href="" class="btn btn-success">Daftar</a>
-                        @endif
-                    </div>
-                </div>
-            </div>
-        @endforeach
-    </div>
+    <!-- Form untuk menambah layanan -->
+    <form action="{{ route('layanan.store') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <div class="form-group">
+            <label for="jenis_layanan">Jenis Layanan</label>
+            <input type="text" name="jenis_layanan" class="form-control" required>
+        </div>
+    
+        <div class="form-group">
+            <label for="harga">Harga</label>
+            <input type="number" name="harga" class="form-control" required>
+        </div>
+    
+        <div class="form-group">
+            <label for="deskripsi">Deskripsi</label>
+            <textarea name="deskripsi" class="form-control"></textarea>
+        </div>
+    
+        <div class="form-group">
+            <label for="gambar">Gambar</label>
+            <input type="file" name="gambar" class="form-control" >
+        </div>
+    
+        <button type="submit" class="btn btn-primary">Tambah Layanan</button>
+    </form>
+    
 @endsection
