@@ -13,7 +13,14 @@ return new class extends Migration
     {
         $sql = " DROP PROCEDURE IF EXISTS insert_log;
 
-        CREATE PROCEDURE insert_log(IN id_pengguna INT UNSIGNED, IN nama_pengguna varchar(255), IN transaksi INT UNSIGNED, IN target varchar(255),  IN description VARCHAR(6), IN oldValue varchar(255), IN newValue varchar(255))
+        CREATE PROCEDURE insert_log(
+        IN id_pengguna INT UNSIGNED, 
+        IN nama_pengguna varchar(255), 
+        IN transaksi INT UNSIGNED, 
+        IN target varchar(255),  
+        IN description VARCHAR(6), 
+        IN oldValue varchar(255), 
+        IN newValue varchar(255))
         BEGIN
             INSERT INTO logs (log_time, id_user, nama, transaksi_id, log_target, log_description, old_value, new_value)
             VALUES (NOW(), id_pengguna, nama_pengguna, transaksi, target, description, oldValue, newValue);
