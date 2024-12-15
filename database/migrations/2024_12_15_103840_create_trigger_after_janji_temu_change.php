@@ -12,62 +12,60 @@ return new class extends Migration
     public function up(): void
     {
         $sql_insert = "
-        DROP TRIGGER IF EXISTS after_layanan_insert;
+        DROP TRIGGER IF EXISTS after_janji_temu_insert;
 
-        CREATE TRIGGER after_layanan_insert
-        AFTER INSERT ON layanan
+        CREATE TRIGGER after_janji_temu_insert
+        AFTER INSERT ON janji_temu
         FOR EACH ROW
         BEGIN
         -- Memasukkan data log untuk operasi INSERT
         INSERT INTO log (modifier_id, table_name, log_target, log_action, old_value, new_value, log_time)
         VALUES (
         @modifier_id, -- ID pengguna yang memodifikasi
-        'layanan', -- Nama tabel
+        'janji_temu', -- Nama tabel
         NEW.id, -- ID dari baris yang dimodifikasi
         'insert', -- Aksi yang dilakukan
         NULL, -- Tidak ada nilai lama untuk operasi INSERT
         JSON_OBJECT(
-            'jenis_layanan', NEW.jenis_layanan,
-            'deskripsi', NEW.deskripsi,
-            'harga', NEW.harga,
-            'gambar', NEW.gambar,
-            'besar_bonus', NEW.besar_bonus,
-            'status', NEW.status
+            'id_pasien', NEW.id_pasien,
+            'jadwal_id', NEW.jadwal_id,
+            'promo_id', NEW.promo_id,
+            'keluhan', NEW.keluhan,
+            'keterangan', NEW.keterangan,
         ), -- Nilai baru
         NOW() -- Waktu log
         );
         END;
         ";
-
+        
         DB::unprepared($sql_insert);
-
+        
         $sql_update = "
-        DROP TRIGGER IF EXISTS after_layanan_update;
+        DROP TRIGGER IF EXISTS after_janji_temu_update;
 
-        CREATE TRIGGER after_layanan_update
-        AFTER UPDATE ON layanan
+        CREATE TRIGGER after_janji_temu_update
+        AFTER UPDATE ON janji_temu
         FOR EACH ROW
         BEGIN
         INSERT INTO log (modifier_id, table_name, log_target, log_action, old_value, new_value, log_time)
         VALUES (
         @modifier_id, -- ID pengguna yang memodifikasi
-        'layanan', -- Nama tabel
+        'janji_temu', -- Nama tabel
         NEW.id, -- ID dari baris yang dimodifikasi
         'update', -- Aksi yang dilakukan
         JSON_OBJECT(
-            'jenis_layanan', NEW.jenis_layanan,
-            'deskripsi', OLD.deskripsi,
-            'harga', OLD.harga,
-            'gambar', OLD.gambar,
-            'besar_bonus', OLD.besar_bonus,
-            'status', OLD.status
+            'id_pasien', OLD.id_pasien,
+            'jadwal_id', OLD.jadwal_id,
+            'promo_id', OLD.promo_id,
+            'status', OLD.status,
+            'keterangan', OLD.keterangan,
         ), -- Tidak ada nilai lama untuk operasi INSERT
         JSON_OBJECT(
-            'jenis_layanan', NEW.jenis_layanan,
-            'deskripsi', NEW.deskripsi,
-            'harga', NEW.harga,
-            'gambar', NEW.besar_bonus,
-            'status', NEW.status
+            'id_pasien', NEW.id_pasien,
+            'jadwal_id', NEW.jadwal_id,
+            'promo_id', NEW.promo_id,
+            'status', NEW.status,
+            'keterangan', NEW.keterangan
         ), -- Nilai baru
         NOW() -- Waktu log
         );
@@ -81,6 +79,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('trigger_after_layanan_change');
+        Schema::dropIfExists('trigger_after_janji_temu_change');
     }
 };
