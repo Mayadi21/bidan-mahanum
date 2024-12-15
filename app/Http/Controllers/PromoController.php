@@ -13,68 +13,19 @@ use Illuminate\Http\Request;
 
 class PromoController extends Controller
 {
-    // Menampilkan halaman daftar promo
+
+
     public function index()
-    {
-        // Mengambil data promo beserta detail promonya
-        // $promo = Promo::with('layanan') // Relasi ke tabel layanan
-        // ->with([
-        //     'detailPromo' => function ($query) {
-        //         $query->select(
-        //             'promo_id',
-        //             DB::raw('MIN(tanggal) as tanggal_mulai'), // Tanggal mulai promo
-        //             DB::raw('MAX(tanggal) as tanggal_selesai') // Tanggal selesai promo
-        //         )
-        //         ->groupBy('promo_id');
-        //     }
-        // ])
-        // ->get()
-        // ->map(function ($promo) {
-        //     $jadwal = $promo->jadwal->first();
-        //     $promo->tanggal_mulai = $jadwal ? $jadwal->tanggal_mulai : null;
-        //     $promo->tanggal_selesai = $jadwal ? $jadwal->tanggal_selesai : null;
-        //     return $promo;
-        // });
-        // $promo = Promo::with(['layanan', 'detailPromo'])->get();
-        $promo = DB::table('promo_view')->get();
+    {   $users = User::aktif()->role('user')->get();
+        $promos = DB::table('promo_view')->get();
 
-    
-        return view('dashboard.promo.index', [
-            'page' => 'Halaman Promo',
-            'active' => 'admin-promo',
-            'promo' => $promo  
-        ]);
-    }
 
-//     public function index()
-// {
-//     // Mengambil data promo beserta layanan, tanggal mulai, dan tanggal selesai
-//     $promo = Promo::with('layanan') // Relasi ke tabel layanan
-//         ->with([ // Sub-query untuk tanggal mulai dan selesai
-//             'detailPromo' => function ($query) {
-//                 $query->select(
-//                     'promo_id',
-//                     DB::raw('MIN(tanggal) as tanggal_mulai'), // Tanggal mulai promo
-//                     DB::raw('MAX(tanggal) as tanggal_selesai') // Tanggal selesai promo
-//                 )
-//                 ->groupBy('promo_id');
-//             }
-//         ])
-//         ->get()
-//         ->map(function ($promo) {
-//             // Menambahkan properti tanggal_mulai dan tanggal_selesai dari jadwal
-//             $jadwal = $promo->jadwal->first();
-//             $promo->tanggal_mulai = $jadwal ? $jadwal->tanggal_mulai : null;
-//             $promo->tanggal_selesai = $jadwal ? $jadwal->tanggal_selesai : null;
-//             return $promo;
-//         });
-
-    // return view('dashboard.promo.index', [
-    //     'page' => 'Halaman Promo',
-    //     'active' => 'admin-promo',
-    //     'promo' => $promo
-    // ]);
-    // }
+            return view('dashboard.promo.index', [
+                'page' => 'Halaman Promo',
+                'active' => 'admin-promo',
+                'promos' => $promos , 
+                'users' => $users  
+            ]);    }
 
 
     // Menampilkan halaman formulir tambah promo
@@ -128,62 +79,6 @@ class PromoController extends Controller
         return redirect()->route('promo.index')->with('success', 'Promo berhasil ditambahkan!');
     }
     
-
-    // public function store(Request $request)
-    // {
-    //     // Validasi input dari form
-    //     $validatedData = $request->validate([
-    //         'judul_promo' => 'required|string|max:255',
-    //         'deskripsi' => 'required|string',
-    //         'layanan_id' => 'required|exists:layanan,id',
-    //         'diskon' => 'required|integer|min:0',
-    //         'kuota' => 'required|integer|min:1',
-    //         'tanggal_mulai' => 'required|date',
-    //         'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
-    //     ]);
-    
-    //     // Buat data promo baru
-    //     $promo = Promo::create([
-    //         'judul_promo' => $validatedData['judul_promo'],
-    //         'deskripsi' => $validatedData['deskripsi'],
-    //         'layanan_id' => $validatedData['layanan_id'],
-    //         'diskon' => $validatedData['diskon'],
-    //     ]);
-    
-    //     // Hitung tanggal mulai, selesai, dan rentang hari
-    //     $tanggalMulai = Carbon::parse($validatedData['tanggal_mulai']);
-    //     $tanggalSelesai = Carbon::parse($validatedData['tanggal_selesai']);
-    //     $jumlahHari = $tanggalMulai->diffInDays($tanggalSelesai) + 1;
-
-    
-    //     // Hitung kuota per hari dan sisa kuota
-    //     $kuotaTotal = $validatedData['kuota'];
-    //     $kuotaPerHari = intdiv($kuotaTotal, $jumlahHari);
-    //     $sisaKuota = $kuotaTotal % $jumlahHari;
-    
-    //     // Loop untuk menyimpan detail promo berdasarkan rentang tanggal
-    //     for ($i = 0; $i < $jumlahHari; $i++) {
-    //         $kuotaHariIni = $kuotaPerHari;
-    
-    //         // Tambahkan sisa kuota ke hari terakhir
-    //         if ($i == $jumlahHari - 1) {
-    //             $kuotaHariIni += $sisaKuota;
-    //         }
-    
-    //         // Simpan detail promo
-    //         DetailPromo::create([
-    //             'promo_id' => $promo->id,
-    //             'kuota' => $kuotaHariIni,
-    //             'tanggal' => $tanggalMulai->copy()->addDays($i)->toDateString(),
-    //         ]);
-    //     }
-    
-    //     // Redirect ke halaman daftar promo dengan pesan sukses
-    //     return redirect()->route('promo.index')->with('success', 'Promo berhasil ditambahkan!');
-    // }
-    
-    
-
     // Metode untuk menampilkan detail promo
     public function show($id)
     {
@@ -198,42 +93,155 @@ class PromoController extends Controller
         ]);
     }
 
-    // Metode untuk menampilkan formulir pendaftaran pasien
-    public function halamanDaftarPromo($id)
-    {
-        $promo = Promo::findOrFail($id);
-        $patients = User::aktif()->role('user')->get(); // Ambil semua pasien yang terdaftar
-        return view('dashboard.promo.register-pasien', [
-            'page' => 'Daftarkan ke Promo',
-            'active' => 'admin-promo',
-            'promo' => $promo  ,
-            'patients' => $patients  
-        ]);
+
+//     // Menampilkan form pendaftaran pasien ke promo
+//     public function showDaftarPasienForm($promoId)
+//     {
+//         // Ambil data promo berdasarkan promoId
+//         $promo = Promo::findOrFail($promoId);
+//         // Ambil semua pasien (users)
+//         $users = User::aktif()->role('user')->get(); // Ambil semua pasien yang terdaftar
+
+//         return view('dashboard.promo.register-pasien', [
+//             'page' => 'Daftarkan ke Promo',
+//             'active' => 'admin-promo',
+//             'promo' => $promo  ,
+//             'users' => $users  
+//         ]);    }
+
+
+//     public function registerPatient(Request $request, $id)
+//     {
+//         // Validasi input
+//         $validated = $request->validate([
+//             'id_pasien' => 'required|exists:users,id',
+//             'keterangan' => 'nullable|string',
+//         ]);
+
+//         // Ambil data promo berdasarkan ID
+//         $promo = Promo::findOrFail($id);
+
+//         // Buat janji temu baru
+//         JanjiTemu::create([
+//             'id_pasien' => $validated['id_pasien'],
+//             'promo_id' => $promo->id,
+//             'jadwal_id' => null, // Karena jadwal tidak diisi, ini bisa disesuaikan kemudian
+//             'keluhan' => 'Tidak ada keluhan', // Misalnya default keluhan
+//             'status' => 'disetujui',
+//             'keterangan' => $validated['keterangan'],
+//         ]);
+
+//         return redirect()->route('promo.show', $promo->id)
+//             ->with('success', 'Pasien berhasil didaftarkan untuk promo.');
+//     }
+
+
+//     public function daftarPasien(Request $request, $promoId)
+// {
+//     // Validasi input
+//     $validated = $request->validate([
+//         'pasien_id' => 'required|exists:users,id',
+//     ]);
+
+//     $pasienId = $validated['pasien_id'];
+
+//     // Hitung kuota terpakai untuk promo ini dengan menghitung janji temu yang sudah terdaftar
+//     $kuotaTerpakai = DB::table('janji_temu')
+//         ->where('jadwal_promo_id', $promoId)
+//         ->where('status', '!=', 'ditolak') // Mengabaikan janji temu yang ditolak
+//         ->count();
+
+//     // Ambil detail promo berdasarkan promoId
+//     $detailPromo = DB::table('detail_promo')
+//         ->where('promo_id', $promoId)
+//         ->orderBy('tanggal', 'asc')
+//         ->get();
+
+//     // Cek sisa kuota dan tentukan jadwal yang akan didaftarkan
+//     foreach ($detailPromo as $promo) {
+//         // Hitung kuota yang sudah terpakai untuk detail promo ini
+//         $totalTerdaftar = DB::table('janji_temu')
+//             ->where('jadwal_promo_id', $promo->id)
+//             ->count();
+
+//         // Hitung sisa kuota untuk promo ini
+//         $sisaKuota = $promo->kuota - $totalTerdaftar;
+
+//         // Jika ada sisa kuota, daftarkan pasien ke detail promo ini
+//         if ($sisaKuota > 0) {
+//             DB::table('janji_temu')->insert([
+//                 'id_pasien' => $pasienId,
+//                 'jadwal_promo_id' => $promo->id,
+//                 'keluhan' => $request->keluhan,
+//                 'status' => 'menunggu konfirmasi', // Atur status sesuai kebutuhan
+//                 'keterangan' => $request->keterangan,
+//             ]);
+
+//             return redirect()->route('promo.detail', ['promoId' => $promoId])
+//                              ->with('success', 'Pasien berhasil didaftarkan ke promo.');
+//         }
+//     }
+
+//     return redirect()->back()->with('error', 'Tidak ada kuota yang tersedia untuk promo ini.');
+// }
+
+
+public function register(Request $request)
+{
+    // Validasi input
+    $request->validate([
+        'promo_id' => 'required|exists:promo,id',
+        'id_pasien' => 'required|exists:users,id',
+    ]);
+
+    $promoId = $request->promo_id;
+
+    // 1. Hitung banyak janji temu dengan foreign key ke promo ini
+    $jumlahJanjiTemu = DB::table('janji_temu')
+        ->where('jadwal_promo_id', $promoId)
+        ->count();
+
+    // 2. Panggil fungsi MySQL untuk menghitung sisa kuota promo
+    $sisaKuota = DB::selectOne("SELECT sisa_kuota_promo(?) AS sisa_kuota", [$promoId])->sisa_kuota;
+
+    // Cek apakah sisa kuota masih tersedia
+    if ($sisaKuota <= 0) {
+        return redirect()->back()->with('error', 'Kuota promo telah penuh, pasien tidak dapat didaftarkan.');
     }
 
+    // 3. Cari detail promo yang masih memiliki slot tersisa (terpakai < kuota)
+    $detailPromo = DB::table('detail_promo')
+        ->where('promo_id', $promoId)
+        ->whereColumn('terpakai', '<', 'kuota')
+        ->orderBy('tanggal', 'asc')
+        ->first();
 
-    public function registerPatient(Request $request, $id)
-    {
-        // Validasi input
-        $validated = $request->validate([
-            'id_pasien' => 'required|exists:users,id',
-            'keterangan' => 'nullable|string',
-        ]);
-
-        // Ambil data promo berdasarkan ID
-        $promo = Promo::findOrFail($id);
-
-        // Buat janji temu baru
-        JanjiTemu::create([
-            'id_pasien' => $validated['id_pasien'],
-            'promo_id' => $promo->id,
-            'jadwal_id' => null, // Karena jadwal tidak diisi, ini bisa disesuaikan kemudian
-            'keluhan' => 'Tidak ada keluhan', // Misalnya default keluhan
-            'status' => 'disetujui',
-            'keterangan' => $validated['keterangan'],
-        ]);
-
-        return redirect()->route('promo.show', $promo->id)
-            ->with('success', 'Pasien berhasil didaftarkan untuk promo.');
+    // Jika tidak ada slot tersisa, kembalikan pesan error
+    if (!$detailPromo) {
+        return redirect()->back()->with('error', 'Semua slot promo telah penuh.');
     }
+
+    try {
+        // 4. Simpan janji temu dan tambahkan id detail promo di kolom jadwal_promo_id
+        DB::transaction(function () use ($request, $detailPromo) {
+            // Simpan janji temu
+            DB::table('janji_temu')->insert([
+                'id_pasien' => $request->id_pasien,
+                'jadwal_promo_id' => $detailPromo->id,
+                'status' => 'disetujui',
+                'keterangan' => null,
+            ]);
+
+            // Update jumlah "terpakai" pada detail_promo
+            DB::table('detail_promo')
+                ->where('id', $detailPromo->id)
+                ->increment('terpakai');
+        });
+
+        return redirect()->back()->with('success', 'Pasien berhasil didaftarkan ke promo.');
+    } catch (\Exception $e) {
+        return redirect()->back()->with('error', 'Terjadi kesalahan saat mendaftarkan pasien: ' . $e->getMessage());
+    }
+}
+
 }

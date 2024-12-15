@@ -18,7 +18,9 @@ return new class extends Migration
             ->onUpdate('cascade')
             ->onDelete('cascade');
             $table->integer('kuota'); // Kuota per tanggal
+            $table->integer('terpakai')->default(0); // jika sama, maka tidak bisa didaftar ke sini
             $table->date('tanggal'); // Tanggal spesifik untuk promo
+
         });
     }
 

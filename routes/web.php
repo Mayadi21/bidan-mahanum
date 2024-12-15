@@ -44,9 +44,7 @@ Route::middleware(['auth', 'notBanned'])->group(function () {
 
         Route::get('/promo', [PromoController::class, 'index'])->name('promo.index');
         Route::get('/promo/{id}', [PromoController::class, 'show'])->name('promo.show');
-        Route::get('/promo/{id}/register-patient', [PromoController::class, 'halamanDaftarPromo'])->name('promo.registerPatientForm');
-        Route::post('/promo/{id}/register-patient', [PromoController::class, 'registerPatient'])->name('promo.registerPatient');
-
+        Route::post('/promo/register', [PromoController::class, 'register'])->name('promo.register');
 
         Route::prefix('admin')->middleware(['admin'])->group(function () {
 
@@ -94,7 +92,6 @@ Route::middleware(['auth', 'notBanned'])->group(function () {
             Route::get('/janjitemu/sediakan-jadwal/{tanggal}', [AdminJanjiTemuController::class, 'getJadwalByTanggal'])->name('jadwal.janjitemu');
             Route::get('/janjitemu/create', [AdminJanjiTemuController::class, 'create'])->name('janjitemu.create');
             
-
             Route::get('/promo/create', [PromoController::class, 'create'])->name('promo.create');
             Route::post('/promo', [PromoController::class, 'store'])->name('promo.store');
 
