@@ -4,7 +4,7 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2">Daftar Transaksi</h1>
     <!-- Button untuk menambah transaksi -->
-    <a href="{{ route('transaksi.create') }}" class="btn btn-primary">Tambah Transaksi</a>
+    <!-- <a href="{{ route('transaksi.create') }}" class="btn btn-primary">Tambah Transaksi</a> -->
 </div>
 
 <!-- Bagian untuk menampilkan pesan -->

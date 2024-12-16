@@ -54,6 +54,7 @@ class AdminJanjiTemuController extends Controller
 
     public function store(Request $request)
     {
+
         $validated = $request->validate([
             'jadwal_id' => 'required|exists:jadwal_janji_temu,id',
             'id_pasien' => 'required|exists:users,id',
@@ -66,6 +67,8 @@ class AdminJanjiTemuController extends Controller
             return redirect()->route('janjitemu.create')->with('error', 'Kuota penuh, tidak dapat menambahkan janji temu.');
         }
         try {
+            DB::statement("SET @modifier_id = ?", [auth()->id()]);
+
             // Simpan janji temu
         JanjiTemu::create([
             'jadwal_id' => $validated['jadwal_id'],
@@ -98,6 +101,8 @@ class AdminJanjiTemuController extends Controller
      */
     public function update(Request $request, $id)
     {
+        DB::statement("SET @modifier_id = ?", [auth()->id()]);
+
         $validated = $request->validate([
             'status' => 'required|in:menunggu konfirmasi,disetujui,selesai,ditolak',
             'keterangan' => 'nullable|string|max:255',
