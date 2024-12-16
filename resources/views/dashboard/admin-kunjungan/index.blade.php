@@ -65,7 +65,7 @@
                         <select class="form-select" id="janji_id" name="janji_id">
                             <option value="" selected>-- Pilih Janji Temu --</option>
                             @foreach($janji_temu as $janji)
-                                <option value="{{ $janji->id }}">{{ $janji->pasien_nama }} ({{ $janji->waktu_janji }})</option>
+                                <option value="{{ $janji->id }}">{{ $janji->pasien_nama }} </option>
                             @endforeach
                         </select>
                     </div>

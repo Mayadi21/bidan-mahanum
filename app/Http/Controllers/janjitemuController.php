@@ -68,6 +68,38 @@ public function jadwalTersedia()
     ]);
 }
 
+public function batalkan($id)
+{
+    // Mulai transaksi untuk memastikan semua operasi berhasil atau gagal bersama
+    DB::transaction(function () use ($id) {
+        // Ambil janji temu yang ingin dibatalkan
+        $janjiTemu = JanjiTemu::findOrFail($id);
+
+        // Cek apakah janji temu memiliki nilai pada jadwal_promo_id
+        if ($janjiTemu->jadwal_promo_id) {
+            // Ambil detail promo terkait dengan jadwal_promo_id
+            $detailPromo = DB::table('detail_promo')
+                ->where('id', $janjiTemu->jadwal_promo_id)
+                ->first();
+
+            if ($detailPromo) {
+                // Kurangi 1 pada kolom terpakai pada detail_promo
+                DB::table('detail_promo')
+                    ->where('id', $detailPromo->id)
+                    ->decrement('terpakai');
+            }
+        }
+
+        // Hapus janji temu yang dibatalkan
+        $janjiTemu->delete();
+    });
+
+    return redirect()->route('user.janjitemu.index')->with('success', 'Janji temu berhasil dibatalkan dan kuota diperbarui.');
+}
+
+
+
+
 }
 
 

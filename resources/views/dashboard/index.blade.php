@@ -21,8 +21,16 @@
         <div class="card-header">Janji temu berikutnya</div>
         <div class="card-body">
             @if ($janjiTemu)
-            <p class="text-center-large"><strong>{{ $janjiTemu->waktu_mulai }}</strong></p>
-            @else
+            <p class="text-center-large">
+                <strong>
+                    {{ 
+                        \Carbon\Carbon::parse($janjiTemu->waktu_mulai)->format('H:i') === '00:00' 
+                        ? \Carbon\Carbon::parse($janjiTemu->waktu_mulai)->translatedFormat('l, d M Y') 
+                        : \Carbon\Carbon::parse($janjiTemu->waktu_mulai)->translatedFormat('l, d M Y H:i') 
+                    }}
+                </strong>
+            </p>
+                        @else
             <p class="text-center-large text-muted">Anda belum memiliki janji temu yang disetujui.</p>
             @endif
         </div>
@@ -34,7 +42,7 @@
     <div class="card-body">
         <div class="alert alert-info">
             @if($janjiTemu)
-            Janji Temu Anda dalam {{ $sisaWaktu }} lagi!
+            {{ $sisaWaktu }}
             @else
             Anda belum memiliki janji temu yang disetujui.
             @endif

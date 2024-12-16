@@ -32,18 +32,27 @@ class DashboardController extends Controller
         if ($janjiTemu) {
             $waktuJanji = Carbon::parse($janjiTemu->waktu_mulai);
             $sekarang = Carbon::now();
-    
-            // Menghitung sisa waktu secara detail
-            $diffInWeeks = $sekarang->diffInWeeks($waktuJanji);
-            $diffInDays = $sekarang->diffInDays($waktuJanji) % 7; // Sisa hari setelah minggu
-            $diffInHours = $sekarang->diffInHours($waktuJanji) % 24; // Sisa jam setelah hari
-    
-            if ($waktuJanji->greaterThan($sekarang)) {
-                $sisaWaktu = ($diffInWeeks ? "$diffInWeeks minggu, " : '') .
-                             ($diffInDays ? "$diffInDays hari, " : '') .
-                             ($diffInHours ? "$diffInHours jam" : '');
+        
+            // Periksa apakah $waktuJanji adalah hari ini dengan jam 00:00
+            if ($waktuJanji->isToday() && $waktuJanji->isStartOfDay()) {
+                $sisaWaktu = 'Janji temu Anda tepat pada hari ini!';
+            } else {
+                // Menghitung sisa waktu secara detail
+                $diffInWeeks = $sekarang->diffInWeeks($waktuJanji);
+                $diffInDays = $sekarang->diffInDays($waktuJanji) % 7; // Sisa hari setelah minggu
+                $diffInHours = $sekarang->diffInHours($waktuJanji) % 24; // Sisa jam setelah hari
+        
+                if ($waktuJanji->greaterThan($sekarang)) {
+                    $sisaWaktu = "Janji temu dalam " . 
+                    ($diffInWeeks ? "$diffInWeeks minggu, " : '') .
+                    ($diffInDays ? "$diffInDays hari, " : '') .
+                    ($diffInHours ? "$diffInHours jam " : '') . 
+                    'lagi!';
+
+                }
             }
         }
+        
     
         return view('dashboard.index', [
             'page' => auth()->user()->nama,
@@ -53,6 +62,7 @@ class DashboardController extends Controller
             'sisaWaktu' => $sisaWaktu, // Kirimkan sisa waktu ke view
         ]);
     }
+
     public function riwayatKunjungan($idPasien)
     {
         $riwayatKunjungan = DB::table('view_kunjungan_pasien')

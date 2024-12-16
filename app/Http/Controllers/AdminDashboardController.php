@@ -27,8 +27,11 @@ class AdminDashboardController extends Controller
 
 
         // Ambil data janji temu hari ini dari view_janji_temu
-        $janjiTemuHariIni = DB::table('view_jadwal_janji_temu')->whereDate('status', 'disetujui')->where('waktu_mulai', today())->get(); // Mengambil semua data janji temu hari ini
-
+        $janjiTemuHariIni = DB::table('view_jadwal_janji_temu')
+        ->where('status', 'disetujui') // Filter status
+        ->whereDate('waktu_mulai', today()) // Filter berdasarkan tanggal waktu_mulai
+        ->get();
+    
         return view('dashboard.bidan-index', [
             'page' => 'Admin Dashboard',
             'active' => 'admin-dashboard',

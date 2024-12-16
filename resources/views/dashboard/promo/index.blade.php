@@ -48,7 +48,6 @@
                             </button>
                             @endcanany
                         </div>
-                        
                     </div>
                 </div>
             @endforeach
@@ -65,7 +64,8 @@
                 </div>
                 <form action="{{ route('promo.register') }}" method="POST">
                     @csrf
-                    <input name="promo_id"  id="promo_id" value="{{ $promo->promo_id }}">
+                    <!-- Input promo_id dibuat hidden dan dinamis -->
+                    <input name="promo_id" id="promo_id" value="">
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="id_pasien" class="form-label">Pilih Pasien</label>
@@ -85,16 +85,21 @@
             </div>
         </div>
     </div>
+
+    <script>
+        const registerModal = document.getElementById('registerModal');
+        registerModal.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget; // Tombol yang memicu modal
+            const promoId = button.getAttribute('data-promo-id'); // Ambil promo_id dari tombol
+            const promoIdInput = registerModal.querySelector('#promo_id'); // Cari input promo_id di dalam modal
+    
+            if (promoIdInput) {
+                promoIdInput.value = promoId; // Isi input dengan nilai promo_id
+                console.log('Promo ID set successfully:', promoIdInput.value); // Log setelah mengisi
+            } else {
+                console.error('Promo ID input field not found.');
+            }
+        });
+    </script>
 @endsection
 
-@section('scripts')
-<script>
-    const registerModal = document.getElementById('registerModal');
-    registerModal.addEventListener('show.bs.modal', function (event) {
-        const button = event.relatedTarget;
-        const promoId = button.getAttribute('data-promo-id');
-        const promoIdInput = registerModal.querySelector('#promo_id');
-        promoIdInput.value = promoId;
-    });
-</script>
-@endsection

@@ -101,7 +101,7 @@ Route::middleware(['auth', 'notBanned'])->group(function () {
 
             // Daftar transaksi
             Route::get('/transaksi', [AdminTransaksiController::class, 'index'])->name('transaksi.index');
-            Route::post('/transaksi/store', [AdminTransaksiController::class, 'storeTransaction'])->name('transaksi.store');
+            Route::post('/transaksi/store', [AdminTransaksiController::class, 'store'])->name('transaksi.store');
             Route::get('/transaksi/create', [AdminTransaksiController::class, 'create'])->name('transaksi.create');
 
             Route::get('/kunjungan', [AdminTransaksiController::class, 'kunjungan'])->name('kunjungan.index');
@@ -135,6 +135,7 @@ Route::middleware(['auth', 'notBanned'])->group(function () {
             Route::post('/janji-temu', [janjitemuController::class, 'store'])->name('janji.temu.store');
 
             Route::get('/jadwal/janji-temu', [janjitemuController::class, 'jadwalTersedia'])->name('jadwal.janji.temu.tersedia');
+            Route::delete('/janji-temu/{id}/batalkan', [janjitemuController::class, 'batalkan'])->name('user.janjitemu.batalkan');
         });
     });
 });

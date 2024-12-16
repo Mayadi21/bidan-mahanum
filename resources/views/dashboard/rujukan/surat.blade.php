@@ -58,7 +58,7 @@
         </table>
         <p>Mohon bantuan tindak lanjutnya. Atas perhatian dan kerjasamanya, kami ucapkan terima kasih.</p>
         <div class="signature">
-            <p>Medan, {{ $rujukan ->tanggal_rujukan}}</p>
+            <p>Medan, {{ $rujukan->tanggal_rujukan }}</p>
             <p></p>
             <p></p>
             <p></p>

@@ -188,7 +188,7 @@
                     
                     <!-- Opsi Memiliki Akun -->
                     <div class="mb-3">
-                        <label class="form-label">Apakah pasien memiliki akun?</label>
+                        <label class="form-label">Apakah pasien akan memiliki akun?</label>
                         <select class="form-select" id="hasAccount" name="has_account" required>
                             <option value="no">Tidak</option>
                             <option value="yes">Ya</option>
