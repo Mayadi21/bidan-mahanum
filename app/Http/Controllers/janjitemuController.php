@@ -24,6 +24,8 @@ class JanjiTemuController extends Controller
         $idPasien = Auth::id();
 
         try {
+            DB::statement("SET @modifier_id = ?", [auth()->id()]);
+
         // Simpan data ke tabel janji_temu
         JanjiTemu::create([
             'id_pasien' => $idPasien,

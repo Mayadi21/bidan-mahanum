@@ -18,8 +18,8 @@ class JadwalSeeder extends Seeder
     public function run(): void
     {
         $schedules = [
-            ['waktu_mulai' => Carbon::create(2024, 12, 16, 9, 0, 0), 'waktu_selesai' => Carbon::create(2024, 12, 16, 12, 0, 0), 'kuota' => 9],
-            ['waktu_mulai' => Carbon::create(2024, 12, 16, 14, 0, 0), 'waktu_selesai' => Carbon::create(2024, 12, 16, 16, 0, 0), 'kuota' => 5],
+        //     ['waktu_mulai' => Carbon::create(2024, 12, 16, 9, 0, 0), 'waktu_selesai' => Carbon::create(2024, 12, 16, 12, 0, 0), 'kuota' => 9],
+        //     ['waktu_mulai' => Carbon::create(2024, 12, 16, 14, 0, 0), 'waktu_selesai' => Carbon::create(2024, 12, 16, 16, 0, 0), 'kuota' => 5],
             ['waktu_mulai' => Carbon::create(2024, 12, 17, 9, 0, 0), 'waktu_selesai' => Carbon::create(2024, 12, 17, 12, 0, 0), 'kuota' => 9],
             ['waktu_mulai' => Carbon::create(2024, 12, 17, 14, 0, 0), 'waktu_selesai' => Carbon::create(2024, 12, 17, 16, 0, 0), 'kuota' => 5],
             ['waktu_mulai' => Carbon::create(2024, 12, 18, 9, 0, 0), 'waktu_selesai' => Carbon::create(2024, 12, 18, 12, 0, 0), 'kuota' => 9],
