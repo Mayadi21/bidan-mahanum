@@ -39,6 +39,8 @@ class AdminPenggajianController extends Controller
 
   public function updateGajiPokok(Request $request, $id)
   {
+    DB::statement("SET @modifier_id = ?", [auth()->id()]);
+
     $request->validate([
       'gaji_pokok' => 'required|integer|min:0',
     ]);
@@ -53,6 +55,8 @@ class AdminPenggajianController extends Controller
 
   public function updateStatus($id)
   {
+    DB::statement("SET @modifier_id = ?", [auth()->id()]);
+
     // Find the record by ID
     $penggajian = Penggajian::findOrFail($id);
 

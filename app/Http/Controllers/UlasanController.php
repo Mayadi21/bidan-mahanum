@@ -35,6 +35,7 @@ class UlasanController extends Controller
         $request->validate([
             'ulasan' => 'required|string|max:255',
         ]);
+        DB::statement("SET @modifier_id = ?", [auth()->id()]);
 
         // Ambil layanan yang dimaksud
         $layanan = Layanan::findOrFail($layananId);
@@ -54,6 +55,8 @@ class UlasanController extends Controller
 // Metode untuk memblokir ulasan (mengubah status menjadi tidak aktif)
 public function block(Ulasan $ulasan)
 {
+    DB::statement("SET @modifier_id = ?", [auth()->id()]);
+
     $ulasan->update(['status' => 'tidak aktif']);
 
     return redirect()->route('admin.ulasan.index')->with('success', 'Ulasan berhasil diblokir.');
@@ -62,6 +65,8 @@ public function block(Ulasan $ulasan)
 // Metode untuk mengaktifkan ulasan (mengubah status menjadi aktif)
 public function activate(Ulasan $ulasan)
 {
+    DB::statement("SET @modifier_id = ?", [auth()->id()]);
+
     $ulasan->update(['status' => 'aktif']);
 
     return redirect()->route('admin.ulasan.index')->with('success', 'Ulasan berhasil diaktifkan.');
@@ -70,9 +75,11 @@ public function activate(Ulasan $ulasan)
 
 public function update(Request $request, $id)
 {
+    
     $request->validate([
         'ulasan' => 'required|string',
     ]);
+    DB::statement("SET @modifier_id = ?", [auth()->id()]);
 
     $ulasan = Ulasan::findOrFail($id);
 

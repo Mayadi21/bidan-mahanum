@@ -30,6 +30,8 @@ class RujukanController extends Controller
 
     public function store(Request $request)
     {
+        DB::statement("SET @modifier_id = ?", [auth()->id()]);
+
         $validated = $request->validate([
             'id_pasien' => 'required|exists:users,id',
             'tanggal_rujukan' => 'required|date',
@@ -49,6 +51,8 @@ class RujukanController extends Controller
 
     public function update(Request $request, $id)
     {
+        DB::statement("SET @modifier_id = ?", [auth()->id()]);
+
         $validated = $request->validate([
             'id_pasien' => 'required|exists:users,id',
             'tanggal_rujukan' => 'required|date',

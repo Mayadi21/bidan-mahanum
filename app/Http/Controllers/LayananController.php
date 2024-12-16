@@ -78,7 +78,8 @@ class LayananController extends Controller
     
     // Default value untuk path gambar
     $filePath = null;
-    
+    DB::statement("SET @modifier_id = ?", [auth()->id()]);
+
     // Proses file gambar jika diunggah
     if ($request->hasFile('gambar')) {
         $file = $request->file('gambar');
@@ -95,7 +96,6 @@ class LayananController extends Controller
         'deskripsi' => $request->deskripsi,
         'status' => 'aktif', // Status default
     ]);
-    DB::statement("SET @modifier_id = ?", [auth()->id()]);
     
     // Redirect atau return response sesuai kebutuhan
     return redirect()->route('layanan.index')->with('success', 'Layanan berhasil ditambahkan!');

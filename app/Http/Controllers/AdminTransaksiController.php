@@ -152,6 +152,7 @@ class AdminTransaksiController extends Controller
 
 public function storeTransaction(Request $request)
 {
+
     // Validasi input
     $request->validate([
         'janji_temu' => 'required|string',
@@ -179,6 +180,8 @@ public function storeTransaction(Request $request)
     // Buat transaksi baru
     DB::beginTransaction();
     try {
+        DB::statement("SET @modifier_id = ?", [auth()->id()]);
+
         $transactionId = DB::table('transaksi')->insertGetId([
             'id_pasien' => $pasienId,
             'janji_id' => $janjiId,
