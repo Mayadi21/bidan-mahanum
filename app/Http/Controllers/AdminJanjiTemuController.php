@@ -99,22 +99,33 @@ class AdminJanjiTemuController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'status' => 'required|in:menunggu konfirmasi,disetujui,selesai,ditolak',
+            'status' => 'required|in:disetujui,ditolak',
             'keterangan' => 'nullable|string|max:255',
         ]);
-
+    
+        // Cari janji temu yang ingin diperbarui
         $janjiTemu = JanjiTemu::findOrFail($id);
-
+    
+        // Periksa apakah status diubah menjadi 'ditolak' dan apakah janji temu ini memiliki jadwal_promo_id
+        if ($validated['status'] === 'ditolak' && $janjiTemu->jadwal_promo_id) {
+            // Kurangi kolom terpakai pada detail promo
+            DB::table('detail_promo')
+                ->where('id', $janjiTemu->jadwal_promo_id)
+                ->decrement('terpakai');
+        }
+    
+        // Perbarui status dan keterangan janji temu
         $janjiTemu->update([
             'status' => $validated['status'],
             'keterangan' => $validated['keterangan'] ?? $janjiTemu->keterangan,
         ]);
-
+    
         return redirect()->route('janjitemu.index')->with(
             'success',
             'Status janji temu berhasil diperbarui.'
         );
     }
+    
 
 
     public function create()

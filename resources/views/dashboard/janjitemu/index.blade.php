@@ -5,13 +5,13 @@
 <div class="container">
 <!-- Pesan Notifikasi -->
 @if(session('success'))
-    <div class="alert alert-success col-lg-8">
+    <div class="alert alert-success col-lg-12">
         {{ session('success') }}
     </div>
 @endif
 
 @if(session('error'))
-    <div class="alert alert-danger col-lg-8">
+    <div class="alert alert-danger col-lg-12">
         {{ session('error') }}
     </div>
 @endif
@@ -27,7 +27,8 @@
             <tr>
                 <th>#</th>
                 <th>Tanggal</th>
-                <th>Waktu</th>
+                <th>Waktu Mulai</th>
+                <th>Waktu Selesai</th>
                 <th>Keluhan</th>
                 <th>Status</th>
                 <th>Keterangan</th>
@@ -37,55 +38,42 @@
             @foreach ($janjiTemu as $index => $janji)
             <tr>
                 <td>{{ $index + 1 }}</td>
+                <?php
+                $mulai = \Carbon\Carbon::parse($janji->waktu_mulai)->format('H:i');
+                $selesai = \Carbon\Carbon::parse($janji->waktu_selesai)->format('H:i');
+                ?>
                 <td>{{ \Carbon\Carbon::parse($janji->waktu_mulai)->format('d M Y') }}</td>
-                <td>{{ \Carbon\Carbon::parse($janji->waktu_mulai)->format('H:i') }}</td>
+                <td>{{ $mulai == '00:00' ? '-' : $mulai}}</td>
+                <td>{{ $selesai == '00:00' ? '-' : $selesai}}</td>
                 <td>{{ $janji->keluhan }}</td>
                 <td>
                     @if($janji->status === 'disetujui')
-                    <span class="badge bg-success">Disetujui</span>
+                        <span class="badge bg-success">Disetujui</span>
                     @elseif($janji->status === 'ditolak')
-                    <span class="badge bg-danger">Ditolak</span>
+                        <span class="badge bg-danger">Ditolak</span>
                     @elseif($janji->status === 'menunggu konfirmasi')
-                            <!-- Tombol Edit -->
-                            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editJanjiTemuModal-{{ $janji->id }}">
+                        <!-- Dropdown untuk membatalkan janji temu -->
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton-{{ $janji->id }}" data-bs-toggle="dropdown" aria-expanded="false">
                                 Menunggu
                             </button>
-
-                            <!-- Modal Edit -->
-                            <div class="modal fade" id="editJanjiTemuModal-{{ $janji->id }}" tabindex="-1" aria-labelledby="editJanjiTemuModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="editJanjiTemuModalLabel">Edit Janji Temu</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <form action="{{ route('user.janjitemu.update', $janji->id) }}" method="POST">
-                                            @csrf
-                                            @method('PUT')
-                                            <div class="modal-body">
-                                                <div class="mb-3">
-                                                    <label for="keluhan-{{ $janji->id }}" class="form-label">Keluhan</label>
-                                                    <textarea class="form-control" id="keluhan-{{ $janji->id }}" name="keluhan" rows="3" required>{{ $janji->keluhan }}</textarea>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="waktu_mulai-{{ $janji->id }}" class="form-label">Waktu Janji</label>
-                                                    <input type="datetime-local" class="form-control" id="waktu_mulai-{{ $janji->id }}" name="waktu_mulai" value="{{ \Carbon\Carbon::parse($janji->waktu_mulai)->format('Y-m-d\TH:i') }}" required>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                                <button type="submit" class="btn btn-primary">Simpan</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton-{{ $janji->id }}">
+                                <li>
+                                    <form action="{{ route('user.janjitemu.batalkan', $janji->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin membatalkan janji temu ini?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="dropdown-item">Batalkan</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
                     @elseif($janji->status === 'selesai')
-                    <span class="badge bg-secondary">Selesai</span>
+                        <span class="badge bg-secondary">Selesai</span>
                     @else
-                    <span class="badge bg-light">Status Tidak Dikenal</span>
+                        <span class="badge bg-light">Status Tidak Dikenal</span>
                     @endif
                 </td>
+                
                 <td>{{ $janji->keterangan }}</td>
             </tr>
             @endforeach

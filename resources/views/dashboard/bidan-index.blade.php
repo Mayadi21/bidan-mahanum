@@ -55,6 +55,7 @@
                         <th>Keluhan</th>
                         <th>Waktu Janji</th>
                         <th>Status</th>
+                        <th>Keterangan</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -65,6 +66,7 @@
                             <td>{{ $item->keluhan }}</td> <!-- Keluhan -->
                             <td>{{ \Carbon\Carbon::parse($item->waktu_mulai)->format('d-m-Y H:i') }}</td> <!-- Waktu Janji -->
                             <td>{{ $item->status }}</td> <!-- Status -->
+                            <td>{{ $item->keterangan }}</td> <!-- Status -->
                         </tr>
                     @endforeach
                 </tbody>
