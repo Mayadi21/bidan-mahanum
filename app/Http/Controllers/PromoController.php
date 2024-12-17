@@ -37,6 +37,47 @@ class PromoController extends Controller
         ]);
     }
 
+    // public function store(Request $request)
+    // {
+    //     // Validasi input
+    //     $validated = $request->validate([
+    //         'judul_promo' => 'required|string|max:255',
+    //         'deskripsi' => 'required|string',
+    //         'layanan_id' => 'required|exists:layanan,id',
+    //         'diskon' => 'required|numeric|min:0',
+    //         'kuota' => 'required|numeric|min:1',
+    //         'tanggal_mulai' => 'required|date',
+    //         'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
+    //     ]);
+    
+    //     // Mnyimpan data promo
+    //     $promo = new Promo();
+    //     $promo->judul_promo = $validated['judul_promo'];
+    //     $promo->deskripsi = $validated['deskripsi'];
+    //     $promo->layanan_id = $validated['layanan_id'];
+    //     $promo->diskon = $validated['diskon'];
+    //     $promo->save();
+    
+    //     // Hitung jumlah hari antara tanggal mulai dan tanggal selesai
+    //     $startDate = \Carbon\Carbon::parse($validated['tanggal_mulai']);
+    //     $endDate = \Carbon\Carbon::parse($validated['tanggal_selesai']);
+    //     $days = $startDate->diffInDays($endDate) + 1; // Jumlah hari promo
+    //     $quotaPerDay = $validated['kuota'] / $days;
+    
+    //     // Menyimpan detail promo untuk setiap hari
+    //     for ($i = 0; $i < $days; $i++) {
+    //         $detailPromo = new DetailPromo();
+    //         $detailPromo->promo_id = $promo->id;
+    //         $detailPromo->tanggal = $startDate->copy()->addDays($i)->format('Y-m-d'); // Salin startDate dan tambahkan hari
+    //         $detailPromo->kuota = ($i == $days - 1) ? ceil($quotaPerDay) : floor($quotaPerDay); // Membagi kuota dengan rata
+    //         $detailPromo->save();
+    //     }
+        
+    
+    //     // Redirect atau beri respons sukses
+    //     return redirect()->route('promo.index')->with('success', 'Promo berhasil ditambahkan!');
+    // }
+
     public function store(Request $request)
     {
         // Validasi input
@@ -50,32 +91,24 @@ class PromoController extends Controller
             'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
         ]);
     
-        // Menyimpan data promo
-        $promo = new Promo();
-        $promo->judul_promo = $validated['judul_promo'];
-        $promo->deskripsi = $validated['deskripsi'];
-        $promo->layanan_id = $validated['layanan_id'];
-        $promo->diskon = $validated['diskon'];
-        $promo->save();
+        try {
+            // Panggil procedure dengan DB::statement
+            DB::statement('CALL procedure_tambah_promo(?, ?, ?, ?, ?, ?, ?)', [
+                $validated['judul_promo'],
+                $validated['deskripsi'],
+                $validated['layanan_id'],
+                $validated['diskon'],
+                $validated['kuota'],
+                $validated['tanggal_mulai'],
+                $validated['tanggal_selesai']
+            ]);
     
-        // Hitung jumlah hari antara tanggal mulai dan tanggal selesai
-        $startDate = \Carbon\Carbon::parse($validated['tanggal_mulai']);
-        $endDate = \Carbon\Carbon::parse($validated['tanggal_selesai']);
-        $days = $startDate->diffInDays($endDate) + 1; // Jumlah hari promo
-        $quotaPerDay = $validated['kuota'] / $days;
-    
-        // Menyimpan detail promo untuk setiap hari
-        for ($i = 0; $i < $days; $i++) {
-            $detailPromo = new DetailPromo();
-            $detailPromo->promo_id = $promo->id;
-            $detailPromo->tanggal = $startDate->copy()->addDays($i)->format('Y-m-d'); // Salin startDate dan tambahkan hari
-            $detailPromo->kuota = ($i == $days - 1) ? ceil($quotaPerDay) : floor($quotaPerDay); // Membagi kuota dengan rata
-            $detailPromo->save();
+            // Redirect atau beri respons sukses
+            return redirect()->route('promo.index')->with('success', 'Promo berhasil ditambahkan!');
+        } catch (\Exception $e) {
+            // Jika ada error, tangani dengan memberikan pesan error
+            return redirect()->back()->withErrors(['error' => 'Terjadi kesalahan saat menambahkan promo: ' . $e->getMessage()]);
         }
-        
-    
-        // Redirect atau beri respons sukses
-        return redirect()->route('promo.index')->with('success', 'Promo berhasil ditambahkan!');
     }
     
     // Metode untuk menampilkan detail promo

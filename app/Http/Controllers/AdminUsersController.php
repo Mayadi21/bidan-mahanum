@@ -64,6 +64,7 @@ class AdminUsersController extends Controller
             'alamat' => 'nullable|string',
             'tanggal_lahir' => 'required|date',
             'pekerjaan' => 'nullable|string',
+            'role' => 'required|string',
             'no_hp' => 'required|string|max:15|unique:users,no_hp',
             'has_account' => 'required|in:yes,no',
             'email' => 'nullable|email|unique:users,email|required_if:has_account,yes',
@@ -81,6 +82,7 @@ class AdminUsersController extends Controller
                 'pekerjaan' => $request->pekerjaan,
                 'no_hp' => $request->no_hp,
                 'status' => 'aktif', // Status otomatis aktif
+                'role' => $request->role
             ]);
     
             // Tambahkan data akun jika pasien memiliki akun
@@ -121,7 +123,6 @@ class AdminUsersController extends Controller
             'tanggal_lahir' => 'required|date',
             'pekerjaan' => 'nullable|string|max:255',
             'no_hp' => 'required|string|max:15',
-            'role' => 'required|string',
         ]);
     
         $user->update($validatedData);

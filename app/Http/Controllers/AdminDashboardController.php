@@ -30,6 +30,7 @@ class AdminDashboardController extends Controller
         $janjiTemuHariIni = DB::table('view_jadwal_janji_temu')
         ->where('status', 'disetujui') // Filter status
         ->whereDate('waktu_mulai', today()) // Filter berdasarkan tanggal waktu_mulai
+        ->orderBy('waktu_mulai', 'asc')
         ->get();
     
         return view('dashboard.bidan-index', [

@@ -54,7 +54,6 @@
                         <th>Nama Pasien</th>
                         <th>Keluhan</th>
                         <th>Waktu Janji</th>
-                        <th>Status</th>
                         <th>Keterangan</th>
                     </tr>
                 </thead>
@@ -64,8 +63,8 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $item->pasien_nama }}</td> <!-- Nama Pasien -->
                             <td>{{ $item->keluhan }}</td> <!-- Keluhan -->
-                            <td>{{ \Carbon\Carbon::parse($item->waktu_mulai)->format('d-m-Y H:i') }}</td> <!-- Waktu Janji -->
-                            <td>{{ $item->status }}</td> <!-- Status -->
+                            <td>{{ \Carbon\Carbon::parse($item->waktu_mulai)->format('d-m-Y H:i') }} s/d 
+                            {{ \Carbon\Carbon::parse($item->waktu_selesai)->format('H:i') }}</td> <!-- Waktu Janji -->
                             <td>{{ $item->keterangan }}</td> <!-- Status -->
                         </tr>
                     @endforeach
