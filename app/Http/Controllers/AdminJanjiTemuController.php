@@ -183,6 +183,8 @@ public function storeJadwal(Request $request)
     ]);
 
     try {
+        DB::statement("SET @modifier_id = ?", [auth()->id()]);
+
         // Loop setiap waktu mulai dan waktu selesai
         foreach ($request->waktu_mulai as $index => $waktuMulai) {
             $waktuSelesai = $request->waktu_selesai[$index];
@@ -226,7 +228,7 @@ public function getJadwalByTanggal(Request $request)
     $tanggal = $request->query('tanggal');
 
     // Ambil data jadwal berdasarkan tanggal
-    $jadwal = Jadwal::whereDate('tanggal', $tanggal)->get();
+    $jadwal = JadwalJanjiTemu::whereDate('tanggal', $tanggal)->get();
 
     // Mengembalikan data jadwal dalam format JSON
     return response()->json($jadwal);

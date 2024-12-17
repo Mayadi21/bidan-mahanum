@@ -18,7 +18,6 @@
                     <th>Action</th>
                     <th>Old Value</th>
                     <th>New Value</th>
-
                 </tr>
             </thead>
             <tbody>
@@ -30,28 +29,8 @@
                     <td class="small">{{ $log->log_target ?? 'N/A' }}</td>
                     <td class="small">{{ $log->log_time ?? 'N/A'}}</td>
                     <td class="small">{{ $log->log_action ?? 'N/A' }}</td>
-
-                    <td class="small">
-                    {{-- <pre>
-        @if(isset($log->old_value) && is_string($log->old_value) && is_array(json_decode($log->old_value, true)))
-            {{ json_encode(json_decode($log->old_value), JSON_PRETTY_PRINT) }}
-        @else
-            N/A
-        @endif
-    </pre> --}}
-    {{ $log->old_value ?? 'N/A' }}
-                    </td>
-                    <td class="small">
-    {{-- <pre>
-        @if(isset($log->new_value) && is_string($log->new_value) && is_array(json_decode($log->new_value, true)))
-            {{ json_encode(json_decode($log->new_value), JSON_PRETTY_PRINT) }}
-        @else
-            N/A
-        @endif
-    </pre> --}}
-    {{ $log->new_value ?? 'N/A' }}
-
-                    </td>
+                    <td class="small">{{ $log->old_value ?? 'N/A' }}</td>
+                    <td class="small">{{ $log->new_value ?? 'N/A' }}</td>
                 </tr>
                 @empty
                 <tr>
@@ -60,6 +39,11 @@
                 @endforelse
             </tbody>
         </table>
+    </div>
+
+    <!-- Tampilkan link pagination -->
+    <div class="d-flex justify-content-center">
+        {{ $logs->links() }}
     </div>
 </div>
 @endsection
