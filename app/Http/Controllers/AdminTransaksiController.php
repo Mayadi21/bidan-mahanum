@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
-
 use App\Models\Transaksi;
 use App\Models\User;
 use Illuminate\Database\QueryException;
@@ -96,6 +95,18 @@ class AdminTransaksiController extends Controller
       ]);
   }
 
+  public function show($id)
+{
+    $transaksi = DB::table('view_transaksi')->where('transaksi_id', $id)->first();
+
+    // Kirim data ke view
+    return view('dashboard.transaksi.show', [
+        'page' => 'Halaman Transaksi',
+        'active' => 'admin-kunjungan',
+        'transaksi' => $transaksi
+    ]);
+}
+
 
   public function store(Request $request)
   {
@@ -104,7 +115,6 @@ class AdminTransaksiController extends Controller
           'janji_temu' => 'required|string',
           'janji_id' => 'nullable|exists:view_jadwal_janji_temu,id', // Validasi menggunakan view
           'pasien_id' => 'nullable|exists:users,id',
-          'bidan_id' => 'required|exists:users,id',
           'layanan' => 'required|array|min:1',
           'layanan.*' => 'exists:layanan,id',
           'keterangan' => 'nullable|string',
@@ -135,37 +145,40 @@ class AdminTransaksiController extends Controller
           $transactionId = DB::table('transaksi')->insertGetId([
               'id_pasien' => $pasienId,
               'janji_id' => $janjiId,
-              'bidan' => $request->bidan_id,
+              'bidan' => Auth::user()->id,
               'keterangan' => $request->keterangan,
               'tanggal' => now(),
           ]);
   
           // Tambahkan layanan yang dipilih
-          foreach ($request->layanan as $layananId) {
-              $layanan = DB::table('layanan')->find($layananId);
-              $potongan = 0; // Default potongan adalah 0
-  
-              if ($layanan) {
-                  // Cek apakah layanan memiliki promo
-                  if ($janjiId && $janjiTemu->jadwal_promo_id) {
-                      $promo = DB::table('promo')
-                          ->join('detail_promo', 'promo.id', '=', 'detail_promo.promo_id')
-                          ->where('detail_promo.id', $janjiTemu->jadwal_promo_id)
-                          ->where('promo.layanan_id', $layananId)
-                          ->first();
-  
-                      if ($promo) {
-                          $potongan = $promo->diskon; 
-                      }
-                  }
-  
-                  DB::table('detail_transaksi')->insert([
-                      'transaksi_id' => $transactionId,
-                      'layanan_id' => $layananId,
-                      'harga' => $layanan->harga, // Harga layanan
-                      'potongan' => $potongan, // Diskon yang diterapkan
-                  ]);
-              }
+// Tambahkan layanan yang dipilih
+foreach ($request->layanan as $layananId) {
+    $layanan = DB::table('layanan')->find($layananId);
+    $potongan = 0; // Default potongan adalah 0
+    
+    if ($layanan) {
+        // Cek apakah layanan memiliki promo
+        if ($janjiId && $janjiTemu->jadwal_promo_id) {
+            $promo = DB::table('promo')
+                ->join('detail_promo', 'promo.id', '=', 'detail_promo.promo_id')
+                ->where('detail_promo.id', $janjiTemu->jadwal_promo_id)
+                ->where('promo.layanan_id', $layananId)
+                ->first();
+
+            if ($promo) {
+                $potongan = $promo->diskon; 
+            }
+        }
+
+        DB::table('detail_transaksi')->insert([
+            'transaksi_id' => $transactionId,
+            'layanan_id' => $layananId,
+            'harga' => $layanan->harga, // Harga layanan
+            'potongan' => $potongan, // Diskon yang diterapkan
+        ]);
+    
+}
+
           }
   
           // Tandai janji temu sebagai selesai jika berasal dari janji temu

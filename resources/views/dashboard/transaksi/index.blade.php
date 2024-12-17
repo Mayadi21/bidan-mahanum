@@ -42,10 +42,9 @@
                     <td>{{ $t->nama_bidan }}</td>
                     <td>{{ $t->total_harga }}</td>
                     <td>
-                        <!-- Tombol untuk membuka modal -->
-                        <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#transaksi-modal-{{ $t->transaksi_id }}">
-                            Lihat
-                        </button>
+                            <a href="{{ route('transaksi.show', $t->transaksi_id) }}" class="btn btn-sm btn-outline-info">
+                                Lihat
+                            </a>
                     </td>
                 </tr>
                 <!-- Modal untuk detail transaksi -->

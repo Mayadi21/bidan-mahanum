@@ -14,7 +14,7 @@
 
         <!-- Tombol Tambah Pengguna -->
         <button type="button" class="btn btn-outline-primary mt-3 mt-lg-0" data-bs-toggle="modal" data-bs-target="#addUserModal">
-            Tambah Pengguna
+            Tambah Pasien
         </button>
     </div>
     @canany(['admin', 'pegawai'])
@@ -23,7 +23,7 @@
                 <button type="submit" name="status" value="aktif" class="btn btn-outline-primary">Pengguna Aktif</button>
                 <button type="submit" name="status" value="tidak aktif" class="btn btn-outline-danger">Pengguna Tidak Aktif</button>
                 <button type="submit" name="status" value="not null" class="btn btn-outline-warning">Pengguna Dengan Akun</button>
-                <button type="submit" name="status" value="null" class="btn btn-outline-secondary">Pengguna Tanpa Akun</button>
+                <button type="submit" name="status" value="null" class="btn btn-outline-secondary">Pasien Tanpa Akun</button>
                 @can('admin')
                 <button type="submit" name="status" value="admin" class="btn btn-outline-success">Admin</button>
                 <button type="submit" name="status" value="pegawai" class="btn btn-outline-success">Pegawai</button>
@@ -131,15 +131,6 @@
                                         <label for="no_hp" class="form-label">Nomor HP</label>
                                         <input type="text" class="form-control" id="no_hp" name="no_hp" value="{{ $user->no_hp }}" required>
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="role" class="form-label">Role</label>
-                                        <select class="form-select" id="role" name="role">
-                                            <option value="user" @if($user->role == 'user') selected @endif>User</option>
-                                            @can('admin')
-                                            <option value="pegawai" @if($user->role == 'pegawai') selected @endif>Pegawai</option>
-                                            @endcan
-                                        </select>
-                                    </div>
                                     <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
                                 </form>
                             </div>
@@ -158,7 +149,7 @@
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-3" id="addUserModalLabel">Tambah Pengguna Baru</h1>
+                <h1 class="modal-title fs-3" id="addUserModalLabel">Tambah Anggota Baru</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -212,6 +203,17 @@
                         <label for="password_confirmation" class="form-label">Konfirmasi Password</label>
                         <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
                     </div>
+
+                    <div class="mb-3">
+                        <label for="role" class="form-label">Role</label>
+                        <select class="form-select" id="role" name="role">
+                            <option value="user" selected>User</option>
+                            @can('admin')
+                            <option value="pegawai">Pegawai</option>
+                            @endcan
+                        </select>
+                    </div>
+                   
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

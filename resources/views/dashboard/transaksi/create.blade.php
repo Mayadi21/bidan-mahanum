@@ -48,17 +48,6 @@
             </select>
         </div>
 
-        <!-- Pilih Bidan -->
-        <div class="mb-3">
-            <label for="bidan_id" class="form-label">Bidan</label>
-            <select class="form-select" name="bidan_id" required>
-                <option value="" selected>-- Pilih Bidan --</option>
-                @foreach($bidan as $b)
-                    <option value="{{ $b->id }}">{{ $b->nama }}</option>
-                @endforeach
-            </select>
-        </div>
-
         <!-- Pilih Layanan -->
         <div class="mb-3">
             <label for="layanan" class="form-label">Pilih Layanan</label>
