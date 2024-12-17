@@ -56,5 +56,10 @@
             </tr>
         </tfoot>
     </table>
+    <div class="text-end mt-4">
+        <a href="{{ route('transaksi.surat', $transaksi->transaksi_id) }}" target="_blank" class="btn btn-primary">
+            <i class="bi bi-printer"></i> Cetak Surat Transaksi
+        </a>
+    </div>
 </div>
 @endsection
