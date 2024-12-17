@@ -108,95 +108,46 @@ class AdminTransaksiController extends Controller
 }
 
 
-  public function store(Request $request)
-  {
-      // Validasi input
-      $request->validate([
-          'janji_temu' => 'required|string',
-          'janji_id' => 'nullable|exists:view_jadwal_janji_temu,id', // Validasi menggunakan view
-          'pasien_id' => 'nullable|exists:users,id',
-          'layanan' => 'required|array|min:1',
-          'layanan.*' => 'exists:layanan,id',
-          'keterangan' => 'nullable|string',
-      ]);
-  
-      // Tentukan pasien berdasarkan janji temu atau input langsung
-      if ($request->janji_temu === 'ya') {
-          $janjiTemu = DB::table('view_jadwal_janji_temu')->find($request->janji_id); // Menggunakan view
-          if (!$janjiTemu) {
-              return back()->withErrors(['janji_id' => 'Janji temu tidak ditemukan.'])->withInput();
-          }
-  
-          // Validasi waktu mulai janji temu
-          if (now()->toDateString() !== Carbon::parse($janjiTemu->waktu_mulai)->toDateString()) {
-              return back()->withErrors(['janji_id' => 'Janji temu hanya dapat diproses pada tanggal waktu mulai.'])->withInput();
-          }
-  
-          $pasienId = $janjiTemu->id_pasien;
-          $janjiId = $request->janji_id; // Menyimpan ID janji temu
-      } else {
-          $pasienId = $request->pasien_id;
-          $janjiId = null; // Tidak ada janji temu jika pilih "tidak"
-      }
-  
-      // Buat transaksi baru
-      DB::beginTransaction();
-      try {
-          $transactionId = DB::table('transaksi')->insertGetId([
-              'id_pasien' => $pasienId,
-              'janji_id' => $janjiId,
-              'bidan' => Auth::user()->id,
-              'keterangan' => $request->keterangan,
-              'tanggal' => now(),
-          ]);
-  
-          // Tambahkan layanan yang dipilih
-// Tambahkan layanan yang dipilih
-foreach ($request->layanan as $layananId) {
-    $layanan = DB::table('layanan')->find($layananId);
-    $potongan = 0; // Default potongan adalah 0
-    
-    if ($layanan) {
-        // Cek apakah layanan memiliki promo
-        if ($janjiId && $janjiTemu->jadwal_promo_id) {
-            $promo = DB::table('promo')
-                ->join('detail_promo', 'promo.id', '=', 'detail_promo.promo_id')
-                ->where('detail_promo.id', $janjiTemu->jadwal_promo_id)
-                ->where('promo.layanan_id', $layananId)
-                ->first();
+public function store(Request $request)
+{
+    // Validasi input
+    $request->validate([
+        'janji_temu' => 'required|string',
+        'janji_id' => 'nullable|exists:view_jadwal_janji_temu,id',
+        'pasien_id' => 'nullable|exists:users,id',
+        'layanan' => 'required|array|min:1',
+        'layanan.*' => 'exists:layanan,id',
+        'keterangan' => 'nullable|string',
+    ]);
 
-            if ($promo) {
-                $potongan = $promo->diskon; 
-            }
-        }
+    // Tentukan pasien berdasarkan janji temu atau input langsung
+    $janjiTemu = $request->janji_temu === 'ya' ? 'ya' : 'tidak';
+    $janjiId = $request->janji_temu === 'ya' ? $request->janji_id : null;
+    $pasienId = $request->janji_temu === 'ya' ? null : $request->pasien_id;
+    $bidanId = Auth::user()->id;
+    $keterangan = $request->keterangan;
+    $tanggal = now()->toDateString();
 
-        DB::table('detail_transaksi')->insert([
-            'transaksi_id' => $transactionId,
-            'layanan_id' => $layananId,
-            'harga' => $layanan->harga, // Harga layanan
-            'potongan' => $potongan, // Diskon yang diterapkan
+    // Ubah array layanan menjadi string ID dipisahkan dengan koma
+    $layananIds = implode(',', $request->layanan);
+
+    try {
+        // Panggil Stored Procedure
+        DB::statement('CALL simpan_transaksi(?, ?, ?, ?, ?, ?, ?)', [
+            $janjiTemu,         // IN p_janji_temu
+            $janjiId,           // IN p_janji_id
+            $pasienId,          // IN p_pasien_id
+            $bidanId,           // IN p_bidan_id
+            $keterangan,        // IN p_keterangan
+            $tanggal,           // IN p_tanggal
+            $layananIds         // IN p_layanan_ids
         ]);
-    
-}
 
-          }
-  
-          // Tandai janji temu sebagai selesai jika berasal dari janji temu
-          if ($request->janji_temu === 'ya') {
-              DB::table('janji_temu')
-                  ->where('id', $request->janji_id)
-                  ->update(['status' => 'selesai', 'keterangan' => $request->keterangan]);
-          }
-  
-          DB::commit();
-  
-          return redirect()->back()->with('success', 'Transaksi berhasil disimpan.');
-      } catch (\Exception $e) {
-          DB::rollBack();
-          return redirect()->back()->withErrors(['error' => 'Terjadi kesalahan saat menyimpan transaksi.'])->withInput();
-      }
-  }
-  
+        return redirect()->back()->with('success', 'Transaksi berhasil disimpan.');
+    } catch (\Exception $e) {
+        return redirect()->back()->withErrors(['error' => 'Terjadi kesalahan: ' . $e->getMessage()])->withInput();
+    }
+}
 
 
 }

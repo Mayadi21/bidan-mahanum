@@ -19,7 +19,7 @@ return new class extends Migration
             IN judul_promo_param VARCHAR(255),
             IN deskripsi_param TEXT,
             IN layanan_id_param INT,
-            IN diskon_param DECIMAL(10,2),
+            IN diskon_param INT,
             IN kuota_param INT,
             IN tanggal_mulai_param DATE,
             IN tanggal_selesai_param DATE

@@ -13,7 +13,7 @@ use Database\Seeders\UlasanSeeder;
 use Database\Seeders\GajiPokokSeeder;
 use Database\Seeders\TransaksiSeeder;
 use Database\Seeders\DetailTransaksiSeeder;
-use Database\Seeders\PenggajianSeeder;
+// use Database\Seeders\PenggajianSeeder;
 
 
 
@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
             TransaksiSeeder::class,
             DetailTransaksiSeeder::class,
             GajiPokokSeeder::class,
-            PenggajianSeeder::class,
+            // PenggajianSeeder::class,
         ]);
     }
 }

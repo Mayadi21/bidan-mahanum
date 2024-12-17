@@ -28,8 +28,6 @@ return new class extends Migration
 
             RETURN jumlah_transaksi;
         END;
-
-        
         ";
 
         DB::unprepared($sql);
