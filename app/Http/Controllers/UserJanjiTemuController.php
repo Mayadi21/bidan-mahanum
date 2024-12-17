@@ -45,6 +45,7 @@ class UserJanjiTemuController extends Controller
             'keluhan' => 'required|string|max:255',
             'waktu_mulai' => 'required|date|after:now',
         ]);
+        DB::statement("SET @modifier_id = ?", [auth()->id()]);
 
         if ($validator->fails()) {
             return redirect()
@@ -63,6 +64,8 @@ class UserJanjiTemuController extends Controller
 
     public function update(Request $request, $id)
     {
+        DB::statement("SET @modifier_id = ?", [auth()->id()]);
+
         $validator = Validator::make($request->all(), [
             'keluhan' => 'required|string|max:255',
             'waktu_mulai' => 'required|date|after:now',

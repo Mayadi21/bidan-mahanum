@@ -8,7 +8,7 @@ class LogController extends Controller
 {
     public function index()
     {
-        $logs = Log::orderBy('log_time', 'desc')->get();   
+        $logs = Log::orderBy('log_time', 'desc')->paginate(10);   
 
      
 

@@ -104,6 +104,7 @@ Route::middleware(['auth', 'notBanned'])->group(function () {
             Route::post('/transaksi/store', [AdminTransaksiController::class, 'store'])->name('transaksi.store');
             Route::get('/transaksi/create', [AdminTransaksiController::class, 'create'])->name('transaksi.create');
             Route::get('/transaksi/{id}', [AdminTransaksiController::class, 'show'])->name('transaksi.show');
+            Route::get('/transaksi/{id}/surat', [AdminTransaksiController::class, 'surat'])->name('transaksi.surat');
 
             Route::get('/kunjungan', [AdminTransaksiController::class, 'kunjungan'])->name('kunjungan.index');
 

@@ -92,6 +92,8 @@ class PromoController extends Controller
         ]);
     
         try {
+            DB::statement("SET @modifier_id = ?", [auth()->id()]);
+
             // Panggil procedure dengan DB::statement
             DB::statement('CALL procedure_tambah_promo(?, ?, ?, ?, ?, ?, ?)', [
                 $validated['judul_promo'],
@@ -161,6 +163,8 @@ public function register(Request $request)
     }
 
     try {
+        DB::statement("SET @modifier_id = ?", [auth()->id()]);
+
         // 4. Tentukan status dan keterangan berdasarkan role pengguna
         $role = Auth::user()->role;
         $status = ($role === 'admin' || $role === 'pegawai') ? 'disetujui' : 'menunggu konfirmasi';

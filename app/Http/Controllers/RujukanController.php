@@ -6,6 +6,7 @@ use App\Models\Rujukan;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf; // Import PDF
+use Illuminate\Support\Facades\DB;
 
 
 class RujukanController extends Controller
