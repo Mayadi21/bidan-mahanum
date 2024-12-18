@@ -66,5 +66,31 @@
         </div>
     </div>
 
+    <script>
+    let waktuIndex = 1;
 
+    document.getElementById('add-time-slot').addEventListener('click', function () {
+        waktuIndex++;
+        const waktuContainer = document.getElementById('waktu-container');
+
+        const waktuGroup = document.createElement('div');
+        waktuGroup.classList.add('row', 'g-3', 'align-items-center', 'mb-4', 'waktu-group');
+
+        waktuGroup.innerHTML = `
+            <div class="col-md-4">
+                <label for="waktu_mulai_${waktuIndex}" class="form-label">Waktu Mulai</label>
+                <input type="time" class="form-control form-control-lg" id="waktu_mulai_${waktuIndex}" name="waktu_mulai[]" required>
+            </div>
+            <div class="col-md-4">
+                <label for="waktu_selesai_${waktuIndex}" class="form-label">Waktu Selesai</label>
+                <input type="time" class="form-control form-control-lg" id="waktu_selesai_${waktuIndex}" name="waktu_selesai[]" required>
+            </div>
+            <div class="col-md-4">
+                <label for="kuota_${waktuIndex}" class="form-label">Kuota</label>
+                <input type="number" class="form-control form-control-lg" id="kuota_${waktuIndex}" name="kuota[]" min="1" required>
+            </div>`;
+
+        waktuContainer.appendChild(waktuGroup);
+    });
+</script>
 @endsection
