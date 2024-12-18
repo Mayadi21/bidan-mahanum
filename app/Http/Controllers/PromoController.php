@@ -87,7 +87,7 @@ class PromoController extends Controller
             'layanan_id' => 'required|exists:layanan,id',
             'diskon' => 'required|numeric|min:0',
             'kuota' => 'required|numeric|min:1',
-            'tanggal_mulai' => 'required|date',
+            'tanggal_mulai' => 'required|date|after_or_equal:today',
             'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
         ]);
     
