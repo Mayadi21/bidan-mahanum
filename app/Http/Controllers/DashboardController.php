@@ -65,7 +65,7 @@ class DashboardController extends Controller
 
     public function riwayatKunjungan($idPasien)
     {
-        $riwayatKunjungan = DB::table('view_kunjungan_pasien')
+        $riwayatKunjungan = DB::table('view_transaksi')
             ->where('id_pasien', $idPasien)
             ->get();
 

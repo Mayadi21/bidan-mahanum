@@ -37,20 +37,42 @@ class AdminPenggajianController extends Controller
     ]);
   }
 
-  public function updateGajiPokok(Request $request, $id)
-  {
-    DB::statement("SET @modifier_id = ?", [auth()->id()]);
+  // public function updateGajiPokok(Request $request, $id)
+  // {
+  //   DB::statement("SET @modifier_id = ?", [auth()->id()]);
 
+  //   $request->validate([
+  //     'gaji_pokok' => 'required|integer|min:0',
+  //   ]);
+
+  //   $gajiPokok = GajiPokok::findOrFail($id);
+  //   $gajiPokok->gaji_pokok = $request->gaji_pokok;
+  //   $gajiPokok->save();
+
+  //   return redirect()->route('gaji-pokok.index')->with('success', 'Gaji pokok berhasil diperbarui.');
+  // }
+
+  public function updateGajiPokok(Request $request, $id)
+{
+    // Validasi input
     $request->validate([
-      'gaji_pokok' => 'required|integer|min:0',
+        'gaji_pokok' => 'required|integer|min:0',
     ]);
 
-    $gajiPokok = GajiPokok::findOrFail($id);
-    $gajiPokok->gaji_pokok = $request->gaji_pokok;
-    $gajiPokok->save();
+    try {
+        DB::statement("SET @modifier_id = ?", [auth()->id()]);
 
-    return redirect()->route('gaji-pokok.index')->with('success', 'Gaji pokok berhasil diperbarui.');
-  }
+        // Panggil prosedur tersimpan MySQL
+        DB::statement("CALL UpdateGajiPokokPegawai(?, ?)", [
+            $id,                     // p_id_gaji_pokok
+            $request->gaji_pokok     // p_gaji_pokok_baru
+        ]);
+
+        return redirect()->route('gaji-pokok.index')->with('success', 'Gaji pokok berhasil diperbarui, termasuk pada periode penggajian aktif.');
+    } catch (\Exception $e) {
+        return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+    }
+}
 
 
   public function updateStatus($id)
@@ -68,19 +90,55 @@ class AdminPenggajianController extends Controller
     // Redirect back with a success message
     return redirect()->back()->with('success', 'Status penggajian berhasil diperbarui.');
   }
-  public function show()
-  {
-    // Mengambil data gaji pegawai berdasarkan ID yang sedang login
-    $gaji = DB::table('penggajian')
-      ->where('id_bidan', Auth::id()) // Mengambil data berdasarkan id_bidan yang sedang login
-      ->orderBy('tahun_gaji', 'desc')
-      ->orderBy('bulan_gaji', 'desc')
-      ->get();
+
+  
+  public function gajiSaya()
+{
+    // Mengambil data gaji pegawai dari view_penggajian berdasarkan ID yang sedang login
+    $gaji = DB::table('view_penggajian')
+        ->where('id_bidan', Auth::id()) // Filter berdasarkan id_bidan dari user yang login
+        ->orderBy('tanggal_penggajian', 'desc')
+        ->get();
 
     return view('dashboard.pegawai-gaji.index', [
-      'page' => 'Halaman Gaji Saya',
-      'active' => 'penggajian',
-      'gaji' => $gaji,
+        'page' => 'Halaman Gaji Saya',
+        'active' => 'penggajian',
+        'gaji' => $gaji,
     ]);
-  }
+}
+
+public function detailPenggajian($id)
+{
+    // Ambil data penggajian berdasarkan ID penggajian
+    $penggajian = DB::table('penggajian')->where('id', $id)->first();
+
+    // Cek jika data penggajian tidak ditemukan
+    if (!$penggajian) {
+        return redirect()->back()->with('error', 'Data penggajian tidak ditemukan.');
+    }
+
+    // Ambil detail transaksi yang sesuai dengan periode gaji dan id_bidan pada penggajian
+    $transaksi = DB::table('detail_transaksi')
+        ->join('transaksi', 'detail_transaksi.transaksi_id', '=', 'transaksi.id')
+        ->join('layanan', 'detail_transaksi.layanan_id', '=', 'layanan.id')
+        ->where('transaksi.bidan', $penggajian->id_bidan) // Tambahkan filter berdasarkan id_bidan
+        ->whereBetween('transaksi.tanggal', [$penggajian->awal_periode_gaji, $penggajian->akhir_periode_gaji])
+        ->select(
+            'transaksi.id as transaksi_id',
+            'transaksi.tanggal as tanggal_transaksi',
+            'layanan.jenis_layanan',
+            'detail_transaksi.bonus_pegawai'
+        )
+        ->get();
+
+    return view('dashboard.penggajian.detail', [
+        'transaksi' => $transaksi,
+        'penggajian' => $penggajian,
+        'page' => 'Detail Penggajian',
+        'active' => 'admini-penggajian'
+    ]);
+}
+
+
+
 }

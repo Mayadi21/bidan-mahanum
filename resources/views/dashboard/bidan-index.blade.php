@@ -18,7 +18,7 @@
         <div class="col-md-6 mb-4">
             <div class="card text-center">
                 <div class="card-header bg-primary text-white">
-                    Janji Temu Menunggu Konfirmasi
+                    Pendaftaran Menunggu Konfirmasi
                 </div>
                 <div class="card-body">
                     <h5 class="card-title">{{ $janjiTemuPending }}</h5>
@@ -65,7 +65,7 @@
                             <td>{{ $item->keluhan }}</td> <!-- Keluhan -->
                             <td>{{ \Carbon\Carbon::parse($item->waktu_mulai)->format('d-m-Y H:i') }} s/d 
                             {{ \Carbon\Carbon::parse($item->waktu_selesai)->format('H:i') }}</td> <!-- Waktu Janji -->
-                            <td>{{ $item->keterangan }}</td> <!-- Status -->
+                            <td>{{ $item->keterangan ?? '-' }}</td>
                         </tr>
                     @endforeach
                 </tbody>

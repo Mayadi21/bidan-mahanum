@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
@@ -64,38 +65,37 @@ class AdminUsersController extends Controller
             'alamat' => 'nullable|string',
             'tanggal_lahir' => 'required|date',
             'pekerjaan' => 'nullable|string',
-            'role' => 'required|string',
             'no_hp' => 'required|string|max:15|unique:users,no_hp',
+            'role' => 'required|string',
             'has_account' => 'required|in:yes,no',
             'email' => 'nullable|email|unique:users,email|required_if:has_account,yes',
             'password' => 'nullable|string|min:8|confirmed|required_if:has_account,yes',
+            'gaji_pokok' => 'nullable|integer|required_if:role,pegawai|min:0',
         ]);
     
         try {
-            // Menyimpan pengguna baru ke database
+            // Persiapkan parameter untuk procedure
+            $hashedPassword = $request->has_account === 'yes' ? Hash::make($request->password) : null;
+            $tanggalInput = Carbon::now()->toDateString();
             DB::statement("SET @modifier_id = ?", [auth()->id()]);
 
-            $user = new User([
-                'nama' => $request->nama,
-                'alamat' => $request->alamat,
-                'tanggal_lahir' => $request->tanggal_lahir,
-                'pekerjaan' => $request->pekerjaan,
-                'no_hp' => $request->no_hp,
-                'status' => 'aktif', // Status otomatis aktif
-                'role' => $request->role
+            // Panggil procedure MySQL
+            DB::statement('CALL procedure_tambah_user(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
+                $request->nama,                // p_nama
+                $request->alamat,              // p_alamat
+                $request->tanggal_lahir,       // p_tanggal_lahir
+                $request->pekerjaan,           // p_pekerjaan
+                $request->no_hp,               // p_no_hp
+                $request->role,                // p_role
+                $request->has_account === 'yes' ? $request->email : null, // p_email
+                $hashedPassword,               // p_password
+                $request->role === 'pegawai' ? $request->gaji_pokok : null, // p_gaji_pokok
+                $tanggalInput                  // p_tanggal_input
             ]);
-    
-            // Tambahkan data akun jika pasien memiliki akun
-            if ($request->has_account === 'yes') {
-                $user->email = $request->email;
-                $user->password = Hash::make($request->password);
-            }
-    
-            $user->save();
     
             return redirect()->route('admin.users.index')->with('success', 'Pengguna berhasil ditambahkan!');
         } catch (\Exception $e) {
-            return redirect()->back()->withInput()->with('error', 'Terjadi kesalahan saat menyimpan data: ' . $e->getMessage());
+            return redirect()->back()->withInput()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
     }
     

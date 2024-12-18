@@ -62,6 +62,7 @@ Route::middleware(['auth', 'notBanned'])->group(function () {
             //route untuk sistem penggajian
             Route::get('/penggajian', [AdminPenggajianController::class, 'index'])->name('admin.penggajian.index');
             Route::put('/update-status-gaji/{id}', [AdminPenggajianController::class, 'updateStatus'])->name('gaji-update-status');
+            Route::get('/penggajian/{id}/detail', [AdminPenggajianController::class, 'detailPenggajian'])->name('gaji-detail');
 
             //route untuk halaman gaji pokok
             Route::get('/gaji-pokok', [AdminPenggajianController::class, 'indexGajiPokok'])->name('gaji-pokok.index');
@@ -121,7 +122,7 @@ Route::middleware(['auth', 'notBanned'])->group(function () {
             Route::delete('/rujukan/{id}', [RujukanController::class, 'destroy'])->name('rujukan.destroy');
             Route::get('/rujukan/{id}/cetak', [RujukanController::class, 'cetak'])->name('rujukan.cetak');
 
-            Route::get('/gaji-pegawai', [AdminPenggajianController::class, 'show'])->name('gaji.pegawai');
+            Route::get('/gaji-pegawai', [AdminPenggajianController::class, 'gajiSaya'])->name('gaji.pegawai');
 
         });
 

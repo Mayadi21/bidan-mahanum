@@ -4,23 +4,27 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 ">
     <h1 class="h2">Daftar Transaksi</h1> 
     <!-- Button untuk menambah transaksi -->
+    
+</div>
+<div>
+    <!-- Bagian untuk menampilkan pesan -->
+@if(session('success'))
+<div class="alert alert-success col-lg-12">
+    {{ session('success') }}
+</div>
+@endif
+@if(session('error'))
+<div class="alert alert-danger col-lg-12">
+    {{ session('error') }}
+</div>
+@endif
 </div>
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap btn-lg align-items-center pb-2 mb-3 border-bottom">
     <a href="{{ route('transaksi.create') }}" class="btn col-lg-12 btn-primary">Tambah Transaksi</a>
 
 </div>
 
-<!-- Bagian untuk menampilkan pesan -->
-@if(session('success'))
-    <div class="alert alert-success col-lg-8">
-        {{ session('success') }}
-    </div>
-@endif
-@if(session('error'))
-    <div class="alert alert-danger col-lg-8">
-        {{ session('error') }}
-    </div>
-@endif
+
 <div class="table-responsive small col-lg-12">
     <table class="table table-striped table-sm">
         <thead>

@@ -14,18 +14,31 @@
                 <th>Gaji Pokok</th>
                 <th>Bonus</th>
                 <th>Total Gaji</th>
+                <th>Status</th>
                 <th>Tanggal Penggajian</th>
             </tr>
         </thead>
         <tbody>
             @forelse($gaji as $item)
                 <tr>
-                    <td>{{ \Carbon\Carbon::createFromFormat('m', $item->bulan_gaji)->format('F') }}</td>
-                    <td>{{ $item->tahun_gaji }}</td>
+                    <!-- Konversi tanggal ke Bulan dan Tahun -->
+                    <td>{{ \Carbon\Carbon::parse($item->tanggal_penggajian)->format('F') }}</td>
+                    <td>{{ \Carbon\Carbon::parse($item->tanggal_penggajian)->format('Y') }}</td>
+
                     <td>Rp {{ number_format($item->gaji_pokok, 0, ',', '.') }}</td>
                     <td>Rp {{ number_format($item->bonus, 0, ',', '.') }}</td>
-                    <td>Rp {{ number_format($item->gaji_pokok + $item->bonus, 0, ',', '.') }}</td>
+                    <td>Rp {{ number_format($item->total_gaji, 0, ',', '.') }}</td>
 
+                    <!-- Menampilkan status gaji -->
+                    <td>
+                        @if($item->status === 'Belum Diserahkan')
+                            <span class="badge bg-warning">{{ $item->status }}</span>
+                        @else
+                            <span class="badge bg-success">{{ $item->status }}</span>
+                        @endif
+                    </td>
+
+                    <!-- Tanggal Penggajian -->
                     <td>{{ $item->tanggal_penggajian ? \Carbon\Carbon::parse($item->tanggal_penggajian)->format('d M Y') : '-' }}</td>
                 </tr>
             @empty
