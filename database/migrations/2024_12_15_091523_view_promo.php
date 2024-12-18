@@ -16,6 +16,7 @@ return new class extends Migration
         SELECT 
             p.id AS promo_id, 
             p.judul_promo AS judul_promo, 
+            p.layanan_id,
             p.deskripsi AS deskripsi, 
             l.jenis_layanan AS jenis_layanan, 
             p.diskon AS diskon, 
@@ -30,6 +31,7 @@ return new class extends Migration
         GROUP BY 
             p.id, 
             p.judul_promo, 
+            p.layanan_id,
             p.deskripsi, 
             l.jenis_layanan, 
             p.diskon;
