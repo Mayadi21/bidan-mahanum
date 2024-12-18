@@ -27,6 +27,8 @@
                 <p><strong>Tanggal Mulai:</strong> {{ $promo->tanggal_mulai }}</p>
                 <p><strong>Tanggal Selesai:</strong> {{ $promo->tanggal_selesai }}</p>
                 <p><strong>Total Kuota:</strong> {{ $promo->total_kuota }}</p>
+                <p><strong>Sisa Kuota:</strong> {{ $promo->total_kuota - $promo->kuota_terpakai }}</p>
+                
             </div>
             <div class="card-footer d-flex justify-content-between">
                 <a href="{{ route('promo.index') }}" class="btn btn-secondary">Kembali</a>

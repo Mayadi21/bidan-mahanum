@@ -28,9 +28,9 @@ BEGIN
             'id_bidan', NEW.id_bidan,
             'gaji_pokok', NEW.gaji_pokok,
             'bonus', NEW.bonus,
-            'bulan_gaji', NEW.bulan_gaji,
+            'awal_periode_gaji', NEW.awal_periode_gaji,
+            'akhir_periode_gaji', NEW.akhir_periode_gaji,
             'tanggal_penggajian', NEW.tanggal_penggajian,
-            'tahun_gaji', NEW.tahun_gaji,
             'status', NEW.status
         ),
         NOW()
@@ -56,18 +56,18 @@ BEGIN
             'id_bidan', OLD.id_bidan,
             'gaji_pokok', OLD.gaji_pokok,
             'bonus', OLD.bonus,
-            'bulan_gaji', OLD.bulan_gaji,
+            'awal_periode_gaji', OLD.awal_periode_gaji,
+            'akhir_periode_gaji', OLD.akhir_periode_gaji,
             'tanggal_penggajian', OLD.tanggal_penggajian,
-            'tahun_gaji', OLD.tahun_gaji,
             'status', OLD.status
         ),
         JSON_OBJECT(
             'id_bidan', NEW.id_bidan,
             'gaji_pokok', NEW.gaji_pokok,
             'bonus', NEW.bonus,
-            'bulan_gaji', NEW.bulan_gaji,
+            'awal_periode_gaji', NEW.awal_periode_gaji,
+            'akhir_periode_gaji', NEW.akhir_periode_gaji,
             'tanggal_penggajian', NEW.tanggal_penggajian,
-            'tahun_gaji', NEW.tahun_gaji,
             'status', NEW.status
         ),
         NOW()

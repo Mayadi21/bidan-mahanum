@@ -20,7 +20,7 @@ return new class extends Migration
                 IN p_pasien_id INT,
                 IN p_bidan_id INT,
                 IN p_keterangan TEXT,
-                IN p_tanggal DATE,
+                IN p_tanggal DATETIME,
                 IN p_layanan_ids TEXT
             )
             BEGIN
@@ -44,35 +44,27 @@ return new class extends Migration
 
                 DECLARE CONTINUE HANDLER FOR NOT FOUND SET v_cursor_done = TRUE;
 
-                -- Cek role bidan
                 SELECT role INTO v_role_bidan
                 FROM users
                 WHERE id = p_bidan_id;
 
-                -- Tentukan pasien ID berdasarkan janji temu atau input langsung
                 IF p_janji_temu = 'ya' THEN
                     SELECT id_pasien, jadwal_promo_id, waktu_mulai
                     INTO v_pasien_id, v_janji_promo_id, v_waktu_mulai
                     FROM view_jadwal_janji_temu 
                     WHERE id = p_janji_id;
 
-                    IF v_pasien_id IS NULL THEN
-                        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Janji temu tidak ditemukan.';
-                    END IF;
-
-                    -- Validasi waktu janji temu
                     IF p_tanggal <> DATE(v_waktu_mulai) THEN
-                        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Janji temu hanya dapat diproses pada tanggal waktu mulai.';
+                        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 
+                        'Promo hanya dapat diklaim pada saat jadwal janji pasien';
                     END IF;
                 ELSE
-                    SET v_pasien_id = p_pasien_id;
+                    SET v_pasien_id = p_pasien_id; 
                     SET v_janji_promo_id = NULL;
                 END IF;
 
-                -- Mulai Transaksi
                 START TRANSACTION;
 
-                -- Simpan Transaksi Utama
                 INSERT INTO transaksi (id_pasien, janji_id, bidan, keterangan, tanggal)
                 VALUES (v_pasien_id, p_janji_id, p_bidan_id, p_keterangan, p_tanggal);
 
@@ -87,14 +79,9 @@ return new class extends Migration
                         LEAVE layanan_loop;
                     END IF;
 
-                    -- Ambil harga layanan dan besar bonus
                     SELECT harga, besar_bonus INTO v_layanan_harga, v_bonus_pegawai
                     FROM layanan 
                     WHERE id = v_layanan_id;
-
-                    IF v_layanan_harga IS NULL THEN
-                        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Layanan tidak valid.';
-                    END IF;
 
                     -- Cek promo jika ada janji temu
                     IF p_janji_temu = 'ya' AND v_janji_promo_id IS NOT NULL THEN
@@ -131,8 +118,10 @@ return new class extends Migration
                             AND p_tanggal BETWEEN awal_periode_gaji AND akhir_periode_gaji;
                         ELSE
                             -- Insert penggajian baru jika belum ada periode gaji
-                            INSERT INTO penggajian (id_bidan, gaji_pokok, bonus, awal_periode_gaji, akhir_periode_gaji, status)
-                            VALUES (p_bidan_id, 0, v_bonus_pegawai, DATE_FORMAT(p_tanggal, '%Y-%m-01'), LAST_DAY(p_tanggal), '0');
+                            INSERT INTO penggajian (id_bidan, gaji_pokok, bonus, awal_periode_gaji,
+                             akhir_periode_gaji, status)
+                            VALUES (p_bidan_id, 0, v_bonus_pegawai, DATE_FORMAT(p_tanggal, '%Y-%m-01')
+                            , LAST_DAY(p_tanggal), '0');
                         END IF;
                     END IF;
 

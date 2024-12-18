@@ -14,7 +14,7 @@
 
         <!-- Tombol Tambah Pengguna -->
         <button type="button" class="btn btn-outline-primary mt-3 mt-lg-0" data-bs-toggle="modal" data-bs-target="#addUserModal">
-            Tambah Pasien
+            Tambah Anggota
         </button>
     </div>
     @canany(['admin', 'pegawai'])
@@ -213,11 +213,17 @@
                             @endcan
                         </select>
                     </div>
+
+                    <!-- Kolom Gaji Pokok -->
+                    <div class="mb-3 d-none" id="gajiPokokField">
+                        <label for="gaji_pokok" class="form-label">Gaji Pokok</label>
+                        <input type="number" class="form-control" id="gaji_pokok" name="gaji_pokok" placeholder="Masukkan gaji pokok">
+                    </div>
                    
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Tambah Pengguna</button>
+                        <button type="submit" class="btn btn-primary">Tambah Anggota</button>
                     </div>
                 </form>
             </div>
@@ -237,6 +243,15 @@
         document.getElementById('email').required = isAccount;
         document.getElementById('password').required = isAccount;
         document.getElementById('password_confirmation').required = isAccount;
+    });
+
+    // Menampilkan input Gaji Pokok jika role adalah "Pegawai"
+    document.getElementById('role').addEventListener('change', function () {
+        const isPegawai = this.value === 'pegawai';
+        document.getElementById('gajiPokokField').classList.toggle('d-none', !isPegawai);
+        
+        // Atur atribut required jika role "Pegawai"
+        document.getElementById('gaji_pokok').required = isPegawai;
     });
 </script>
 @endsection

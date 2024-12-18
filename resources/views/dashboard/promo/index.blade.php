@@ -65,7 +65,7 @@
                 <form action="{{ route('promo.register') }}" method="POST">
                     @csrf
                     <!-- Input promo_id dibuat hidden dan dinamis -->
-                    <input name="promo_id" id="promo_id" value="">
+                    <input type="hidden" name="promo_id" id="promo_id" value="">
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="id_pasien" class="form-label">Pilih Pasien</label>

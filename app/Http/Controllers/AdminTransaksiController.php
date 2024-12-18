@@ -135,7 +135,7 @@ public function store(Request $request)
     $pasienId = $request->janji_temu === 'ya' ? null : $request->pasien_id;
     $bidanId = Auth::user()->id;
     $keterangan = $request->keterangan;
-    $tanggal = now()->toDateString();
+    $tanggal = now()->toDateTimeString();
 
     // Ubah array layanan menjadi string ID dipisahkan dengan koma
     $layananIds = implode(',', $request->layanan);
@@ -153,11 +153,29 @@ public function store(Request $request)
             $layananIds         // IN p_layanan_ids
         ]);
 
-        return redirect()->back()->with('success', 'Transaksi berhasil disimpan.');
+        return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil disimpan.');
     } catch (\Exception $e) {
-        return redirect()->back()->withErrors(['error' => 'Terjadi kesalahan: ' . $e->getMessage()])->withInput();
+        return redirect()->route('transaksi.index')->withErrors(['error' => 'Terjadi kesalahan: ' . $e->getMessage()])->withInput();
     }
 }
 
+
+    public function surat($id)
+    {
+        // Ambil data transaksi berdasarkan ID dari view_transaksi
+        $transaksi = DB::table('view_transaksi')->where('transaksi_id', $id)->first();
+
+        // Jika data transaksi ditemukan, kirim ke view
+        if (!$transaksi) {
+            abort(404, 'Transaksi tidak ditemukan');
+        }
+        
+        // Load view 'surat' dengan data transaksi dan generate PDF
+        $pdf = Pdf::loadView('dashboard.transaksi.surat', compact('transaksi'))
+            ->setPaper('a4', 'portrait');
+        
+        // Stream atau download PDF dengan nama file yang dinamis
+        return $pdf->stream('Surat_Transaksi_' . $transaksi->transaksi_id . '.pdf');
+    }
 
 }

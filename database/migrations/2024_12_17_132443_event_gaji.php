@@ -12,17 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         $sql = "
-        DROP TRIGGER IF EXISTS tambah_bonus_after_insert;
 
-        CREATE TRIGGER tambah_bonus_after_insert
-        AFTER INSERT ON detail_transaksi
-        FOR EACH ROW
-        BEGIN
-            CALL menambahkan_bonus_bidan(NEW.transaksi_id);
-        END
-        ";
-
-        DB::unprepared($sql);
+        DROP EVENT IF EXISTS event_generate_penggajian;
+        CREATE EVENT IF NOT EXISTS event_generate_penggajian
+        ON SCHEDULE
+        EVERY 1 MONTH
+        DO
+        CALL generate_monthly_penggajian();
+        
+                ";
+                
+                DB::unprepared($sql);
     }
 
     /**
@@ -30,5 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
+        //
     }
 };

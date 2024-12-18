@@ -54,8 +54,7 @@
         <p><strong>Nama Pasien:</strong> {{ $transaksi->pasien->nama ?? 'Nama Pasien Tidak Ditemukan' }}</p>
         <!-- Display Nama Bidan -->
         <p><strong>Nama Bidan:</strong> {{ $transaksi->bidanUser->nama ?? 'Nama Bidan Tidak Ditemukan' }}</p>
-        <p><strong>Tanggal Transaksi:</strong> {{ \Carbon\Carbon::parse($transaksi->tanggal)->format('d M Y') }}</p>
-        <p><strong>Keterangan:</strong> {{ $transaksi->keterangan ?? '-' }}</p>
+        <p><strong>Waktu Transaksi:</strong> {{ \Carbon\Carbon::parse($transaksi->tanggal)->format('d M Y H:i') }}</p>
 
         <table>
             <thead>
@@ -100,6 +99,9 @@
             </tr>
         </tfoot>
         </table>
+
+        <p><strong>Keterangan:</strong> {{ $transaksi->keterangan ?? '-' }}</p>
+
 
         <div class="text-right" style="margin-top: 20px;">
             <p><strong>Terima kasih atas kepercayaan Anda!</strong></p>

@@ -17,18 +17,16 @@ return new class extends Migration
 
         CREATE PROCEDURE generate_monthly_penggajian()
         BEGIN
-            -- Variabel deklarasi
             DECLARE done INT DEFAULT 0;
             DECLARE id_pegawai INT;
             DECLARE gaji_pokok DECIMAL(10, 2);
             DECLARE awal_periode DATE;
             DECLARE akhir_periode DATE;
-            
             DECLARE cur CURSOR FOR 
                 SELECT users.id, gaji_pokok.gaji_pokok
                 FROM users
                 JOIN gaji_pokok ON users.id = gaji_pokok.id_bidan
-                WHERE users.role = 'pegawai'; -- Mengubah role dari 'bidan' ke 'pegawai'
+                WHERE users.role = 'pegawai' AND users.status = 'aktif';
 
             DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
 
@@ -43,16 +41,17 @@ return new class extends Migration
 
                 -- Tentukan tanggal periode gaji (25 bulan lalu sampai 24 bulan ini)
                 SET awal_periode = DATE_SUB(CURDATE(), INTERVAL 1 MONTH);
-                SET awal_periode = DATE_FORMAT(awal_periode, '%Y-%m-25'); -- Mulai dari tanggal 25 bulan sebelumnya
-                SET akhir_periode = DATE_FORMAT(CURDATE(), '%Y-%m-24'); -- Sampai tanggal 24 bulan berjalan
+                SET awal_periode = DATE_FORMAT(awal_periode, '%Y-%m-25');
+                SET akhir_periode = DATE_FORMAT(CURDATE(), '%Y-%m-24'); 
 
-                INSERT INTO penggajian (id_bidan, gaji_pokok, bonus, awal_periode_gaji, akhir_periode_gaji, tanggal_penggajian)
+                INSERT INTO penggajian (id_bidan, gaji_pokok, bonus, 
+                awal_periode_gaji, akhir_periode_gaji, tanggal_penggajian)
                 VALUES (id_pegawai, gaji_pokok, 0, awal_periode, akhir_periode, NULL);
             END LOOP;
 
-            -- Menutup cursor
             CLOSE cur;
         END;
+
         ";
 
         DB::unprepared($sql);

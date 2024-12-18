@@ -107,13 +107,6 @@ class LayananSeeder extends Seeder
                 'status' => 'aktif',
             ],
             [
-                'jenis_layanan' => 'Sunat Dewasa - Laser',
-                'deskripsi' => 'Layanan sunat dewasa dengan teknologi laser adalah prosedur sunat yang menggunakan alat laser untuk memotong bagian kulit di sekitar area kelamin dengan presisi tinggi. Metode ini menawarkan berbagai keuntungan, termasuk pengurangan rasa sakit, minimalisasi pendarahan, dan waktu pemulihan yang lebih cepat dibandingkan dengan metode konvensional. Selain itu, teknologi laser juga meminimalkan risiko infeksi dan memberikan hasil yang lebih rapi. Prosedur ini dilakukan oleh tenaga medis berpengalaman yang memastikan kenyamanan dan keselamatan pasien selama dan setelah prosedur berlangsung.',
-                'harga' => 1800000,
-                'besar_bonus' => 180000,
-                'status' => 'aktif',
-            ],
-            [
                 'jenis_layanan' => 'Periksa Kadar Gula Darah',
                 'deskripsi' => 'Layanan pemeriksaan kadar gula darah adalah prosedur medis yang dilakukan untuk mengukur jumlah glukosa dalam darah. Pemeriksaan ini penting untuk mendeteksi kondisi kesehatan seperti diabetes atau gangguan metabolisme lainnya. Dengan melakukan pemeriksaan secara rutin, seseorang dapat mengetahui apakah kadar gula darah mereka berada dalam kisaran normal atau mengalami peningkatan yang berisiko. Prosedur ini biasanya dilakukan dengan menggunakan alat pengukur gula darah (glukometer) dan dapat dilakukan dengan cara pengambilan darah dari jari atau labu darah, tergantung pada jenis pemeriksaan yang dilakukan.',
                 'harga' => 20000,
