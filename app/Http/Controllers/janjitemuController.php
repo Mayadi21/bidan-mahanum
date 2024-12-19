@@ -40,7 +40,13 @@ class JanjiTemuController extends Controller
         } catch (\Illuminate\Database\QueryException $e) {
             // Tangkap pesan error dari trigger
             if ($e->getCode() === '45000') {
-                $errorMessage = $e->getPrevious()->getMessage();
+                // Ambil pesan error utama dari detail pesan
+                $errorMessage = $e->getPrevious() ? $e->getPrevious()->getMessage() : $e->getMessage();
+                
+                // Bersihkan angka dan ambil hanya pesan error setelah kode angka
+                if (preg_match('/\d+\s+(.+)/', $errorMessage, $matches)) {
+                    $errorMessage = trim($matches[1]); // Ambil hanya bagian setelah angka
+                }
             } else {
                 $errorMessage = 'Terjadi kesalahan saat menyimpan jadwal.';
             }

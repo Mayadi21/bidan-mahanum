@@ -31,7 +31,7 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Pasien</th>
-                <th scope="col">Tanggal</th>
+                <th scope="col">Waktu</th>
                 <th scope="col">Bidan</th>
                 <th scope="col">Total Harga</th>
                 <th scope="col">Aksi</th>

@@ -68,23 +68,33 @@ class AdminTransaksiController extends Controller
     }
 
 
-    public function kunjungan()
+    public function kunjungan(Request $request)
     {
-        // Ambil data dari view_transaksi_summary
-        $transaksi = DB::table('view_transaksi')->get();
+
+    
+        $search = $request->input('search');
+
+        $transaksi = DB::table('view_transaksi')
+            ->when($search, function($query, $search) {
+                $query->where('nama_pasien', 'like', '%' . $search . '%')
+                      ->orWhere('tanggal', 'like', '%' . $search . '%')
+                      ->orWhere('nama_bidan', 'like', '%' . $search . '%');
+            })->orderBy('tanggal', 'desc')
+            ->get();
+    
         $janji_temu = DB::table('view_jadwal_janji_temu')
             ->where('status', 'disetujui')
             ->whereBetween('waktu_mulai', [
-                now()->subDays(2)->startOfDay()->toDateTimeString(),
+                now()->startOfDay()->toDateTimeString(),
                 now()->addDays(2)->endOfDay()->toDateTimeString()
             ])
-
             ->orderBy('waktu_mulai', 'desc')
             ->get();
+    
         $layanan = Layanan::aktif()->get();
         $pasien = User::aktif()->where('role', 'user')->get();
         $bidan = User::aktif()->where('role', 'admin')->orWhere('role', 'pegawai')->get();
-
+    
         return view('dashboard.admin-kunjungan.index', [
             'page' => 'Halaman Transaksi',
             'active' => 'admin-kunjungan',
@@ -93,9 +103,9 @@ class AdminTransaksiController extends Controller
             'layanan' => $layanan,
             'pasien' => $pasien,
             'bidan' => $bidan,
-
         ]);
     }
+    
 
     public function show($id)
     {

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invoice Transaksi</title>
+    <title>Detail Transaksi</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -51,9 +51,9 @@
     <div class="invoice-box">
         <h2>Invoice Transaksi</h2>
         <!-- Display Nama Pasien -->
-        <p><strong>Nama Pasien:</strong> {{ $transaksi->pasien->nama ?? 'Nama Pasien Tidak Ditemukan' }}</p>
+        <p><strong>Nama Pasien:</strong> {{ $transaksi->nama_pasien?? 'Nama Pasien Tidak Ditemukan' }}</p>
         <!-- Display Nama Bidan -->
-        <p><strong>Nama Bidan:</strong> {{ $transaksi->bidanUser->nama ?? 'Nama Bidan Tidak Ditemukan' }}</p>
+        <p><strong>Nama Bidan:</strong> {{ $transaksi->nama_bidan ?? 'Nama Bidan Tidak Ditemukan' }}</p>
         <p><strong>Waktu Transaksi:</strong> {{ \Carbon\Carbon::parse($transaksi->tanggal)->format('d M Y H:i') }}</p>
 
         <table>

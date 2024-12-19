@@ -80,7 +80,7 @@ class AdminUsersController extends Controller
             DB::statement("SET @modifier_id = ?", [auth()->id()]);
 
             // Panggil procedure MySQL
-            DB::statement('CALL procedure_tambah_user(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
+            DB::statement('CALL add_user(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
                 $request->nama,                // p_nama
                 $request->alamat,              // p_alamat
                 $request->tanggal_lahir,       // p_tanggal_lahir

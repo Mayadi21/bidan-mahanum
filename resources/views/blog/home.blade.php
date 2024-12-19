@@ -29,7 +29,6 @@
             <div class="col-md-4">
                 <div class="feature-card p-4 bg-light rounded">
                     <h5>{{ $layanan->jenis_layanan }}</h5>
-                    <p>{{ $layanan->deskripsi }}</p>
                 </div>
             </div>
             @endforeach
