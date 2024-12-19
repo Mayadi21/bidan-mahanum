@@ -37,17 +37,17 @@ class AdminUsersController extends Controller
                     break;
             }
         } else {
-            $users = User::aktif()->role('user');
+            $users = User::aktif()->role('user')->paginate(10);
         }
 
         if(request('search')) {
-            $users = $users->search(request('search'));
+            $users = $users->search(request('search'))->paginate(10);
         }
 
         return view('dashboard.admin-users.index', [
             'page' => 'Halaman Users',
             'active' => 'admin-users',
-            'users' => $users->get(),
+            'users' => $users,
         ]);
     }
 

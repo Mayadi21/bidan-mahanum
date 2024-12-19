@@ -11,18 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        $sql = "
+        // $sql = "
+        // SET GLOBAL event_scheduler = ON;
 
-        DROP EVENT IF EXISTS event_generate_penggajian;
-        CREATE EVENT IF NOT EXISTS event_generate_penggajian
-        ON SCHEDULE
-        EVERY 1 MONTH
-        DO
-        CALL generate_monthly_penggajian();
+        // DROP EVENT IF EXISTS event_generate_penggajian;
+        // CREATE EVENT IF NOT EXISTS event_generate_penggajian
+        // ON SCHEDULE
+        // EVERY 1 MONTH
+        // DO
+        // CALL generate_monthly_penggajian();
         
-                ";
+        //         ";
                 
-                DB::unprepared($sql);
+                // DB::unprepared($sql);
     }
 
     /**

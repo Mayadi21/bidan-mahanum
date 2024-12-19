@@ -3,7 +3,7 @@
 @section('content')
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2">Daftar Kunjungan</h1>
-    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-transaction-modal">Tambah Transaksi</button>
+    <!-- <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-transaction-modal">Tambah Transaksi</button> -->
 </div>
 
 <!-- Bagian untuk menampilkan pesan -->
