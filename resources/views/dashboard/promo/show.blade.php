@@ -24,8 +24,8 @@
                 <p><strong>Deskripsi:</strong> {{ $promo->deskripsi }}</p>
                 <p><strong>Jenis Layanan:</strong> {{ $promo->jenis_layanan }}</p>
                 <p><strong>Diskon:</strong> {{ $promo->diskon }}</p>
-                <p><strong>Tanggal Mulai:</strong> {{ $promo->tanggal_mulai }}</p>
-                <p><strong>Tanggal Selesai:</strong> {{ $promo->tanggal_selesai }}</p>
+                <p><strong>Tanggal Mulai:</strong> {{ \Carbon\Carbon::parse($promo->tanggal_mulai)->format('d-m-Y') }}</p>
+                <p><strong>Tanggal Selesai:</strong> {{ \Carbon\Carbon::parse($promo->tanggal_selesai)->format('d-m-Y') }}</p>
                 <p><strong>Total Kuota:</strong> {{ $promo->total_kuota }}</p>
                 <p><strong>Sisa Kuota:</strong> {{ $promo->total_kuota - $promo->kuota_terpakai }}</p>
                 

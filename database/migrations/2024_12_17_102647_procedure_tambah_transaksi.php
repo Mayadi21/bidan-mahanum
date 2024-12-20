@@ -54,7 +54,7 @@ return new class extends Migration
                     FROM view_jadwal_janji_temu 
                     WHERE id = p_janji_id;
 
-                    IF p_tanggal <> DATE(v_waktu_mulai) THEN
+                    IF DATE(p_tanggal) <> DATE(v_waktu_mulai) THEN
                         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 
                         'Promo hanya dapat diklaim pada saat jadwal janji pasien';
                     END IF;

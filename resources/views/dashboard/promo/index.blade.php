@@ -31,8 +31,8 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ $promo->judul_promo }}</h5>
                             <p class="card-text">
-                                <strong>Tanggal Mulai:</strong> {{ $promo->tanggal_mulai }}<br>
-                                <strong>Tanggal Selesai:</strong> {{ $promo->tanggal_selesai }}
+                                <strong>Tanggal Mulai:</strong> {{ \Carbon\Carbon::parse($promo->tanggal_mulai)->format('d-m-Y') }}<br>
+                                <strong>Tanggal Selesai:</strong> {{ \Carbon\Carbon::parse($promo->tanggal_selesai)->format('d-m-Y') }}<br>
                             </p>
                         </div>
                         <div class="card-footer d-flex justify-content-between">

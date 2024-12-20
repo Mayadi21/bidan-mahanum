@@ -21,7 +21,8 @@ class AdminTransaksiController extends Controller
     public function index()
     {
         // Ambil data dari view_transaksi_summary
-        $transaksi = DB::table('view_transaksi')->get();
+        $transaksi = DB::table('view_transaksi')->
+        orderBy('tanggal', 'desc')->get();
         $janji_temu = DB::table('view_jadwal_janji_temu')
             ->where('status', 'disetujui')
             ->orderBy('waktu_mulai', 'desc')

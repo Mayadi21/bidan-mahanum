@@ -13,7 +13,12 @@
                 <!-- Admin Section -->
                 <h6 class="sidebar-heading d-flex justify-content-start align-items-center px-3 my-3 text-uppercase" style="color: #0d47a1;">
                     <i class="bi bi-person-vcard" style="color: #1e88e5;"></i>
+                    @can('admin')
                     <span class="ms-2 fw-bold" style="font-family: 'nunito', sans-serif; font-weight:600;">Admin</span>
+                    @endcan
+                    @can('pegawai')
+                    <span class="ms-2 fw-bold" style="font-family: 'nunito', sans-serif; font-weight:600;">Pegawai</span>
+                    @endcan
                 </h6>
                 <hr class="my-3" style="border-color: #bbdefb;">
 

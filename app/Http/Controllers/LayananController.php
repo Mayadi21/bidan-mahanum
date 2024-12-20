@@ -105,7 +105,6 @@ class LayananController extends Controller
     // Melakukan update layanan (hanya untuk admin)
     public function update(Request $request, $id)
     {
-        DB::statement("SET @modifier_id = ?", [auth()->id()]);
         $request->validate([
             'jenis_layanan' => 'required|string|max:255',
             'deskripsi' => 'nullable|string',
@@ -113,6 +112,8 @@ class LayananController extends Controller
             'besar_bonus' => 'required|integer|min:0',
             'gambar' => 'nullable|image',
         ]);
+        DB::statement("SET @modifier_id = ?", [auth()->id()]);
+
         // Update data layanan
         DB::table('layanan')->where('id', $id)->update([
             'jenis_layanan' => $request->jenis_layanan,
@@ -127,6 +128,8 @@ class LayananController extends Controller
 
     public function nonaktifkan($id)
     {
+        DB::statement("SET @modifier_id = ?", [auth()->id()]);
+
         $layanan = Layanan::findOrFail($id);
         $layanan->status = 'tidak aktif'; // Ubah status menjadi tidak aktif
         $layanan->save(); // Simpan perubahan
@@ -136,6 +139,8 @@ class LayananController extends Controller
 
     public function aktifkan($id)
     {
+        DB::statement("SET @modifier_id = ?", [auth()->id()]);
+
         // Update status layanan menjadi aktif
         $layanan = Layanan::findOrFail($id);
         $layanan->update(['status' => 'aktif']);

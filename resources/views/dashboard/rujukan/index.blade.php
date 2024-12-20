@@ -63,7 +63,7 @@
             </div>
             <div class="modal-body">
                 <!-- Detail Rujukan -->
-                <p><strong>Nama Pasien:</strong> {{ $rujukan->nama_pasien }}</p>
+                <p><strong>Nama Pasien:</strong> {{ $rujukan->user->nama }}</p>
                 <p><strong>Tujuan Rujukan:</strong> {{ $rujukan->tujuan_rujukan }}</p>
                 <p><strong>Tanggal Rujukan:</strong> {{ $rujukan->tanggal_rujukan }}</p>
                 <p><strong>Keterangan:</strong> {{ $rujukan->keterangan }}</p>

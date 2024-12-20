@@ -29,7 +29,7 @@
                     <td>{{ $kunjungan->nama_bidan }}</td>
                     <td>{{ $kunjungan->keterangan }}</td>
                     <td>Rp {{ number_format($kunjungan->total_harga, 0, ',', '.') }}</td>
-                    <td>{{ $kunjungan->tanggal }}</td>
+                    <td>{{ \Carbon\Carbon::parse($kunjungan->tanggal)->setTimezone('Asia/Jakarta')->format('d-m-Y H:i:s') }}</td>
                 </tr>
                 @endforeach
             </tbody>
