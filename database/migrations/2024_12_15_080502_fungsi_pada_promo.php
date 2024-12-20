@@ -13,7 +13,7 @@ return new class extends Migration
     {
         $sql = "
         DROP FUNCTION IF EXISTS total_kuota_promo;
-        CREATE FUNCTION total_kuota_promo(promo_id INT) 
+        CREATE FUNCTION total_kuota_promo(p_promo_id INT) 
         RETURNS INT
         DETERMINISTIC
         BEGIN
@@ -21,7 +21,7 @@ return new class extends Migration
             
             SELECT SUM(kuota) INTO total_kuota
             FROM detail_promo
-            WHERE promo_id = promo_id;
+            WHERE promo_id = p_promo_id;
             
             RETURN total_kuota;
         END;

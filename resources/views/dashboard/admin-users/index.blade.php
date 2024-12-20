@@ -143,10 +143,6 @@
                 
         </table>
     </div>
- <!-- Tampilkan link pagination -->
- <div class="d-flex justify-content-center">
-        {{ $users->links() }}
-    </div>
 <!-- Modal Tambah Pengguna -->
 <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">

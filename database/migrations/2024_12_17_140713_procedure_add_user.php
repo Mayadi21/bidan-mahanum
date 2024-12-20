@@ -44,6 +44,8 @@ return new class extends Migration
                     SET v_akhir_periode_gaji = DATE_FORMAT(p_tanggal_input, '%Y-%m-24');
                 END IF;
 
+                INSERT INTO gaji_pokok(id_bidan, gaji_pokok) VALUES (v_users_id, p_gaji_pokok);
+
                 INSERT INTO penggajian (id_bidan, gaji_pokok, awal_periode_gaji, akhir_periode_gaji, tanggal_penggajian)
                 VALUES (v_user_id, p_gaji_pokok, v_awal_periode_gaji, v_akhir_periode_gaji, NULL);
             END IF;

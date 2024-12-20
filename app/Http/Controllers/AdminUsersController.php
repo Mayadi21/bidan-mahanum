@@ -37,17 +37,17 @@ class AdminUsersController extends Controller
                     break;
             }
         } else {
-            $users = User::aktif()->role('user')->paginate(10);
+            $users = User::aktif()->role('user');
         }
 
         if(request('search')) {
-            $users = $users->search(request('search'))->paginate(10);
+            $users = $users->search(request('search'));
         }
 
         return view('dashboard.admin-users.index', [
             'page' => 'Halaman Users',
             'active' => 'admin-users',
-            'users' => $users,
+            'users' => $users->get(),
         ]);
     }
 
@@ -80,7 +80,7 @@ class AdminUsersController extends Controller
             DB::statement("SET @modifier_id = ?", [auth()->id()]);
 
             // Panggil procedure MySQL
-            DB::statement('CALL procedure_tambah_user(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
+            DB::statement('CALL add_user(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
                 $request->nama,                // p_nama
                 $request->alamat,              // p_alamat
                 $request->tanggal_lahir,       // p_tanggal_lahir
